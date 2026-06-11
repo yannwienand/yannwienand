@@ -338,18 +338,11 @@
       font-size: 0.58rem; font-weight: 700;
       letter-spacing: 0.18em; text-transform: uppercase;
     }
-    /* XY Pad */
-    .ile-xy-canvas {
-      width: 100%; height: 140px; display: block;
-      cursor: crosshair; border: 1px solid #e8e8e8; border-radius: 2px;
-      touch-action: none;
-    }
-    .ile-xy-axlabels {
-      display: flex; justify-content: space-between; margin-top: 0.35rem;
-    }
-    .ile-xy-axlabel {
-      font-size: 0.48rem; letter-spacing: 0.1em; text-transform: uppercase; color: #bbb;
-    }
+    /* Field Faders */
+    .ile-faders { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.6rem; }
+    .ile-fader-row { display: flex; align-items: center; gap: 0.9rem; }
+    .ile-fader-label { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: #aaa; width: 5.5rem; flex-shrink: 0; text-align: right; }
+    .ile-fader { flex: 1; accent-color: #111; }
     /* Monastery strip */
     .ile-mon {
       display: flex; align-items: center; gap: 1rem;
@@ -1156,12 +1149,15 @@
             <button class="ile-ver-btn"        id="ile-vf-stereo" onclick="ileSetVer('field','stereo')">Stereo</button>
           </div>
         </div>
-        <!-- XY Pad: X = crossfade drops↔footsteps · Y = volume -->
-        <canvas id="ile-xy-canvas" class="ile-xy-canvas"></canvas>
-        <div class="ile-xy-axlabels">
-          <span class="ile-xy-axlabel">← Drops</span>
-          <span class="ile-xy-axlabel" style="color:#d0d0d0">drag to blend &amp; set volume</span>
-          <span class="ile-xy-axlabel">Footsteps →</span>
+        <div class="ile-faders">
+          <div class="ile-fader-row">
+            <span class="ile-fader-label">Drops</span>
+            <input type="range" class="ile-fader" id="ile-fader-drp" min="0" max="100" value="70" oninput="ileFader('drp',this.value)">
+          </div>
+          <div class="ile-fader-row">
+            <span class="ile-fader-label">Footsteps</span>
+            <input type="range" class="ile-fader" id="ile-fader-stp" min="0" max="100" value="70" oninput="ileFader('stp',this.value)">
+          </div>
         </div>
       </div>
 
@@ -1677,8 +1673,7 @@ const PAGES = ['start','project','literature','casestudy','process','portfolio',
 const ile = {
   fieldPlaying: false,
   monPlaying:   false,
-  xy:           { x: 50, y: 70 },   // x = crossfade (0=drops,100=foot) · y = vol (0-100)
-  vol:          { mon: 0.50 },
+  vol:          { drp: 0.70, stp: 0.70, mon: 0.50 },
   ver:          { field: 'ambi', mon: 'ambi' },
 };
 const ileAud = { drp: null, stp: null, mon: null };
@@ -1721,10 +1716,6 @@ function showPage(id) {
   });
   location.hash = id === 'start' ? '' : id;
   window.scrollTo(0, 0);
-  // Re-sync XY canvas after the casestudy section becomes visible
-  if (id === 'casestudy' && window._ileXYSync) {
-    requestAnimationFrame(() => window._ileXYSync());
-  }
 }
 
 window.addEventListener('hashchange', () => {
@@ -1834,22 +1825,25 @@ const AUDIO_PATHS = {
 };
 
 // ─────────────────────────────────────────
-//  ILE AUDIO ENGINE  (plain volume control — no Web Audio API)
+//  ILE AUDIO ENGINE  (plain volume — no Web Audio API)
 // ─────────────────────────────────────────
 function ileAudInit() {
   if (ileAud.drp) return;
   ileAud.drp = document.getElementById('plAudDrops');
   ileAud.stp = document.getElementById('plAudSchritte');
   ileAud.mon = document.getElementById('ileAudMon');
-  ileXYApplyVolume();
+  ileApplyVolumes();
 }
 
-function ileXYApplyVolume() {
+function ileApplyVolumes() {
   if (!ileAud.drp) return;
-  const xf  = ile.xy.x / 100;
-  const vol = ile.xy.y / 100;
-  ileAud.drp.volume = Math.cos(xf * Math.PI / 2) * vol;
-  ileAud.stp.volume = Math.sin(xf * Math.PI / 2) * vol;
+  ileAud.drp.volume = ile.vol.drp;
+  ileAud.stp.volume = ile.vol.stp;
+}
+
+function ileFader(track, val) {
+  ile.vol[track] = val / 100;
+  if (ileAud[track]) ileAud[track].volume = ile.vol[track];
 }
 
 // ─────────────────────────────────────────
@@ -1865,7 +1859,7 @@ function ileToggleField() {
     const stpSrc = ile.ver.field === 'ambi' ? AUDIO_PATHS.foot_ambi  : AUDIO_PATHS.foot_stereo;
     if (!ileAud.drp.src || ileAud.drp.src === location.href) ileAud.drp.src = drpSrc;
     if (!ileAud.stp.src || ileAud.stp.src === location.href) ileAud.stp.src = stpSrc;
-    ileXYApplyVolume();
+    ileApplyVolumes();
     ileAud.drp.play().catch(() => {});
     ileAud.stp.play().catch(() => {});
     if (btn) btn.classList.add('on');
@@ -1921,112 +1915,7 @@ function ileSetVer(section, ver) {
   }
 }
 
-function ileXYUpdate() {
-  ile.xy.x = Math.max(0, Math.min(100, ile.xy.x));
-  ile.xy.y = Math.max(0, Math.min(100, ile.xy.y));
-  ileXYApplyVolume();
-}
-
-function ileDrawXY() {
-  const canvas = document.getElementById('ile-xy-canvas');
-  if (!canvas || !canvas.width || !canvas.height) return;
-  const W = canvas.width, H = canvas.height;
-  const ctx = canvas.getContext('2d');
-
-  ctx.fillStyle = '#fafafa';
-  ctx.fillRect(0, 0, W, H);
-
-  // Subtle grid
-  ctx.strokeStyle = '#efefef'; ctx.lineWidth = 1;
-  [0.25, 0.5, 0.75, 1].forEach(f => {
-    const gx = Math.round(f * W) + 0.5;
-    ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
-  });
-  [0.33, 0.67].forEach(f => {
-    const gy = Math.round(f * H) + 0.5;
-    ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke();
-  });
-
-  // Vol label (rotated, left side)
-  ctx.save();
-  ctx.translate(9, H / 2);
-  ctx.rotate(-Math.PI / 2);
-  ctx.fillStyle = '#d0d0d0';
-  ctx.font = '7px Helvetica Neue, Arial, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('VOL', 0, 0);
-  ctx.restore();
-
-  // Dot position (invert Y: top = max vol)
-  const dotX = (ile.xy.x / 100) * W;
-  const dotY = (1 - ile.xy.y / 100) * H;
-
-  // Crosshair lines
-  ctx.strokeStyle = 'rgba(0,0,0,0.08)'; ctx.lineWidth = 1;
-  ctx.setLineDash([3, 4]);
-  ctx.beginPath(); ctx.moveTo(dotX, 0); ctx.lineTo(dotX, H); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(0, dotY); ctx.lineTo(W, dotY); ctx.stroke();
-  ctx.setLineDash([]);
-
-  // Outer dot
-  ctx.beginPath(); ctx.arc(dotX, dotY, 7, 0, Math.PI * 2);
-  ctx.fillStyle = '#000'; ctx.fill();
-  // Inner dot (white centre)
-  ctx.beginPath(); ctx.arc(dotX, dotY, 3, 0, Math.PI * 2);
-  ctx.fillStyle = '#fff'; ctx.fill();
-}
-
-function ileXYSetup() {
-  const canvas = document.getElementById('ile-xy-canvas');
-  if (!canvas) return;
-
-  function syncSize() {
-    // Use getBoundingClientRect so we get the real rendered width even if
-    // the section was hidden when DOMContentLoaded fired.
-    const r   = canvas.getBoundingClientRect();
-    const w   = r.width || (canvas.parentElement ? canvas.parentElement.clientWidth : 0);
-    if (w > 10) { canvas.width = Math.round(w); canvas.height = 140; }
-    ileDrawXY();
-  }
-  syncSize();
-  window.addEventListener('resize', syncSize);
-  // Exposed so showPage can call it when case-study becomes visible
-  window._ileXYSync = syncSize;
-
-  let dragging = false;
-
-  // Always use the rendered rect — never divide by canvas.width (can be 0 on load)
-  function getPos(e) {
-    const r = canvas.getBoundingClientRect();
-    if (!r.width || !r.height) return null;
-    const cx = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
-    const cy = (e.touches ? e.touches[0].clientY : e.clientY) - r.top;
-    return {
-      x: Math.max(0, Math.min(100, (cx / r.width)  * 100)),
-      y: Math.max(0, Math.min(100, (1 - cy / r.height) * 100))
-    };
-  }
-
-  function apply(e) {
-    if (!dragging) return;
-    const p = getPos(e);
-    if (!p) return;
-    ile.xy.x = p.x; ile.xy.y = p.y;
-    ileXYUpdate();
-    ileDrawXY();
-  }
-
-  canvas.addEventListener('mousedown',  e => { dragging = true; syncSize(); apply(e); });
-  canvas.addEventListener('touchstart', e => { e.preventDefault(); dragging = true; syncSize(); apply(e); }, { passive: false });
-  window.addEventListener('mousemove',  apply);
-  window.addEventListener('touchmove',  e => { if (dragging) { e.preventDefault(); apply(e); } }, { passive: false });
-  window.addEventListener('mouseup',    () => { dragging = false; });
-  window.addEventListener('touchend',   () => { dragging = false; });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  ileXYSetup();
-});
+document.addEventListener('DOMContentLoaded', () => {});
 
 // ── Portfolio drawer ────────────────────────────────────────────────────────
 const PROJECTS = {
