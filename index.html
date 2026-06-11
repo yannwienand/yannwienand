@@ -314,40 +314,58 @@
     .ile-play:hover { background: #333; }
     .ile-play.on    { background: #555; }
     .ile-play svg   { width: 9px; height: 9px; }
+    /* Ambi / Stereo version toggle */
+    .ile-ver-tog {
+      display: flex; border: 1px solid #e0e0e0; overflow: hidden; margin-left: auto;
+    }
+    .ile-ver-btn {
+      font-family: inherit; font-size: 0.57rem; font-weight: 600;
+      padding: 0.28rem 0.75rem; border: none; background: #fff; cursor: pointer;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      border-right: 1px solid #e0e0e0; transition: all 0.12s;
+    }
+    .ile-ver-btn:last-child { border-right: none; }
+    .ile-ver-btn.active { background: #000; color: #fff; }
+    /* Field recordings section */
+    .ile-field {
+      padding: 1.2rem 1.5rem 1.4rem;
+      border-bottom: 1.5px solid #000;
+    }
+    .ile-field-hd {
+      display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;
+    }
+    .ile-field-title {
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+    }
+    /* XY Pad */
+    .ile-xy-canvas {
+      width: 100%; height: 140px; display: block;
+      cursor: crosshair; border: 1px solid #e8e8e8; border-radius: 2px;
+      touch-action: none;
+    }
+    .ile-xy-axlabels {
+      display: flex; justify-content: space-between; margin-top: 0.35rem;
+    }
+    .ile-xy-axlabel {
+      font-size: 0.48rem; letter-spacing: 0.1em; text-transform: uppercase; color: #bbb;
+    }
     /* Monastery strip */
     .ile-mon {
-      display: flex; align-items: center; gap: 1.2rem;
-      padding: 1.1rem 1.5rem;
-      border-bottom: 1.5px solid #000;
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.5rem;
       background: linear-gradient(135deg, #f8f8f8 0%, #f2f2f2 100%);
     }
     .ile-mon-label {
       font-size: 0.58rem; font-weight: 700;
       letter-spacing: 0.18em; text-transform: uppercase; flex: 1;
     }
+    .ile-mon-right {
+      display: flex; align-items: center; gap: 1rem; flex-shrink: 0;
+    }
     .ile-mon-vol {
-      display: flex; align-items: center; gap: 0.6rem; flex: 2; max-width: 200px;
+      display: flex; align-items: center; gap: 0.5rem; width: 120px;
     }
-    /* Field recordings section */
-    .ile-field {
-      padding: 1.2rem 1.5rem 1.4rem;
-    }
-    .ile-field-hd {
-      display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.4rem;
-    }
-    .ile-field-title {
-      font-size: 0.58rem; font-weight: 700;
-      letter-spacing: 0.18em; text-transform: uppercase;
-    }
-    /* Crossfader */
-    .ile-xfade-row {
-      display: flex; align-items: center; gap: 1rem;
-    }
-    .ile-xfade-label {
-      font-size: 0.52rem; letter-spacing: 0.1em; text-transform: uppercase;
-      color: #888; white-space: nowrap; min-width: 52px;
-    }
-    .ile-xfade-label:last-child { text-align: right; }
     /* Range inputs */
     .ile-player input[type="range"] {
       -webkit-appearance: none; height: 1.5px;
@@ -960,9 +978,30 @@
 
     <!-- ── INTERACTIVE LISTENING ── -->
     <h2 class="sec-title">Interactive Listening</h2>
-    <p class="body-text" style="font-size:0.82rem; color:var(--dim)">Headphones recommended. Play the monastery ambience and field recordings separately or together. Use the crossfader to blend between water drops and footsteps.</p>
+    <p class="body-text" style="font-size:0.82rem; color:var(--dim)">Headphones recommended. Drag on the XY pad: left↔right blends between Drops and Footsteps, up↓down sets volume. Ambi = binaural ambisonics mix.</p>
 
     <div class="ile-player">
+
+      <!-- Field Recordings -->
+      <div class="ile-field">
+        <div class="ile-field-hd">
+          <button class="ile-play" id="ile-play-field" onclick="ileToggleField()">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+          <span class="ile-field-title">Field Recordings</span>
+          <div class="ile-ver-tog">
+            <button class="ile-ver-btn active" id="ile-vf-ambi"   onclick="ileSetVer('field','ambi')">Ambi</button>
+            <button class="ile-ver-btn"        id="ile-vf-stereo" onclick="ileSetVer('field','stereo')">Stereo</button>
+          </div>
+        </div>
+        <!-- XY Pad: X = crossfade drops↔footsteps · Y = volume -->
+        <canvas id="ile-xy-canvas" class="ile-xy-canvas"></canvas>
+        <div class="ile-xy-axlabels">
+          <span class="ile-xy-axlabel">← Drops</span>
+          <span class="ile-xy-axlabel" style="color:#d0d0d0">drag to blend &amp; set volume</span>
+          <span class="ile-xy-axlabel">Footsteps →</span>
+        </div>
+      </div>
 
       <!-- Monastery Ambience -->
       <div class="ile-mon">
@@ -970,24 +1009,15 @@
           <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
         </button>
         <span class="ile-mon-label">Monastery Ambience</span>
-        <div class="ile-mon-vol">
-          <span class="ile-slabel">Vol</span>
-          <input type="range" id="ile-vol-mon" min="0" max="100" value="50" style="flex:1" oninput="ileVol('mon',this.value)">
-        </div>
-      </div>
-
-      <!-- Field recordings -->
-      <div class="ile-field">
-        <div class="ile-field-hd">
-          <button class="ile-play" id="ile-play-field" onclick="ileToggleField()">
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
-          </button>
-          <span class="ile-field-title">Field Recordings</span>
-        </div>
-        <div class="ile-xfade-row">
-          <span class="ile-xfade-label">Drops</span>
-          <input type="range" id="ile-xf" min="0" max="100" value="50" style="flex:1" oninput="ileXFade(this.value)">
-          <span class="ile-xfade-label">Footsteps</span>
+        <div class="ile-mon-right">
+          <div class="ile-ver-tog">
+            <button class="ile-ver-btn active" id="ile-vm-ambi"   onclick="ileSetVer('mon','ambi')">Ambi</button>
+            <button class="ile-ver-btn"        id="ile-vm-stereo" onclick="ileSetVer('mon','stereo')">Stereo</button>
+          </div>
+          <div class="ile-mon-vol">
+            <span class="ile-slabel">Vol</span>
+            <input type="range" id="ile-vol-mon" min="0" max="100" value="50" style="flex:1" oninput="ileVol('mon',this.value)">
+          </div>
         </div>
       </div>
 
@@ -1416,8 +1446,9 @@ const PAGES = ['start','project','literature','casestudy','process','portfolio',
 const ile = {
   fieldPlaying: false,
   monPlaying:   false,
-  xfade:        50,       // 0 = all drops, 100 = all footsteps
+  xy:           { x: 50, y: 70 },   // x = crossfade (0=drops,100=foot) · y = vol (0-100)
   vol:          { mon: 0.50 },
+  ver:          { field: 'ambi', mon: 'ambi' },
 };
 const ileAud = { drp: null, stp: null, mon: null };
 
@@ -1557,11 +1588,14 @@ const _origShowPage = typeof showPage !== 'undefined' ? null : null;
 //  BINAURAL / STEREO TOGGLE (interactive player)
 // ─────────────────────────────────────────
 const AUDIO_PATHS = {
-  binaural:   'https://archive.org/download/I_Accept_The_Magic_Anyway/komposition_binaural.mp3',
-  stereo:     'https://archive.org/download/I_Accept_The_Magic_Anyway/komposition_stereo.mp3',
-  drops:      'audio/drops%20ambi.mp3',
-  footsteps:  'audio/foot%20ambi.mp3',
-  atmo:       'audio/atmo%20ambi.mp3',
+  binaural:      'https://archive.org/download/I_Accept_The_Magic_Anyway/komposition_binaural.mp3',
+  stereo:        'https://archive.org/download/I_Accept_The_Magic_Anyway/komposition_stereo.mp3',
+  drops_ambi:    'audio/drops%20ambi.mp3',
+  drops_stereo:  'audio/drops%20stereo.mp3',
+  foot_ambi:     'audio/foot%20ambi.mp3',
+  foot_stereo:   'audio/foot%20stereo.mp3',
+  rain_ambi:     'audio/rain%20ambi.mp3',
+  rain_stereo:   'audio/rain%20stereo.mp3',
 };
 
 // ─────────────────────────────────────────
@@ -1581,16 +1615,17 @@ function ileInitCtx() {
   ileAud.stp = document.getElementById('plAudSchritte');
   ileAud.mon = document.getElementById('ileAudMon');
 
-  // Field recordings: crossfader (drops ↔ footsteps) → master gain → out
+  // Field recordings: crossfade × volume (XY pad)
   const srcDrp    = actx.createMediaElementSource(ileAud.drp);
   const srcStp    = actx.createMediaElementSource(ileAud.stp);
   const gainDrp   = actx.createGain();
   const gainStp   = actx.createGain();
   const gainField = actx.createGain();
-  const xf = ile.xfade / 100;
+  const xf  = ile.xy.x / 100;
+  const vol = ile.xy.y / 100;
   gainDrp.gain.value   = Math.cos(xf * Math.PI / 2);
   gainStp.gain.value   = Math.sin(xf * Math.PI / 2);
-  gainField.gain.value = 0.85;
+  gainField.gain.value = vol;
   srcDrp.connect(gainDrp); gainDrp.connect(gainField);
   srcStp.connect(gainStp); gainStp.connect(gainField);
   gainField.connect(masterOut);
@@ -1615,8 +1650,10 @@ function ileToggleField() {
   const btn = document.getElementById('ile-play-field');
   const ico = btn ? btn.querySelector('svg') : null;
   if (ile.fieldPlaying) {
-    if (!ileAud.drp.src || ileAud.drp.src === location.href) ileAud.drp.src = AUDIO_PATHS.drops;
-    if (!ileAud.stp.src || ileAud.stp.src === location.href) ileAud.stp.src = AUDIO_PATHS.footsteps;
+    const drpSrc = ile.ver.field === 'ambi' ? AUDIO_PATHS.drops_ambi : AUDIO_PATHS.drops_stereo;
+    const stpSrc = ile.ver.field === 'ambi' ? AUDIO_PATHS.foot_ambi  : AUDIO_PATHS.foot_stereo;
+    if (!ileAud.drp.src || ileAud.drp.src === location.href) ileAud.drp.src = drpSrc;
+    if (!ileAud.stp.src || ileAud.stp.src === location.href) ileAud.stp.src = stpSrc;
     ileAud.drp.play().catch(() => {});
     ileAud.stp.play().catch(() => {});
     if (btn) btn.classList.add('on');
@@ -1635,7 +1672,8 @@ function ileToggleMon() {
   const btn = document.getElementById('ile-play-mon');
   const ico = btn ? btn.querySelector('svg') : null;
   if (ile.monPlaying) {
-    if (!ileAud.mon.src || ileAud.mon.src === location.href) ileAud.mon.src = AUDIO_PATHS.atmo;
+    const monSrc = ile.ver.mon === 'ambi' ? AUDIO_PATHS.rain_ambi : AUDIO_PATHS.rain_stereo;
+    if (!ileAud.mon.src || ileAud.mon.src === location.href) ileAud.mon.src = monSrc;
     ileAud.mon.play().catch(() => {});
     if (btn) btn.classList.add('on');
     if (ico) ico.innerHTML = '<rect x="5" y="3" width="4" height="16"/><rect x="13" y="3" width="4" height="16"/>';
@@ -1651,15 +1689,126 @@ function ileVol(k, v) {
   if (actx && ileNodes[k]) ileNodes[k].gain.setTargetAtTime(ile.vol[k], actx.currentTime, 0.01);
 }
 
-function ileXFade(v) {
-  ile.xfade = v;
-  const xf = v / 100;
+function ileSetVer(section, ver) {
+  ile.ver[section] = ver;
+  const pfx = section === 'field' ? 'ile-vf' : 'ile-vm';
+  ['ambi','stereo'].forEach(v => {
+    const el = document.getElementById(pfx + '-' + v);
+    if (el) el.classList.toggle('active', v === ver);
+  });
+  if (section === 'field' && ile.fieldPlaying) {
+    const drpSrc = ver === 'ambi' ? AUDIO_PATHS.drops_ambi : AUDIO_PATHS.drops_stereo;
+    const stpSrc = ver === 'ambi' ? AUDIO_PATHS.foot_ambi  : AUDIO_PATHS.foot_stereo;
+    ileAud.drp.src = drpSrc; ileAud.drp.play().catch(() => {});
+    ileAud.stp.src = stpSrc; ileAud.stp.play().catch(() => {});
+  }
+  if (section === 'mon' && ile.monPlaying) {
+    ileAud.mon.src = ver === 'ambi' ? AUDIO_PATHS.rain_ambi : AUDIO_PATHS.rain_stereo;
+    ileAud.mon.play().catch(() => {});
+  }
+}
+
+function ileXYUpdate() {
+  const xf  = ile.xy.x / 100;
+  const vol = ile.xy.y / 100;
   if (actx && ileNodes.drp) {
     const t = actx.currentTime;
     ileNodes.drp.gain.setTargetAtTime(Math.cos(xf * Math.PI / 2), t, 0.02);
     ileNodes.stp.gain.setTargetAtTime(Math.sin(xf * Math.PI / 2), t, 0.02);
+    ileNodes.field.gain.setTargetAtTime(vol, t, 0.02);
   }
 }
+
+function ileDrawXY() {
+  const canvas = document.getElementById('ile-xy-canvas');
+  if (!canvas || !canvas.width || !canvas.height) return;
+  const W = canvas.width, H = canvas.height;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#fafafa';
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle grid
+  ctx.strokeStyle = '#efefef'; ctx.lineWidth = 1;
+  [0.25, 0.5, 0.75, 1].forEach(f => {
+    const gx = Math.round(f * W) + 0.5;
+    ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
+  });
+  [0.33, 0.67].forEach(f => {
+    const gy = Math.round(f * H) + 0.5;
+    ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke();
+  });
+
+  // Vol label (rotated, left side)
+  ctx.save();
+  ctx.translate(9, H / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillStyle = '#d0d0d0';
+  ctx.font = '7px Helvetica Neue, Arial, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('VOL', 0, 0);
+  ctx.restore();
+
+  // Dot position (invert Y: top = max vol)
+  const dotX = (ile.xy.x / 100) * W;
+  const dotY = (1 - ile.xy.y / 100) * H;
+
+  // Crosshair lines
+  ctx.strokeStyle = 'rgba(0,0,0,0.08)'; ctx.lineWidth = 1;
+  ctx.setLineDash([3, 4]);
+  ctx.beginPath(); ctx.moveTo(dotX, 0); ctx.lineTo(dotX, H); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, dotY); ctx.lineTo(W, dotY); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Outer dot
+  ctx.beginPath(); ctx.arc(dotX, dotY, 7, 0, Math.PI * 2);
+  ctx.fillStyle = '#000'; ctx.fill();
+  // Inner dot (white centre)
+  ctx.beginPath(); ctx.arc(dotX, dotY, 3, 0, Math.PI * 2);
+  ctx.fillStyle = '#fff'; ctx.fill();
+}
+
+function ileXYSetup() {
+  const canvas = document.getElementById('ile-xy-canvas');
+  if (!canvas) return;
+
+  function syncSize() {
+    const p = canvas.parentElement;
+    const w = p ? p.clientWidth : 300;
+    if (w > 10) { canvas.width = w; canvas.height = 140; }
+    ileDrawXY();
+  }
+  syncSize();
+  window.addEventListener('resize', syncSize);
+
+  let dragging = false;
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect();
+    const cx = ((e.touches ? e.touches[0].clientX : e.clientX) - r.left) * (canvas.width / r.width);
+    const cy = ((e.touches ? e.touches[0].clientY : e.clientY) - r.top)  * (canvas.height / r.height);
+    return {
+      x: Math.max(0, Math.min(100, (cx / canvas.width)  * 100)),
+      y: Math.max(0, Math.min(100, (1 - cy / canvas.height) * 100))
+    };
+  }
+  function apply(e) {
+    if (!dragging) return;
+    const p = getPos(e);
+    ile.xy.x = p.x; ile.xy.y = p.y;
+    ileXYUpdate();
+    ileDrawXY();
+  }
+  canvas.addEventListener('mousedown',  e => { dragging = true; apply(e); });
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); dragging = true; apply(e); }, { passive: false });
+  window.addEventListener('mousemove',  apply);
+  window.addEventListener('touchmove',  e => { if (dragging) { e.preventDefault(); apply(e); } }, { passive: false });
+  window.addEventListener('mouseup',    () => { dragging = false; });
+  window.addEventListener('touchend',   () => { dragging = false; });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  ileXYSetup();
+});
 </script>
 </body>
 </html>
