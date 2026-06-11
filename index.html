@@ -135,15 +135,34 @@
       margin-bottom: 1.5rem;
     }
     .featured-abstract {
-      max-width: 720px;
       border-left: 3px solid #000;
       padding: 1.1rem 1.4rem;
       background: var(--light);
       font-size: 0.88rem;
       color: var(--mid);
       line-height: 1.8;
+      margin-bottom: 0;
+    }
+    /* monastery image + abstract side by side */
+    .featured-body {
+      display: grid;
+      grid-template-columns: minmax(0,3fr) minmax(0,2fr);
+      gap: 2rem;
+      align-items: start;
       margin-bottom: 1.5rem;
     }
+    .featured-monastery {
+      width: 100%; height: 100%;
+      min-height: 220px; max-height: 340px;
+      object-fit: cover;
+      display: block;
+    }
+    @media (max-width: 700px) {
+      .featured-body { grid-template-columns: 1fr; }
+      .featured-monastery { max-height: 220px; }
+    }
+    /* keyword highlight */
+    .kw { font-weight: 700; color: #111; }
     .featured-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
     .feat-link {
       display: inline-block;
@@ -276,90 +295,74 @@
     .tag-pos { color: #2a7a3a; font-weight: 600; }
     .tag-neg { color: #8b2020; font-weight: 600; }
 
-    /* ─── AUDIO PLAYER ─────────────────── */
-    .player-wrap {
-      background: #000; color: #c8c0b0;
-      font-family: 'Courier New', monospace;
-      max-width: 580px; margin: 1.5rem 0 2.5rem;
+    /* ─── ILE PLAYER ─────────────────── */
+    .ile-player {
+      max-width: 680px; margin: 1.5rem 0 2.5rem;
+      border: 1.5px solid #000; overflow: hidden; background: #fff;
     }
-    .pl-head {
-      padding: 1rem 1.5rem 0.9rem;
-      border-bottom: 1px solid #1e1e1e;
-      display: flex; align-items: baseline; justify-content: space-between;
+    .ile-slabel {
+      font-size: 0.44rem; letter-spacing: 0.13em; text-transform: uppercase;
+      color: #aaa; white-space: nowrap;
     }
-    .pl-title { font-size: 1rem; font-style: italic; color: #d4c8a8; letter-spacing: 0.02em; }
-    .pl-sub   { font-size: 0.52rem; letter-spacing: 0.2em; color: #555; text-transform: uppercase; }
-
-    #vizCanvas { display: block; width: 100%; height: 48px; background: #050505; border-bottom: 1px solid #1a1a1a; }
-
-    .pl-transport {
-      padding: 0.8rem 1.5rem; border-bottom: 1px solid #1a1a1a;
-      display: flex; flex-direction: column; gap: 0.6rem;
+    /* Play button */
+    .ile-play {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #000; color: #fff; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background 0.12s;
     }
-    .pl-row { display: flex; align-items: center; gap: 0.8rem; }
-
-    .pl-play {
-      flex-shrink: 0; width: 32px; height: 32px;
-      background: none; border: 1px solid #2a2a2a; color: #c8c0b0;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: all 0.15s;
+    .ile-play:hover { background: #333; }
+    .ile-play.on    { background: #555; }
+    .ile-play svg   { width: 9px; height: 9px; }
+    /* Monastery strip */
+    .ile-mon {
+      display: flex; align-items: center; gap: 1.2rem;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1.5px solid #000;
+      background: linear-gradient(135deg, #f8f8f8 0%, #f2f2f2 100%);
     }
-    .pl-play:hover, .pl-play.on { border-color: #9a7a3a; color: #c8a060; }
-    .pl-play svg { width: 12px; height: 12px; }
-
-    .pl-seek { flex: 1; }
-    .pl-time { font-size: 0.52rem; color: #444; min-width: 88px; text-align: right; letter-spacing: 0.04em; }
-
-    .pl-lbl { font-size: 0.48rem; letter-spacing: 0.12em; text-transform: uppercase; color: #444; min-width: 32px; text-align: right; }
-    .pl-val { font-size: 0.5rem; color: #888; min-width: 40px; text-align: right; }
-    .pl-val.hi { color: #c8a060; }
-
-    /* Shared range style inside player */
-    .player-wrap input[type="range"] {
-      -webkit-appearance: none; height: 1px; background: #222;
-      outline: none; cursor: pointer; width: 100%;
+    .ile-mon-label {
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; flex: 1;
     }
-    .player-wrap input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 10px; height: 10px;
-      border-radius: 50%; background: #9a7a3a; cursor: pointer;
-      border: 1.5px solid #000;
+    .ile-mon-vol {
+      display: flex; align-items: center; gap: 0.6rem; flex: 2; max-width: 200px;
     }
-
-    .pl-track { padding: 0.9rem 1.5rem; border-bottom: 1px solid #1a1a1a; }
-    .pl-track:last-of-type { border-bottom: none; }
-
-    .pl-track-hd {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 0.75rem;
+    /* Field recordings section */
+    .ile-field {
+      padding: 1.2rem 1.5rem 1.4rem;
     }
-    .pl-track-name { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: #c0bab0; }
-    .pl-track-type { font-size: 0.48rem; color: #444; letter-spacing: 0.06em; margin-top: 2px; }
-
-    .pl-mute {
-      font-size: 0.48rem; letter-spacing: 0.1em;
-      background: none; border: 1px solid #2a2a2a; color: #555;
-      padding: 0.16rem 0.4rem; cursor: pointer;
-      font-family: 'Courier New', monospace; transition: all 0.12s;
+    .ile-field-hd {
+      display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.4rem;
     }
-    .pl-mute:hover { border-color: #555; color: #c0bab0; }
-    .pl-mute.on    { color: #c05050; border-color: #c05050; }
-
-    .pl-ctrl { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.45rem; }
-
-    .pl-xfade { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.45rem; }
-    .pl-xfade-label { font-size: 0.48rem; color: #555; letter-spacing: 0.06em; white-space: nowrap; }
-
-    .pl-filter-row { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #1a1a1a; }
-    .pl-ftype {
-      background: #111; border: 1px solid #2a2a2a; color: #c0bab0;
-      font-family: 'Courier New', monospace; font-size: 0.52rem;
-      padding: 0.15rem 0.35rem; cursor: pointer; outline: none;
+    .ile-field-title {
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
     }
-    .pl-ftype option { background: #111; }
-    .pl-filter-ctrls { margin-top: 0.4rem; display: flex; flex-direction: column; gap: 0.4rem; }
-    .pl-footer {
-      border-top: 1px solid #1a1a1a; padding: 0.5rem 1.5rem;
-      font-size: 0.46rem; letter-spacing: 0.1em; color: #333; text-align: center;
+    /* Crossfader */
+    .ile-xfade-row {
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .ile-xfade-label {
+      font-size: 0.52rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #888; white-space: nowrap; min-width: 52px;
+    }
+    .ile-xfade-label:last-child { text-align: right; }
+    /* Range inputs */
+    .ile-player input[type="range"] {
+      -webkit-appearance: none; height: 1.5px;
+      background: #d8d8d8; outline: none; cursor: pointer;
+      width: 100%; border-radius: 2px;
+    }
+    .ile-player input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: #000; cursor: pointer;
+      border: 2px solid #fff; box-shadow: 0 0 0 1.5px #000;
+    }
+    .ile-player input[type="range"]::-moz-range-thumb {
+      width: 13px; height: 13px; border-radius: 50%;
+      background: #000; border: 2px solid #fff;
     }
 
     /* ═══════════════════════════════════════
@@ -506,8 +509,7 @@
       <span class="hero-arrow" onclick="document.querySelector('.featured-project').scrollIntoView({behavior:'smooth'})">↘</span>
     </div>
     <div class="hero-right">
-      <!-- Replace with your actual photo: <img src="images/portrait.jpg" alt="Yann Wienand"> -->
-      <div class="hero-photo">[ Photo ]</div>
+      <div class="hero-photo"><img src="images/profil.jpg" alt="Yann Wienand"></div>
     </div>
   </div>
 
@@ -515,8 +517,11 @@
   <div class="featured-project">
     <div class="featured-kicker">Project Incubation · RESOUND Master 2025/26 · Prof. Adriana Sá</div>
     <h2 class="featured-title">I Accept the<br>Magic Anyway</h2>
-    <div class="featured-abstract">
-      In an abandoned monastery in Spain, dripping water became footsteps. This paper asks whether Predictive Processing can serve as compositional dramaturgy: a four-state arc from sounds with clear sources through rising ambiguity to aberrant salience — the condition in which the brain's filtering mechanism fails and everything demands attention equally (Kapur, 2003). The paper then asks what keeps that state from tipping into dissociation. The answer found in practice is what Ihde (2007) calls the expressive dimension of voice: the layer that persists in a narrator's voice when its semantic content withdraws. The paper documents the compositional decisions behind <em>I Accept the Magic Anyway</em>, a collaborative headphone &amp; subwoofer listening installation made with Mischa Nijhof for the exhibition <em>Resounding Territories</em> in Lisbon.
+    <div class="featured-body">
+      <div class="featured-abstract">
+        In an abandoned monastery in Spain, dripping water became footsteps. This paper asks whether <span class="kw">Predictive Processing</span> can serve as compositional dramaturgy: a <span class="kw">four-state arc</span> from sounds with clear sources through rising ambiguity to <span class="kw">aberrant salience</span> — the condition in which the brain's filtering mechanism fails and everything demands attention equally (Kapur, 2003). The paper then asks what keeps that state from tipping into dissociation. The answer found in practice is what Ihde (2007) calls the <span class="kw">expressive dimension of voice</span>: the layer that persists in a narrator's voice when its semantic content withdraws. The paper documents the compositional decisions behind <em>I Accept the Magic Anyway</em>, a collaborative headphone &amp; subwoofer listening installation made with Mischa Nijhof for the exhibition <em>Resounding Territories</em> in Lisbon.
+      </div>
+      <img src="images/monastery.jpg" alt="Abandoned monastery, Spain" class="featured-monastery">
     </div>
     <div class="featured-links">
       <button class="feat-link" onclick="showPage('project')">Project Overview →</button>
@@ -556,8 +561,8 @@
     <h2 class="works-heading">Other Works</h2>
 
     <div class="project-block">
-      <div class="project-kicker">Album · 2024</div>
-      <div class="project-title">a place that no longer exists</div>
+      <div class="project-kicker">Album · 2026</div>
+      <div class="project-title">Music and Grief (Thesis &amp; Performance)</div>
       <p class="project-body">A memory archive of 14 music productions — EDM, Sound Design, Animation Film Sound, Ambient — created over the past 5 years.</p>
     </div>
 
@@ -635,7 +640,7 @@
     <h2 class="sec-title">Introduction</h2>
     <div class="sec-label" style="margin-top:1.5rem">Personal Position</div>
     <p class="body-text">
-      One stormy night in Spain, I slept in an abandoned monastery. Water dripped into a puddle next to my room. Within minutes, the dripping had turned into footsteps. I checked several times whether anyone was there. Nothing in the acoustic signal had changed. What had changed was how my nervous system was reading it. Under darkness, isolation, and exhaustion, a sound I could easily identify had become loaded with ambiguous meaning. Aberrant salience is not the absence of meaning but its excess: not just source-uncertainty, but a felt urgency that nothing can be dismissed.
+      One stormy night in Spain, I slept in an abandoned monastery. Water dripped into a puddle next to my room. Within minutes, the dripping had turned into footsteps. I checked several times whether anyone was there. Nothing in the acoustic signal had changed. What had changed was how my nervous system was reading it. Under darkness, isolation, and exhaustion, a sound I could easily identify had become loaded with ambiguous meaning. <span class="kw">Aberrant salience</span> is not the absence of meaning but its excess: not just source-uncertainty, but a felt urgency that nothing can be dismissed.
     </p>
     <p class="body-text">
       Two earlier observations sharpened this. At a concert in Lisbon, experimental ambient music engaged or relaxed one listener and sent another into anxious introspection. These experiences pointed to the same gap: aberrant salience works as a perceptual mechanism, but without an anchor, it tips toward one extreme or the other. The narrator in this piece is that anchor.
@@ -646,7 +651,7 @@
 
     <div class="sec-label" style="margin-top:2rem">Research Context &amp; Landmark References</div>
     <p class="body-text">
-      Predictive Processing is a well-established theory of perception: the brain continuously compares incoming sensory data against stored predictions, while mismatches drive attention toward what is surprising or significant (Clark, 2013; Seth, 2021). Sá's taxonomy of continuity and discontinuity maps closely onto PP: ambivalent discontinuity corresponds to rising prediction error, and radical discontinuity approximates aberrant salience (Sá, 2013). Schaeffer's listening taxonomy offers a structural parallel: <em>écoute causale</em> at one end, <em>écoute réduite</em> at the other. The movement from State 1 to State 3 in this piece follows roughly that sequence. Ihde's concept of the expressive dimension of voice (Ihde, 2007) provides the theoretical grounding for the sub-question.
+      <span class="kw">Predictive Processing</span> is a well-established theory of perception: the brain continuously compares incoming sensory data against stored predictions, while mismatches drive attention toward what is surprising or significant (Clark, 2013; Seth, 2021). Sá's taxonomy of continuity and discontinuity maps closely onto PP: ambivalent discontinuity corresponds to rising prediction error, and radical discontinuity approximates <span class="kw">aberrant salience</span> (Sá, 2013). Schaeffer's listening taxonomy offers a structural parallel: <em>écoute causale</em> at one end, <em>écoute réduite</em> at the other. The movement from State 1 to State 3 in this piece follows roughly that sequence. Ihde's concept of the <span class="kw">expressive dimension of voice</span> (Ihde, 2007) provides the theoretical grounding for the sub-question.
     </p>
     <p class="body-text">
       The methodology is practice-based: findings come from compositional decisions, the documented failure of an earlier approach in State 3, and audience responses from Jardim do Bombarda. The paper proceeds through a literature review covering PP and aberrant salience, Schaeffer's listening modes and their limits, Ihde's dual dimension of voice, and the concept of Forced Grace; followed by a case study documenting the four-state structure of the piece.
@@ -674,7 +679,7 @@
       <div class="state-row">
         <div class="state-num">State 3</div>
         <div class="state-content">
-          <strong>Aberrant salience.</strong> Categorisation fails. The narrator says "I will speak less now" and then does, but does not disappear. What remains is Ihde's expressive dimension: breath, hesitation, fragments from a recorded self-interview with all semantic context removed. Around this, ebb and flow of composed grains replaces static chaos — density breathes, rises and recedes.
+          <strong>Aberrant salience.</strong> Categorisation fails. The narrator says "I will speak less now" and then does, but does not disappear. What remains is Ihde's <span class="kw">expressive dimension</span>: breath, hesitation, fragments from a recorded self-interview with all semantic context removed. Around this, ebb and flow of composed grains replaces static chaos — density breathes, rises and recedes.
         </div>
       </div>
       <div class="state-row">
@@ -704,6 +709,8 @@
     <div class="sec-label">Project Incubation · Literature Review</div>
     <h1 class="page-title">Literature<br>Review</h1>
     <p class="body-text" style="color:var(--dim)">Annotated bibliography — theoretical and practical references.</p>
+    <img src="images/mindmap_i_accept_the_magic_anyway_v2.png" alt="Research Mindmap" style="width:100%; max-width:900px; margin: 0.5rem 0 0.5rem; border: 1px solid #eee; display:block;">
+    <p style="font-size:0.68rem; color:var(--dim); margin-bottom:1.5rem">Research map: references, sub-questions, hypothesis, methods.</p>
     <hr class="divider">
 
     <!-- ── 3.1 Predictive Processing ── -->
@@ -904,136 +911,46 @@
 
     <hr class="divider">
 
-    <!-- ── AUDIO PLAYER ── -->
+    <!-- ── INTERACTIVE LISTENING ── -->
     <h2 class="sec-title">Interactive Listening</h2>
-    <p class="body-text" style="font-size:0.82rem; color:var(--dim)">Drag audio files onto each track. Binaural: headphones recommended.</p>
+    <p class="body-text" style="font-size:0.82rem; color:var(--dim)">Headphones recommended. Play the monastery ambience and field recordings separately or together. Use the crossfader to blend between water drops and footsteps.</p>
 
-    <!-- Binaural / Stereo toggle -->
-    <div class="toggle-group">
-      <button class="toggle-btn active" id="binBtn" onclick="setAudioVersion('binaural')">Binaural</button>
-      <button class="toggle-btn"        id="sterBtn" onclick="setAudioVersion('stereo')">Stereo</button>
-    </div>
+    <div class="ile-player">
 
-    <!-- The Player -->
-    <div class="player-wrap">
-      <div class="pl-head">
-        <span class="pl-title">I Accept the Magic Anyway</span>
-        <span class="pl-sub">Web Audio</span>
+      <!-- Monastery Ambience -->
+      <div class="ile-mon">
+        <button class="ile-play" id="ile-play-mon" onclick="ileToggleMon()">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+        </button>
+        <span class="ile-mon-label">Monastery Ambience</span>
+        <div class="ile-mon-vol">
+          <span class="ile-slabel">Vol</span>
+          <input type="range" id="ile-vol-mon" min="0" max="100" value="50" style="flex:1" oninput="ileVol('mon',this.value)">
+        </div>
       </div>
 
-      <canvas id="vizCanvas" width="580" height="48"></canvas>
-
-      <!-- Transport -->
-      <div class="pl-transport">
-        <div class="pl-row">
-          <button class="pl-play" id="plPlayBtn" onclick="plToggle()">
-            <svg id="plPlayIco" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+      <!-- Field recordings -->
+      <div class="ile-field">
+        <div class="ile-field-hd">
+          <button class="ile-play" id="ile-play-field" onclick="ileToggleField()">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
           </button>
-          <div class="pl-seek"><input type="range" id="plSeek" min="0" max="1000" value="0" oninput="plSeekTo(this.value)"></div>
-          <div class="pl-time" id="plTime">0:00 / –</div>
+          <span class="ile-field-title">Field Recordings</span>
         </div>
-        <div class="pl-row">
-          <span class="pl-lbl" style="min-width:46px">Speed</span>
-          <input type="range" id="plSpeed" min="25" max="200" value="100" style="flex:1" oninput="plSpeed(this.value)">
-          <span class="pl-val hi" id="plSpeedV">1.00×</span>
-        </div>
-      </div>
-
-      <!-- Track 1: Composition -->
-      <div class="pl-track" id="plTr1">
-        <div class="pl-track-hd">
-          <div>
-            <div class="pl-track-name" id="plN1">Composition</div>
-            <div class="pl-track-type" id="plT1">Binaural · Loop</div>
-          </div>
-          <button class="pl-mute" id="plM1" onclick="plMute(1)">Mute</button>
-        </div>
-        <div class="pl-ctrl"><span class="pl-lbl">Vol</span><input type="range" id="plV1" min="0" max="100" value="80" oninput="plVol(1,this.value)"><span class="pl-val" id="plVV1">80</span></div>
-        <div class="pl-ctrl"><span class="pl-lbl">Rev</span><input type="range" id="plR1" min="0" max="100" value="5"  oninput="plRev(1,this.value)"><span class="pl-val" id="plRV1">5%</span></div>
-        <div class="pl-filter-row">
-          <div class="pl-ctrl" style="margin-bottom:0.4rem">
-            <span class="pl-lbl">Filt</span>
-            <select class="pl-ftype" id="plFT1" onchange="plFilt(1)">
-              <option value="highpass" selected>HPF</option><option value="lowpass">LPF</option>
-              <option value="peaking">Peak EQ</option><option value="notch">Notch</option><option value="off">Off</option>
-            </select>
-          </div>
-          <div class="pl-filter-ctrls">
-            <div class="pl-ctrl"><span class="pl-lbl">Freq</span><input type="range" id="plFF1" min="0" max="100" value="6" oninput="plFilt(1)"><span class="pl-val" id="plFFV1">60Hz</span></div>
-            <div class="pl-ctrl"><span class="pl-lbl">Q</span><input type="range" id="plFQ1" min="0" max="100" value="30" oninput="plFilt(1)"><span class="pl-val" id="plFQV1">0.71</span></div>
-            <div class="pl-ctrl" id="plFGRow1" style="display:none"><span class="pl-lbl">Gain</span><input type="range" id="plFG1" min="-24" max="24" value="0" oninput="plFilt(1)"><span class="pl-val" id="plFGV1">0dB</span></div>
-          </div>
+        <div class="ile-xfade-row">
+          <span class="ile-xfade-label">Drops</span>
+          <input type="range" id="ile-xf" min="0" max="100" value="50" style="flex:1" oninput="ileXFade(this.value)">
+          <span class="ile-xfade-label">Footsteps</span>
         </div>
       </div>
 
-      <!-- Track 2: Field Recordings (crossfader Drops ↔ Footsteps) -->
-      <div class="pl-track" id="plTr2">
-        <div class="pl-track-hd">
-          <div>
-            <div class="pl-track-name">Field Recordings</div>
-            <div class="pl-track-type">Drops · Footsteps · Space</div>
-          </div>
-          <button class="pl-mute" id="plM2" onclick="plMute(2)">Mute</button>
-        </div>
-        <!-- Crossfader: Drops ←→ Footsteps -->
-        <div class="pl-xfade">
-          <span class="pl-xfade-label">Drops</span>
-          <input type="range" id="plXF" min="0" max="100" value="50" style="flex:1" oninput="plXFade(this.value)">
-          <span class="pl-xfade-label">Footsteps</span>
-        </div>
-        <div class="pl-ctrl"><span class="pl-lbl">Vol</span><input type="range" id="plV2" min="0" max="100" value="70" oninput="plVol(2,this.value)"><span class="pl-val" id="plVV2">70</span></div>
-        <div class="pl-ctrl"><span class="pl-lbl">Rev</span><input type="range" id="plR2" min="0" max="100" value="40" oninput="plRev(2,this.value)"><span class="pl-val" id="plRV2">40%</span></div>
-        <div class="pl-filter-row">
-          <div class="pl-ctrl" style="margin-bottom:0.4rem">
-            <span class="pl-lbl">Filt</span>
-            <select class="pl-ftype" id="plFT2" onchange="plFilt(2)">
-              <option value="highpass">HPF</option><option value="lowpass" selected>LPF</option>
-              <option value="peaking">Peak EQ</option><option value="notch">Notch</option><option value="off">Off</option>
-            </select>
-          </div>
-          <div class="pl-filter-ctrls">
-            <div class="pl-ctrl"><span class="pl-lbl">Freq</span><input type="range" id="plFF2" min="0" max="100" value="82" oninput="plFilt(2)"><span class="pl-val" id="plFFV2">6.3k</span></div>
-            <div class="pl-ctrl"><span class="pl-lbl">Q</span><input type="range" id="plFQ2" min="0" max="100" value="30" oninput="plFilt(2)"><span class="pl-val" id="plFQV2">0.71</span></div>
-            <div class="pl-ctrl" id="plFGRow2" style="display:none"><span class="pl-lbl">Gain</span><input type="range" id="plFG2" min="-24" max="24" value="0" oninput="plFilt(2)"><span class="pl-val" id="plFGV2">0dB</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Track 3: Narrator -->
-      <div class="pl-track" id="plTr3">
-        <div class="pl-track-hd">
-          <div>
-            <div class="pl-track-name">Narrator</div>
-            <div class="pl-track-type">Voice · Expressive Dimension</div>
-          </div>
-          <button class="pl-mute" id="plM3" onclick="plMute(3)">Mute</button>
-        </div>
-        <div class="pl-ctrl"><span class="pl-lbl">Vol</span><input type="range" id="plV3" min="0" max="100" value="90" oninput="plVol(3,this.value)"><span class="pl-val" id="plVV3">90</span></div>
-        <div class="pl-ctrl"><span class="pl-lbl">Rev</span><input type="range" id="plR3" min="0" max="100" value="10" oninput="plRev(3,this.value)"><span class="pl-val" id="plRV3">10%</span></div>
-        <div class="pl-filter-row">
-          <div class="pl-ctrl" style="margin-bottom:0.4rem">
-            <span class="pl-lbl">Filt</span>
-            <select class="pl-ftype" id="plFT3" onchange="plFilt(3)">
-              <option value="highpass" selected>HPF</option><option value="lowpass">LPF</option>
-              <option value="peaking">Peak EQ</option><option value="notch">Notch</option><option value="off">Off</option>
-            </select>
-          </div>
-          <div class="pl-filter-ctrls">
-            <div class="pl-ctrl"><span class="pl-lbl">Freq</span><input type="range" id="plFF3" min="0" max="100" value="13" oninput="plFilt(3)"><span class="pl-val" id="plFFV3">110Hz</span></div>
-            <div class="pl-ctrl"><span class="pl-lbl">Q</span><input type="range" id="plFQ3" min="0" max="100" value="30" oninput="plFilt(3)"><span class="pl-val" id="plFQV3">0.71</span></div>
-            <div class="pl-ctrl" id="plFGRow3" style="display:none"><span class="pl-lbl">Gain</span><input type="range" id="plFG3" min="-24" max="24" value="0" oninput="plFilt(3)"><span class="pl-val" id="plFGV3">0dB</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="pl-footer">↓ Drag audio file onto track · Reverb: synthetic stone-room IR ~4.5s · Binaural: use headphones</div>
-    </div>
+    </div><!-- .ile-player -->
 
     <!-- Audio elements -->
-    <audio id="plAud1" loop></audio>
     <audio id="plAudDrops" loop></audio>
     <audio id="plAudSchritte" loop></audio>
     <audio id="plAud3"></audio>
+    <audio id="ileAudMon" loop></audio>
 
     <hr class="divider">
 
@@ -1174,10 +1091,10 @@
     <!-- ── DISCUSSION ── -->
     <h2 class="sec-title">Findings &amp; Open Questions</h2>
     <p class="body-text">
-      The PP framework did ground a workable compositional dramaturgy. The four states map onto the logic of prediction error: low, rising, collapsed into aberrant salience, and then metacognitively held. The grammar of the narrator at each state was derived directly from this logic: at low prediction error, short declaratives that close uncertainty; at rising error, half-sentences and 'or' and 'we'; at collapsed categorisation, breath and fragments.
+      The <span class="kw">Predictive Processing</span> framework did ground a workable compositional dramaturgy. The four states map onto the logic of prediction error: low, rising, collapsed into <span class="kw">aberrant salience</span>, and then metacognitively held. The grammar of the narrator at each state was derived directly from this logic: at low prediction error, short declaratives that close uncertainty; at rising error, half-sentences and 'or' and 'we'; at collapsed categorisation, breath and fragments.
     </p>
     <p class="body-text">
-      The sub-question found a practical answer, though not a clean one. The expressive dimension of voice, without semantic content, makes aberrant salience navigable in a way that pure abstraction does not. But the first version also held grain synthesis at constant maximum intensity. The current version breathes: density rises and recedes rather than flooding. Both changes happened together. Whether the expressive dimension alone would suffice, or whether the ebb and flow of the grain is doing equal work, remains an open question this piece cannot answer.
+      The sub-question found a practical answer, though not a clean one. The <span class="kw">expressive dimension of voice</span>, without semantic content, makes <span class="kw">aberrant salience</span> navigable in a way that pure abstraction does not. But the first version also held grain synthesis at constant maximum intensity. The current version breathes: density rises and recedes rather than flooding. Both changes happened together. Whether the expressive dimension alone would suffice, or whether the ebb and flow of the grain is doing equal work, remains an open question this piece cannot answer.
     </p>
     <p class="body-text">
       Several visitors reported State 4 as the narrator's story rather than their own. Whether that is a failure of the compositional design, a limitation of first-person voice, or an expected response to an autobiographical piece remains unresolved. Adriana Sá's observation after listening — that she had already begun questioning her perception in the first minutes — suggests the naming that was designed to stabilise had instead introduced doubt. A voice that identifies a sound raises the possibility it might not have been there.
@@ -1185,10 +1102,10 @@
 
     <h2 class="sec-title">Further Research</h2>
     <p class="body-text">
-      The most immediate open question comes from the collaboration with Mischa Nijhof. Her piece was not built from PP theory — it began when she heard the monastery story and recognised her own experience in it. But the same mechanism is legible in both: aberrant salience that produces warmth rather than threat. Whether pronoia and paranoia together constitute a compositional axis others can navigate, and what positions exist between the poles, is a question this paper opens without closing.
+      The most immediate open question comes from the collaboration with Mischa Nijhof. Her piece was not built from PP theory — it began when she heard the monastery story and recognised her own experience in it. But the same mechanism is legible in both: <span class="kw">aberrant salience</span> that produces warmth rather than threat. Whether <span class="kw">Pronoia</span> and <span class="kw">Paranoia</span> together constitute a compositional axis others can navigate, and what positions exist between the poles, is a question this paper opens without closing.
     </p>
     <p class="body-text">
-      The expressive dimension as a compositional tool also needs further development. This paper identifies it in one form: the narrator's voice. Whether it can function as an anchor in other forms — a recurring melodic fragment, a spatial signature, a timbral quality — and under what conditions, is a question this piece cannot answer alone.
+      The <span class="kw">expressive dimension</span> as a compositional tool also needs further development. This paper identifies it in one form: the narrator's voice. Whether it can function as an anchor in other forms — a recurring melodic fragment, a spatial signature, a timbral quality — and under what conditions, is a question this piece cannot answer alone.
     </p>
     <p class="body-text">
       What this paper points toward most directly is the relationship between scientific framework and perceptual experience: not art inspired by neuroscience, but art that makes a perceptual mechanism legible during the experience itself. The narrator's final sentence breaks where the explanation would begin. That was a compositional decision. Whether completing it would have made the PP mechanism audible without breaking the experience is a question a next piece would need to find out.
@@ -1208,12 +1125,12 @@
     <hr class="divider">
     <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:1.5rem; max-width:900px; margin-top:1.5rem">
       <div style="border:1px solid var(--border); padding:1.2rem">
-        <div class="project-kicker">Installation · RESOUND 2025/26</div>
+        <div class="project-kicker">Installation · 2026</div>
         <div class="project-title">I Accept the Magic Anyway</div>
       </div>
       <div style="border:1px solid var(--border); padding:1.2rem">
-        <div class="project-kicker">Album · 2024</div>
-        <div class="project-title">a place that no longer exists</div>
+        <div class="project-kicker">Album · 2026</div>
+        <div class="project-title">Music and Grief (Thesis &amp; Performance)</div>
       </div>
       <div style="border:1px solid var(--border); padding:1.2rem">
         <div class="project-kicker">Bachelor Thesis · 2024</div>
@@ -1251,7 +1168,7 @@
     <div class="cv-big">CV</div>
     <div class="cv-doc">
       <div class="cv-name">Yann Wienand</div>
-      <div class="cv-contact">+491765794252 &nbsp;|&nbsp; yannwienand@gmail.com &nbsp;|&nbsp; Berlin</div>
+      <div class="cv-contact">+4917657982552 &nbsp;|&nbsp; yannwienand@gmail.com &nbsp;|&nbsp; Lisbon</div>
 
       <div class="cv-section-head">Skills &amp; Interests</div>
       <div class="cv-entry">
@@ -1267,7 +1184,11 @@
 
       <div class="cv-section-head">Education</div>
       <div class="cv-entry">
-        <div class="cv-entry-head"><span class="cv-entry-title">Universidade Lusófona, Lisbon</span><span class="cv-entry-date">2024 – present</span></div>
+        <div class="cv-entry-head"><span class="cv-entry-title">Universidade Lusófona, Lisbon</span><span class="cv-entry-date">Feb 2026 – Jul 2026</span></div>
+        <div class="cv-entry-org">Master of Music, RESOUND — Interdisciplinary Sound Practice</div>
+      </div>
+      <div class="cv-entry">
+        <div class="cv-entry-head"><span class="cv-entry-title">IADT, Institute of Art, Design + Technologies, Dún Laoghaire</span><span class="cv-entry-date">Sep 2025 – Dec 2025</span></div>
         <div class="cv-entry-org">Master of Music, RESOUND — Interdisciplinary Sound Practice</div>
       </div>
       <div class="cv-entry">
@@ -1294,14 +1215,14 @@
       </div>
       <div class="cv-entry">
         <div class="cv-entry-head"><span class="cv-entry-title">Sound Experience Internship</span><span class="cv-entry-date">Berlin, Aug 2023 – Feb 2024</span></div>
-        <div class="cv-entry-org">Kong Kong — Audio Agency</div>
+        <div class="cv-entry-org">Kling Klang Klong — Audio Agency</div>
         <div class="cv-entry-body"><ul>
-          <li>Designed immersive nature soundscapes in ProTools with Dolby Atmos demo-like storytelling approach for L-Acoustics 7 multichannel system L-ISA</li>
+          <li>Designed immersive nature soundscapes in ProTools with Dolby Atmos demo-like storytelling approach for L-Acoustics multichannel system L-ISA</li>
           <li>Composed and designed a full composition, soundscape and sound design for Kunstmuseum Stuttgart</li>
         </ul></div>
       </div>
       <div class="cv-entry">
-        <div class="cv-entry-head"><span class="cv-entry-title">Audio Design Internship</span><span class="cv-entry-date">Stuttgart, Apr 2023 – Jun 2023</span></div>
+        <div class="cv-entry-head"><span class="cv-entry-title">Audio Design Internship</span><span class="cv-entry-date">Stuttgart, Mar 2023 – Jun 2023</span></div>
         <div class="cv-entry-org">Klangerfinder Audio Agency</div>
         <div class="cv-entry-body"><ul>
           <li>Corporate sound &amp; audio branding, including futuristic UI/UX &amp; service design research for public transport</li>
@@ -1319,6 +1240,10 @@
 
       <div class="cv-section-head">Scholarships</div>
       <div class="cv-entry">
+        <div class="cv-entry-head"><span class="cv-entry-title">Erasmus Mundus Joint Masters (EMJM) Scholarship</span><span class="cv-entry-date">Aug 2025 – Jul 2027</span></div>
+        <div class="cv-entry-body">Competitive full scholarship for the ReSound Erasmus Mundus Joint Master (IADT Dublin · Universidade Lusófona Lisbon · LMTA Vilnius), delivered through the FilmEU consortium.</div>
+      </div>
+      <div class="cv-entry">
         <div class="cv-entry-head"><span class="cv-entry-title">Baden-Württemberg &amp; Fulbright Travel Scholarship</span><span class="cv-entry-date">Monterey Bay, CA · Aug–Dec 2022</span></div>
         <div class="cv-entry-body">Funded semester abroad in Arts Management &amp; Composition</div>
       </div>
@@ -1335,6 +1260,15 @@
 // ─────────────────────────────────────────
 const PAGES = ['start','project','literature','casestudy','portfolio','cv'];
 
+// ILE state (defined early so showPage can reference it safely)
+const ile = {
+  fieldPlaying: false,
+  monPlaying:   false,
+  xfade:        50,       // 0 = all drops, 100 = all footsteps
+  vol:          { mon: 0.50 },
+};
+const ileAud = { drp: null, stp: null, mon: null };
+
 function showPage(id) {
   if (!PAGES.includes(id)) id = 'start';
   // Pause comp players when leaving their page
@@ -1350,6 +1284,21 @@ function showPage(id) {
       cancelAnimationFrame(cpState[k].raf);
     }
   });
+  // Pause ILE tracks on page change
+  if (ile.fieldPlaying) {
+    ile.fieldPlaying = false;
+    if (ileAud.drp) ileAud.drp.pause();
+    if (ileAud.stp) ileAud.stp.pause();
+    const fb = document.getElementById('ile-play-field');
+    if (fb) { fb.classList.remove('on'); const s = fb.querySelector('svg'); if (s) s.innerHTML = '<polygon points="5,3 19,12 5,21"/>'; }
+  }
+  if (ile.monPlaying) {
+    ile.monPlaying = false;
+    if (ileAud.mon) ileAud.mon.pause();
+    const mb = document.getElementById('ile-play-mon');
+    if (mb) { mb.classList.remove('on'); const s = mb.querySelector('svg'); if (s) s.innerHTML = '<polygon points="5,3 19,12 5,21"/>'; }
+  }
+
   PAGES.forEach(p => {
     document.getElementById('page-' + p).classList.toggle('active', p === id);
   });
@@ -1455,359 +1404,110 @@ const _origShowPage = typeof showPage !== 'undefined' ? null : null;
 // ─────────────────────────────────────────
 //  BINAURAL / STEREO TOGGLE (interactive player)
 // ─────────────────────────────────────────
-let audioVersion = 'binaural';
 const AUDIO_PATHS = {
-  binaural: 'https://archive.org/download/I_Accept_The_Magic_Anyway/komposition_binaural.mp3',
-  stereo:   'https://archive.org/download/I_Accept_The_Magic_Anyway/komposition_stereo.mp3',
-  drops:    'audio/drops.mp3',
-  schritte: 'audio/schritte.mp3',
-  narrator: 'audio/narrator.mp3',
+  binaural:   'https://archive.org/download/I_Accept_The_Magic_Anyway/komposition_binaural.mp3',
+  stereo:     'https://archive.org/download/I_Accept_The_Magic_Anyway/komposition_stereo.mp3',
+  drops:      'audio/drops%20ambi.mp3',
+  footsteps:  'audio/foot%20ambi.mp3',
+  atmo:       'audio/atmo%20ambi.mp3',
 };
-
-function setAudioVersion(v) {
-  audioVersion = v;
-  document.getElementById('binBtn').classList.toggle('active', v === 'binaural');
-  document.getElementById('sterBtn').classList.toggle('active', v === 'stereo');
-  document.getElementById('plT1').textContent = (v === 'binaural' ? 'Binaural' : 'Stereo') + ' · Loop';
-  const a = plAud[1];
-  if (a) {
-    const wasPlaying = !a.paused;
-    const pos = a.currentTime;
-    a.src = AUDIO_PATHS[v];
-    if (wasPlaying) { a.currentTime = pos; a.play().catch(()=>{}); }
-  }
-}
 
 // ─────────────────────────────────────────
-//  WEB AUDIO ENGINE
+//  ILE AUDIO ENGINE
 // ─────────────────────────────────────────
-let actx = null, masterOut = null, vizAn = null;
-let plPlaying = false, plSeekRaf = null, plVizRaf = null;
-const plAud = {
-  1: null,
-  drops: null,
-  schritte: null,
-  3: null,
-};
-const plNodes = {};
-const plState = {
-  vol:   {1: 0.80, 2: 0.70, 3: 0.90},
-  rev:   {1: 0.05, 2: 0.40, 3: 0.10},
-  muted: {1: false, 2: false, 3: false},
-  xfade: 0.5,
-  speed: 1.0,
-};
+let actx = null, masterOut = null;
+const ileNodes = {};
 
-function plInitCtx() {
+function ileInitCtx() {
   if (actx) { actx.resume(); return; }
   actx = new (window.AudioContext || window.webkitAudioContext)();
+  masterOut = actx.createGain();
+  masterOut.gain.value = 1.0;
+  masterOut.connect(actx.destination);
 
-  masterOut = actx.createGain(); masterOut.gain.value = 1;
-  vizAn     = actx.createAnalyser();
-  vizAn.fftSize = 512; vizAn.smoothingTimeConstant = 0.82;
-  masterOut.connect(vizAn); vizAn.connect(actx.destination);
+  ileAud.drp = document.getElementById('plAudDrops');
+  ileAud.stp = document.getElementById('plAudSchritte');
+  ileAud.mon = document.getElementById('ileAudMon');
 
-  const ir = plBuildIR();
+  // Field recordings: crossfader (drops ↔ footsteps) → master gain → out
+  const srcDrp    = actx.createMediaElementSource(ileAud.drp);
+  const srcStp    = actx.createMediaElementSource(ileAud.stp);
+  const gainDrp   = actx.createGain();
+  const gainStp   = actx.createGain();
+  const gainField = actx.createGain();
+  const xf = ile.xfade / 100;
+  gainDrp.gain.value   = Math.cos(xf * Math.PI / 2);
+  gainStp.gain.value   = Math.sin(xf * Math.PI / 2);
+  gainField.gain.value = 0.85;
+  srcDrp.connect(gainDrp); gainDrp.connect(gainField);
+  srcStp.connect(gainStp); gainStp.connect(gainField);
+  gainField.connect(masterOut);
+  ileNodes.drp   = gainDrp;
+  ileNodes.stp   = gainStp;
+  ileNodes.field = gainField;
 
-  plAud[1] = document.getElementById('plAud1');
-  plSetupSingle(1, plAud[1], ir);
-
-  plAud.drops    = document.getElementById('plAudDrops');
-  plAud.schritte = document.getElementById('plAudSchritte');
-  plSetupField(ir);
-
-  plAud[3] = document.getElementById('plAud3');
-  plSetupSingle(3, plAud[3], ir);
-
-  plStartViz();
-}
-
-function plSetupSingle(n, el, ir) {
-  const src = actx.createMediaElementSource(el);
-  const gain = actx.createGain();
-  const filt = actx.createBiquadFilter();
-  const dry  = actx.createGain();
-  const conv = actx.createConvolver();
-  const wet  = actx.createGain();
-  gain.gain.value = plState.vol[n];
-  dry.gain.value  = 1 - plState.rev[n];
-  wet.gain.value  = plState.rev[n];
-  conv.buffer     = ir;
-  plApplyFilt(n, filt);
-  src.connect(gain); gain.connect(filt);
-  filt.connect(dry); filt.connect(conv);
-  dry.connect(masterOut); conv.connect(wet); wet.connect(masterOut);
-  plNodes[n] = { gain, filt, dry, wet, conv };
-}
-
-function plSetupField(ir) {
-  const srcDrops    = actx.createMediaElementSource(plAud.drops);
-  const srcSchritte = actx.createMediaElementSource(plAud.schritte);
-  const gainDrops    = actx.createGain();
-  const gainSchritte = actx.createGain();
-  const gainMaster   = actx.createGain();
-  const filt = actx.createBiquadFilter();
-  const dry  = actx.createGain();
-  const conv = actx.createConvolver();
-  const wet  = actx.createGain();
-
-  gainMaster.gain.value = plState.vol[2];
-  dry.gain.value = 1 - plState.rev[2];
-  wet.gain.value = plState.rev[2];
-  conv.buffer = ir;
-  plApplyFilt(2, filt);
-
-  const xf = plState.xfade;
-  gainDrops.gain.value    = Math.cos(xf * Math.PI / 2);
-  gainSchritte.gain.value = Math.sin(xf * Math.PI / 2);
-
-  srcDrops.connect(gainDrops);       gainDrops.connect(gainMaster);
-  srcSchritte.connect(gainSchritte); gainSchritte.connect(gainMaster);
-  gainMaster.connect(filt);
-  filt.connect(dry); filt.connect(conv);
-  dry.connect(masterOut); conv.connect(wet); wet.connect(masterOut);
-
-  plNodes[2] = { gainDrops, gainSchritte, gain: gainMaster, filt, dry, wet, conv };
-}
-
-// Monastery IR — synthetic stone room ~4.5s T60
-function plBuildIR() {
-  const sr = actx.sampleRate, dur = 4.5, len = Math.floor(sr * dur);
-  const buf = actx.createBuffer(2, len, sr);
-  const pre = Math.floor(sr * 0.022);
-  const refls = [[0.028,0.75],[0.042,0.60],[0.061,0.50],[0.082,0.42],[0.108,0.34],[0.140,0.27],[0.175,0.21],[0.215,0.16]];
-  for (let ch = 0; ch < 2; ch++) {
-    const d = buf.getChannelData(ch);
-    for (let i = pre; i < len; i++) { const t=(i-pre)/sr; d[i]=(Math.random()*2-1)*Math.exp(-2.1*t)*0.22; }
-    refls.forEach(([t,g],k) => {
-      const jit = ch===1 ? Math.floor(sr*0.0005*((k%4)+1)) : 0;
-      const idx = Math.floor(sr*t)+pre+jit;
-      if (idx<len) d[idx] += g*(ch===0?1.0:0.88+Math.random()*0.12);
-    });
-    let z=0; for (let i=0;i<len;i++){d[i]=d[i]*0.55+z*0.45;z=d[i];}
-  }
-  return buf;
-}
-
-function plApplyFilt(n, f) {
-  const type = document.getElementById('plFT'+n).value;
-  const fv   = parseFloat(document.getElementById('plFF'+n).value);
-  const qv   = parseFloat(document.getElementById('plFQ'+n).value);
-  f.type = (type==='off')?'allpass':type;
-  f.frequency.value = plS2F(fv);
-  f.Q.value = plS2Q(qv);
+  // Monastery ambience: simple gain → out
+  const srcMon  = actx.createMediaElementSource(ileAud.mon);
+  const gainMon = actx.createGain();
+  gainMon.gain.value = ile.vol.mon;
+  srcMon.connect(gainMon); gainMon.connect(masterOut);
+  ileNodes.mon = gainMon;
 }
 
 // ─────────────────────────────────────────
-//  PLAYER CONTROLS
+//  ILE CONTROLS
 // ─────────────────────────────────────────
-function plToggle() {
-  plInitCtx();
-  plPlaying = !plPlaying;
-  const btn = document.getElementById('plPlayBtn');
-  const ico = document.getElementById('plPlayIco');
-  if (plPlaying) {
-    btn.classList.add('on');
-    ico.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
-    [plAud[1], plAud.drops, plAud.schritte, plAud[3]].forEach(a => {
-      if (a && a.src && !plState.muted[a === plAud[3] ? 3 : a === plAud[1] ? 1 : 2])
-        a.play().catch(()=>{});
-    });
-    plStartSeek();
+function ileToggleField() {
+  ileInitCtx();
+  ile.fieldPlaying = !ile.fieldPlaying;
+  const btn = document.getElementById('ile-play-field');
+  const ico = btn ? btn.querySelector('svg') : null;
+  if (ile.fieldPlaying) {
+    if (!ileAud.drp.src || ileAud.drp.src === location.href) ileAud.drp.src = AUDIO_PATHS.drops;
+    if (!ileAud.stp.src || ileAud.stp.src === location.href) ileAud.stp.src = AUDIO_PATHS.footsteps;
+    ileAud.drp.play().catch(() => {});
+    ileAud.stp.play().catch(() => {});
+    if (btn) btn.classList.add('on');
+    if (ico) ico.innerHTML = '<rect x="5" y="3" width="4" height="16"/><rect x="13" y="3" width="4" height="16"/>';
   } else {
-    btn.classList.remove('on');
-    ico.innerHTML = '<polygon points="5,3 19,12 5,21"/>';
-    [plAud[1], plAud.drops, plAud.schritte, plAud[3]].forEach(a => { if(a) a.pause(); });
-    cancelAnimationFrame(plSeekRaf);
+    ileAud.drp.pause();
+    ileAud.stp.pause();
+    if (btn) btn.classList.remove('on');
+    if (ico) ico.innerHTML = '<polygon points="5,3 19,12 5,21"/>';
   }
 }
 
-function plVol(n, v) {
-  plState.vol[n] = v/100;
-  document.getElementById('plVV'+n).textContent = v;
-  if (plNodes[n]) plNodes[n].gain.gain.setTargetAtTime(plState.muted[n]?0:plState.vol[n], actx.currentTime, 0.01);
-  plFill('plV'+n, v, 0, 100);
+function ileToggleMon() {
+  ileInitCtx();
+  ile.monPlaying = !ile.monPlaying;
+  const btn = document.getElementById('ile-play-mon');
+  const ico = btn ? btn.querySelector('svg') : null;
+  if (ile.monPlaying) {
+    if (!ileAud.mon.src || ileAud.mon.src === location.href) ileAud.mon.src = AUDIO_PATHS.atmo;
+    ileAud.mon.play().catch(() => {});
+    if (btn) btn.classList.add('on');
+    if (ico) ico.innerHTML = '<rect x="5" y="3" width="4" height="16"/><rect x="13" y="3" width="4" height="16"/>';
+  } else {
+    ileAud.mon.pause();
+    if (btn) btn.classList.remove('on');
+    if (ico) ico.innerHTML = '<polygon points="5,3 19,12 5,21"/>';
+  }
 }
 
-function plRev(n, v) {
-  plState.rev[n] = v/100;
-  document.getElementById('plRV'+n).textContent = v===0?'Dry':v===100?'Wet':v+'%';
-  if (plNodes[n]) {
+function ileVol(k, v) {
+  ile.vol[k] = v / 100;
+  if (actx && ileNodes[k]) ileNodes[k].gain.setTargetAtTime(ile.vol[k], actx.currentTime, 0.01);
+}
+
+function ileXFade(v) {
+  ile.xfade = v;
+  const xf = v / 100;
+  if (actx && ileNodes.drp) {
     const t = actx.currentTime;
-    plNodes[n].dry.gain.setTargetAtTime(1-plState.rev[n], t, 0.02);
-    plNodes[n].wet.gain.setTargetAtTime(plState.rev[n],   t, 0.02);
+    ileNodes.drp.gain.setTargetAtTime(Math.cos(xf * Math.PI / 2), t, 0.02);
+    ileNodes.stp.gain.setTargetAtTime(Math.sin(xf * Math.PI / 2), t, 0.02);
   }
-  plFill('plR'+n, v, 0, 100);
 }
-
-function plFilt(n) {
-  const type = document.getElementById('plFT'+n).value;
-  const fv   = parseFloat(document.getElementById('plFF'+n).value);
-  const qv   = parseFloat(document.getElementById('plFQ'+n).value);
-  const gv   = parseFloat(document.getElementById('plFG'+n).value);
-  const freq = plS2F(fv), q = plS2Q(qv);
-  document.getElementById('plFFV'+n).textContent = plFmtHz(freq);
-  document.getElementById('plFQV'+n).textContent = q.toFixed(2);
-  document.getElementById('plFGV'+n).textContent = gv+'dB';
-  const showG = (type==='peaking'||type==='lowshelf'||type==='highshelf');
-  document.getElementById('plFGRow'+n).style.display = showG?'flex':'none';
-  if (plNodes[n]) {
-    const f = plNodes[n].filt;
-    f.type = (type==='off')?'allpass':type;
-    f.frequency.setTargetAtTime(freq, actx.currentTime, 0.01);
-    f.Q.setTargetAtTime(q, actx.currentTime, 0.01);
-    if (showG) f.gain.setTargetAtTime(gv, actx.currentTime, 0.01);
-  }
-  plFill('plFF'+n, fv, 0, 100); plFill('plFQ'+n, qv, 0, 100);
-}
-
-function plMute(n) {
-  plState.muted[n] = !plState.muted[n];
-  document.getElementById('plM'+n).classList.toggle('on', plState.muted[n]);
-  if (plNodes[n]) plNodes[n].gain.gain.setTargetAtTime(plState.muted[n]?0:plState.vol[n], actx.currentTime, 0.01);
-  const auds = n===1?[plAud[1]]:n===2?[plAud.drops,plAud.schritte]:[plAud[3]];
-  auds.forEach(a => {
-    if (plState.muted[n]) { if(a) a.pause(); }
-    else if (plPlaying && a && a.src) a.play().catch(()=>{});
-  });
-}
-
-function plXFade(v) {
-  plState.xfade = v/100;
-  const xf = plState.xfade;
-  if (plNodes[2]) {
-    const t = actx.currentTime;
-    plNodes[2].gainDrops.gain.setTargetAtTime(Math.cos(xf*Math.PI/2),    t, 0.02);
-    plNodes[2].gainSchritte.gain.setTargetAtTime(Math.sin(xf*Math.PI/2), t, 0.02);
-  }
-  plFill('plXF', v, 0, 100);
-}
-
-function plSpeed(v) {
-  plState.speed = v/100;
-  document.getElementById('plSpeedV').textContent = plState.speed.toFixed(2)+'×';
-  [plAud[1], plAud.drops, plAud.schritte, plAud[3]].forEach(a => { if(a) a.playbackRate = plState.speed; });
-  plFill('plSpeed', v, 25, 200);
-}
-
-function plSeekTo(v) {
-  const a = [plAud[1], plAud.drops, plAud.schritte, plAud[3]].find(a => a&&a.duration&&!isNaN(a.duration));
-  if (!a) return;
-  const t = (v/1000)*a.duration;
-  [plAud[1], plAud.drops, plAud.schritte, plAud[3]].forEach(x => {
-    if (x && x.duration) x.currentTime = Math.min(t, x.duration-0.05);
-  });
-}
-
-// ─────────────────────────────────────────
-//  SEEK UPDATE LOOP
-// ─────────────────────────────────────────
-function plStartSeek() {
-  function tick() {
-    const a = [plAud[1], plAud.drops, plAud.schritte, plAud[3]].find(a=>a&&a.duration&&!isNaN(a.duration));
-    if (a) {
-      const pct = (a.currentTime/a.duration)*1000;
-      const sb  = document.getElementById('plSeek');
-      if (!sb.matches(':active')) { sb.value = pct; plFill('plSeek', pct, 0, 1000); }
-      document.getElementById('plTime').textContent = plFmtT(a.currentTime)+' / '+plFmtT(a.duration);
-    }
-    plSeekRaf = requestAnimationFrame(tick);
-  }
-  tick();
-}
-
-// ─────────────────────────────────────────
-//  VISUALIZER
-// ─────────────────────────────────────────
-function plStartViz() {
-  const canvas = document.getElementById('vizCanvas');
-  const c = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
-  const data = new Uint8Array(vizAn.frequencyBinCount);
-  function draw() {
-    plVizRaf = requestAnimationFrame(draw);
-    vizAn.getByteFrequencyData(data);
-    c.clearRect(0,0,W,H);
-    const bins = data.length;
-    for (let i=0;i<bins;i++) {
-      const lx = Math.log(i+1)/Math.log(bins);
-      const lx2= Math.log(i+2)/Math.log(bins);
-      const x0 = Math.floor(lx*W), bw = Math.max(Math.ceil(lx2*W)-x0, 1);
-      const v  = data[i]/255, bh = v*H, alpha = 0.2+v*0.8;
-      c.fillStyle = `rgba(0,0,0,${alpha.toFixed(2)})`;
-      c.fillRect(x0, H-bh, bw, bh);
-    }
-  }
-  draw();
-}
-
-// ─────────────────────────────────────────
-//  DRAG & DROP onto tracks
-// ─────────────────────────────────────────
-function plDropSetup(elId, n) {
-  const el = document.getElementById(elId);
-  el.addEventListener('dragover', e => { e.preventDefault(); el.style.outline='2px dashed #555'; });
-  el.addEventListener('dragleave', () => el.style.outline='');
-  el.addEventListener('drop', e => {
-    e.preventDefault(); el.style.outline='';
-    const f = e.dataTransfer.files[0];
-    if (!f || !f.type.startsWith('audio/')) return;
-    plInitCtx();
-    const target = n==='drops' ? plAud.drops : n==='schritte' ? plAud.schritte : plAud[n];
-    if (target.src.startsWith('blob:')) URL.revokeObjectURL(target.src);
-    target.src = URL.createObjectURL(f);
-    target.playbackRate = plState.speed;
-    if (plPlaying && !plState.muted[n==='drops'||n==='schritte'?2:n])
-      target.play().catch(()=>{});
-  });
-}
-plDropSetup('plTr1', 1);
-plDropSetup('plTr2', 'drops');
-plDropSetup('plTr3', 3);
-
-// ─────────────────────────────────────────
-//  HELPERS
-// ─────────────────────────────────────────
-function plS2F(v)    { return 20*Math.pow(1000,v/100); }
-function plS2Q(v)    { return 0.1*Math.pow(200,v/100); }
-function plFmtHz(hz) { return hz>=1000?(hz/1000).toFixed(1)+'k':Math.round(hz)+'Hz'; }
-function plFmtT(s)   {
-  if (!s||isNaN(s)) return '0:00';
-  const m=Math.floor(s/60), sec=Math.floor(s%60);
-  return m+':'+(sec<10?'0':'')+sec;
-}
-function plFill(id, val, min, max) {
-  const el = document.getElementById(id); if (!el) return;
-  const pct = ((val-min)/(max-min))*100;
-  const isPlayer = el.closest('.player-wrap');
-  const c1 = isPlayer ? '#9a7a3a' : '#000';
-  const c2 = isPlayer ? '#222' : '#e0e0e0';
-  el.style.background = `linear-gradient(to right,${c1} 0%,${c1} ${pct}%,${c2} ${pct}%,${c2} 100%)`;
-}
-
-// ─────────────────────────────────────────
-//  INIT DISPLAYS ON LOAD
-// ─────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  [1,2,3].forEach(n => {
-    plFill('plV'+n, parseFloat(document.getElementById('plV'+n).value), 0, 100);
-    plFill('plR'+n, parseFloat(document.getElementById('plR'+n).value), 0, 100);
-    const fv=parseFloat(document.getElementById('plFF'+n).value);
-    const qv=parseFloat(document.getElementById('plFQ'+n).value);
-    document.getElementById('plFFV'+n).textContent = plFmtHz(plS2F(fv));
-    document.getElementById('plFQV'+n).textContent = plS2Q(qv).toFixed(2);
-    plFill('plFF'+n, fv, 0, 100); plFill('plFQ'+n, qv, 0, 100);
-  });
-  plFill('plSpeed', 100, 25, 200);
-  plFill('plSeek',  0,   0, 1000);
-  plFill('plXF',    50,  0, 100);
-  const canvas = document.getElementById('vizCanvas');
-  if (canvas) {
-    const c = canvas.getContext('2d');
-    c.fillStyle = 'rgba(0,0,0,0.06)';
-    c.fillRect(0, canvas.height-1, canvas.width, 1);
-  }
-});
 </script>
 </body>
 </html>
