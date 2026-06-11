@@ -338,11 +338,18 @@
       font-size: 0.58rem; font-weight: 700;
       letter-spacing: 0.18em; text-transform: uppercase;
     }
-    /* Field Faders */
-    .ile-faders { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.6rem; }
-    .ile-fader-row { display: flex; align-items: center; gap: 0.9rem; }
-    .ile-fader-label { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: #aaa; width: 5.5rem; flex-shrink: 0; text-align: right; }
-    .ile-fader { flex: 1; accent-color: #111; }
+    /* XY Pad */
+    .ile-xy-canvas {
+      width: 100%; height: 140px; display: block;
+      cursor: crosshair; border: 1px solid #e8e8e8; border-radius: 2px;
+      touch-action: none;
+    }
+    .ile-xy-axlabels {
+      display: flex; justify-content: space-between; margin-top: 0.35rem;
+    }
+    .ile-xy-axlabel {
+      font-size: 0.48rem; letter-spacing: 0.1em; text-transform: uppercase; color: #bbb;
+    }
     /* Monastery strip */
     .ile-mon {
       display: flex; align-items: center; gap: 1rem;
@@ -728,6 +735,7 @@
           <p class="project-body">A memory archive of 14 music productions — EDM, Sound Design, Animation Film Sound, Ambient — created over the past 5 years.</p>
         </div>
       </div>
+      <audio controls preload="none" style="width:100%;margin-top:0.7rem" src="https://archive.org/download/portfolio_202606/05%20Chapter%20Blue%20%28snippet%29.mp3"></audio>
     </div>
 
     <div class="project-block">
@@ -741,6 +749,7 @@
           <div class="project-roles">Roles: Composition · Music Production · Sound Design · Voice &amp; Vocal Recording · Mixing &amp; Mastering · Creative Direction · Lighting Programming (Showsync Beam &amp; Ableton) · 24-Channel Speaker Setup</div>
         </div>
       </div>
+      <video controls preload="none" style="width:100%;margin-top:0.7rem;border-radius:2px" src="https://archive.org/download/portfolio_202606/01%20Bachelor%E2%80%99s%20Performance.mp4"></video>
     </div>
 
     <div class="project-block">
@@ -774,6 +783,7 @@
           <p class="project-body">Field recordings of waves in Bray, Dublin and re-amplification.</p>
         </div>
       </div>
+      <audio controls preload="none" style="width:100%;margin-top:0.7rem" src="https://archive.org/download/portfolio_202606/PM.2tr_9_STC_CA2_FreshEars_17122025.mp3"></audio>
     </div>
 
     <div class="project-block">
@@ -786,6 +796,7 @@
           <div class="project-roles">Roles: Water drop installation · Violin &amp; live electronics · Sound manipulation · Dramaturgy · 8.1 speaker setup (60 m² underground concrete hall)</div>
         </div>
       </div>
+      <video controls preload="none" style="width:100%;margin-top:0.7rem;border-radius:2px" src="https://archive.org/download/portfolio_202606/04%20EAST%20Festival%20Installation%20.mov"></video>
     </div>
 
     <div class="project-block">
@@ -798,6 +809,7 @@
           <div class="project-roles">Roles: Composition · Violin &amp; Celesta recording · Foley &amp; Sound Design · Mixing &amp; Mastering · Vocal reference recording · Dolby Atmos surround mix (ProTools)</div>
         </div>
       </div>
+      <video controls preload="none" style="width:100%;margin-top:0.7rem;border-radius:2px" src="https://archive.org/download/portfolio_202606/03%20Up%20You%20Go%20%28snippet%29.mov"></video>
     </div>
 
     <div class="project-block">
@@ -810,6 +822,7 @@
           <div class="project-roles">Roles: Music composition &amp; production · Sound design · Recording (guitar, voice) · Mixing &amp; Mastering</div>
         </div>
       </div>
+      <video controls preload="none" style="width:100%;margin-top:0.7rem;border-radius:2px" src="https://archive.org/download/portfolio_202606/02%20T-Idents.mp4"></video>
     </div>
 
   </div>
@@ -1149,15 +1162,11 @@
             <button class="ile-ver-btn"        id="ile-vf-stereo" onclick="ileSetVer('field','stereo')">Stereo</button>
           </div>
         </div>
-        <div class="ile-faders">
-          <div class="ile-fader-row">
-            <span class="ile-fader-label">Drops</span>
-            <input type="range" class="ile-fader" id="ile-fader-drp" min="0" max="100" value="70" oninput="ileFader('drp',this.value)">
-          </div>
-          <div class="ile-fader-row">
-            <span class="ile-fader-label">Footsteps</span>
-            <input type="range" class="ile-fader" id="ile-fader-stp" min="0" max="100" value="70" oninput="ileFader('stp',this.value)">
-          </div>
+        <canvas id="ile-xy-canvas" class="ile-xy-canvas"></canvas>
+        <div class="ile-xy-axlabels">
+          <span class="ile-xy-axlabel">← Drops</span>
+          <span class="ile-xy-axlabel" style="color:#d0d0d0">drag to mix &amp; set volume</span>
+          <span class="ile-xy-axlabel">Footsteps →</span>
         </div>
       </div>
 
@@ -1557,6 +1566,7 @@
     <div class="proj-drawer-close"><button onclick="closeProject(null)">Close ×</button></div>
     <img class="proj-drawer-img" id="projImg" src="" alt="">
     <img class="proj-drawer-img" id="projImg2" src="" alt="" style="display:none;margin-top:0.5rem">
+    <div id="projMedia" style="padding:0.8rem 1rem 0"></div>
     <div class="proj-drawer-body">
       <div class="proj-drawer-kicker" id="projKicker"></div>
       <div class="proj-drawer-title" id="projTitle"></div>
@@ -1673,7 +1683,8 @@ const PAGES = ['start','project','literature','casestudy','process','portfolio',
 const ile = {
   fieldPlaying: false,
   monPlaying:   false,
-  vol:          { drp: 0.70, stp: 0.70, mon: 0.50 },
+  xy:           { x: 50, y: 70 },   // x: 0=drops · 100=footsteps   y: 0=quiet · 100=loud
+  vol:          { mon: 0.50 },
   ver:          { field: 'ambi', mon: 'ambi' },
 };
 const ileAud = { drp: null, stp: null, mon: null };
@@ -1716,6 +1727,9 @@ function showPage(id) {
   });
   location.hash = id === 'start' ? '' : id;
   window.scrollTo(0, 0);
+  if (id === 'casestudy' && window._ileXYSync) {
+    requestAnimationFrame(() => window._ileXYSync());
+  }
 }
 
 window.addEventListener('hashchange', () => {
@@ -1825,25 +1839,22 @@ const AUDIO_PATHS = {
 };
 
 // ─────────────────────────────────────────
-//  ILE AUDIO ENGINE  (plain volume — no Web Audio API)
+//  ILE AUDIO ENGINE  (plain audio.volume — no Web Audio API)
 // ─────────────────────────────────────────
 function ileAudInit() {
   if (ileAud.drp) return;
   ileAud.drp = document.getElementById('plAudDrops');
   ileAud.stp = document.getElementById('plAudSchritte');
   ileAud.mon = document.getElementById('ileAudMon');
-  ileApplyVolumes();
+  ileXYApplyVolume();
 }
 
-function ileApplyVolumes() {
+function ileXYApplyVolume() {
   if (!ileAud.drp) return;
-  ileAud.drp.volume = ile.vol.drp;
-  ileAud.stp.volume = ile.vol.stp;
-}
-
-function ileFader(track, val) {
-  ile.vol[track] = val / 100;
-  if (ileAud[track]) ileAud[track].volume = ile.vol[track];
+  const xf  = ile.xy.x / 100;
+  const vol = ile.xy.y / 100;
+  ileAud.drp.volume = Math.cos(xf * Math.PI / 2) * vol;
+  ileAud.stp.volume = Math.sin(xf * Math.PI / 2) * vol;
 }
 
 // ─────────────────────────────────────────
@@ -1859,7 +1870,7 @@ function ileToggleField() {
     const stpSrc = ile.ver.field === 'ambi' ? AUDIO_PATHS.foot_ambi  : AUDIO_PATHS.foot_stereo;
     if (!ileAud.drp.src || ileAud.drp.src === location.href) ileAud.drp.src = drpSrc;
     if (!ileAud.stp.src || ileAud.stp.src === location.href) ileAud.stp.src = stpSrc;
-    ileApplyVolumes();
+    ileXYApplyVolume();
     ileAud.drp.play().catch(() => {});
     ileAud.stp.play().catch(() => {});
     if (btn) btn.classList.add('on');
@@ -1915,7 +1926,96 @@ function ileSetVer(section, ver) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {});
+function ileXYUpdate() {
+  ile.xy.x = Math.max(0, Math.min(100, ile.xy.x));
+  ile.xy.y = Math.max(0, Math.min(100, ile.xy.y));
+  ileXYApplyVolume();
+}
+
+function ileDrawXY() {
+  const canvas = document.getElementById('ile-xy-canvas');
+  if (!canvas || !canvas.width || !canvas.height) return;
+  const W = canvas.width, H = canvas.height;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#fafafa';
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle vertical grid
+  ctx.strokeStyle = '#efefef'; ctx.lineWidth = 1;
+  [0.25, 0.5, 0.75].forEach(f => {
+    const gx = Math.round(f * W) + 0.5;
+    ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
+  });
+  [0.33, 0.67].forEach(f => {
+    const gy = Math.round(f * H) + 0.5;
+    ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke();
+  });
+
+  // Dot
+  const dotX = (ile.xy.x / 100) * W;
+  const dotY = (1 - ile.xy.y / 100) * H;
+
+  ctx.strokeStyle = 'rgba(0,0,0,0.07)'; ctx.lineWidth = 1;
+  ctx.setLineDash([3, 4]);
+  ctx.beginPath(); ctx.moveTo(dotX, 0); ctx.lineTo(dotX, H); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, dotY); ctx.lineTo(W, dotY); ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.beginPath(); ctx.arc(dotX, dotY, 7, 0, Math.PI * 2);
+  ctx.fillStyle = '#111'; ctx.fill();
+  ctx.beginPath(); ctx.arc(dotX, dotY, 3, 0, Math.PI * 2);
+  ctx.fillStyle = '#fff'; ctx.fill();
+}
+
+function ileXYSetup() {
+  const canvas = document.getElementById('ile-xy-canvas');
+  if (!canvas) return;
+
+  function syncSize() {
+    const r = canvas.getBoundingClientRect();
+    const w = r.width || (canvas.parentElement ? canvas.parentElement.clientWidth : 0);
+    if (w > 10) { canvas.width = Math.round(w); canvas.height = 140; }
+    ileDrawXY();
+  }
+  syncSize();
+  window.addEventListener('resize', syncSize);
+  window._ileXYSync = syncSize;
+
+  let dragging = false;
+
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect();
+    if (!r.width || !r.height) return null;
+    const cx = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+    const cy = (e.touches ? e.touches[0].clientY : e.clientY) - r.top;
+    return {
+      x: Math.max(0, Math.min(100, (cx / r.width)  * 100)),
+      y: Math.max(0, Math.min(100, (1 - cy / r.height) * 100))
+    };
+  }
+
+  function apply(e) {
+    if (!dragging) return;
+    const p = getPos(e);
+    if (!p) return;
+    ile.xy.x = p.x;
+    ile.xy.y = p.y;
+    ileXYUpdate();
+    ileDrawXY();
+  }
+
+  canvas.addEventListener('mousedown',  e => { dragging = true; syncSize(); apply(e); });
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); dragging = true; syncSize(); apply(e); }, { passive: false });
+  window.addEventListener('mousemove',  apply);
+  window.addEventListener('touchmove',  e => { if (dragging) { e.preventDefault(); apply(e); } }, { passive: false });
+  window.addEventListener('mouseup',    () => { dragging = false; });
+  window.addEventListener('touchend',   () => { dragging = false; });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  ileXYSetup();
+});
 
 // ── Portfolio drawer ────────────────────────────────────────────────────────
 const PROJECTS = {
@@ -1931,7 +2031,9 @@ const PROJECTS = {
     title:  'Music and Grief (Thesis & Performance)',
     thumb:  'images/a%20place%20that%20no%20longer%20exists.jpg',
     desc:   'A memory archive of 14 music productions — EDM, Sound Design, Animation Film Sound, Ambient — created over the past 5 years.',
-    roles:  ''
+    roles:  '',
+    media:  'https://archive.org/download/portfolio_202606/05%20Chapter%20Blue%20%28snippet%29.mp3',
+    mediaType: 'audio'
   },
   sehen: {
     kicker: 'Bachelor Thesis · 2024',
@@ -1939,7 +2041,9 @@ const PROJECTS = {
     thumb:  'images/a%20place%20that%20no%20longer%20exists.jpg',
     thumb2: 'images/thumb_sehen.jpg',
     desc:   'A multimedia performance exploring the relationship between music and grief following my father\'s passing from cancer. I translated the emotional chaos, passivity, and impulsivity of the (pre-)mourning process into sound, focusing on sonic spaces, ritual structures, and autobiographical memory.',
-    roles:  'Composition · Music Production · Sound Design · Voice & Vocal Recording · Mixing & Mastering · Creative Direction · Lighting Programming (Showsync Beam & Ableton) · 24-Channel Speaker Setup'
+    roles:  'Composition · Music Production · Sound Design · Voice & Vocal Recording · Mixing & Mastering · Creative Direction · Lighting Programming (Showsync Beam & Ableton) · 24-Channel Speaker Setup',
+    media:  'https://archive.org/download/portfolio_202606/01%20Bachelor%E2%80%99s%20Performance.mp4',
+    mediaType: 'video'
   },
   thehum: {
     kicker: 'Interactive Systems · IADT 2025',
@@ -1960,28 +2064,36 @@ const PROJECTS = {
     title:  'Music Production Project',
     thumb:  'images/dublin.jpg',
     desc:   'Field recordings of waves in Bray, Dublin and re-amplification.',
-    roles:  ''
+    roles:  '',
+    media:  'https://archive.org/download/portfolio_202606/PM.2tr_9_STC_CA2_FreshEars_17122025.mp3',
+    mediaType: 'audio'
   },
   bach: {
     kicker: 'EAST Festival · 2022',
     title:  'Bach in Bitterfeld (Installation)',
     thumb:  'images/installation.png',
     desc:   'Interactive installations exploring water and musical fragments by J.S. Bach in a former underground water reservoir with a 60-second decay time. Water drop sound installation, violin and live electronics, Valence-Arousal XY Pad performance.',
-    roles:  'Water drop installation · Violin & live electronics · Sound manipulation · Dramaturgy · 8.1 speaker setup (60 m² underground concrete hall)'
+    roles:  'Water drop installation · Violin & live electronics · Sound manipulation · Dramaturgy · 8.1 speaker setup (60 m² underground concrete hall)',
+    media:  'https://archive.org/download/portfolio_202606/04%20EAST%20Festival%20Installation%20.mov',
+    mediaType: 'video'
   },
   upyougo: {
     kicker: 'Animation Sound · 2021',
     title:  'Up You Go',
     thumb:  'images/upyougo.png',
     desc:   'Children\'s animation film in collaboration with Nanyang University\'s Animation Institute. Screened at Stuttgart Trickfilm International Animated Film Festival 2025.',
-    roles:  'Composition · Violin & Celesta recording · Foley & Sound Design · Mixing & Mastering · Vocal reference recording · Dolby Atmos surround mix (ProTools)'
+    roles:  'Composition · Violin & Celesta recording · Foley & Sound Design · Mixing & Mastering · Vocal reference recording · Dolby Atmos surround mix (ProTools)',
+    media:  'https://archive.org/download/portfolio_202606/03%20Up%20You%20Go%20%28snippet%29.mov',
+    mediaType: 'video'
   },
   telekom: {
     kicker: 'Brand Sound · 2023',
     title:  'T-Idents (Telekom)',
     thumb:  'images/telekom.png',
     desc:   'Sound identities for Telekom\'s diverse motion designs. Three scenes: Jungle/earthy/fresh, Playful/technical, Friendly/childish/warm. UI/UX sounds from Telekom\'s sound branding catalog alongside recorded guitar, voice, and synth elements.',
-    roles:  'Music composition & production · Sound design · Recording (guitar, voice) · Mixing & Mastering'
+    roles:  'Music composition & production · Sound design · Recording (guitar, voice) · Mixing & Mastering',
+    media:  'https://archive.org/download/portfolio_202606/02%20T-Idents.mp4',
+    mediaType: 'video'
   }
 };
 
@@ -2004,6 +2116,16 @@ function openProject(key) {
   } else {
     rolesEl.style.display = 'none';
   }
+  const mediaDiv = document.getElementById('projMedia');
+  if (p.media) {
+    if (p.mediaType === 'video') {
+      mediaDiv.innerHTML = `<video controls preload="none" style="width:100%;border-radius:2px;display:block" src="${p.media}"></video>`;
+    } else {
+      mediaDiv.innerHTML = `<audio controls preload="none" style="width:100%;display:block" src="${p.media}"></audio>`;
+    }
+  } else {
+    mediaDiv.innerHTML = '';
+  }
   document.getElementById('projOverlay').classList.add('open');
   document.getElementById('projDrawer').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -2011,6 +2133,7 @@ function openProject(key) {
 
 function closeProject(e) {
   if (e && e.target !== document.getElementById('projOverlay')) return;
+  document.getElementById('projMedia').innerHTML = '';   // stop playback
   document.getElementById('projOverlay').classList.remove('open');
   document.getElementById('projDrawer').classList.remove('open');
   document.body.style.overflow = '';
