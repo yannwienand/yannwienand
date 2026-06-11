@@ -738,6 +738,19 @@
       <p class="project-body">A memory archive of 14 music productions (EDM, Sound Design, Animation Film Sound, Ambient) created over the past 5 years.</p>
     </div>
 
+    <div class="project-block">
+      <div class="project-block-inner">
+        <img class="project-block-thumb" src="images/297122188_763731011505795_6643265607603850847_n.jpg" alt="05 Chapter Blue" onerror="this.style.display='none'">
+        <div>
+          <div class="project-kicker">Music Duo · 2022</div>
+          <div class="project-title">05 Chapter Blue</div>
+          <p class="project-body">A music duo formed with singer Sprossi during the COVID pandemic via Instagram. All work was created online in an iterative back-and-forth. The project explores the inner child and personal transformation, translating her visual ideas into aural concepts. Working with an artist without formal training meant building new collaborative processes: weekly Zoom sessions and learning to make space for the voice from the start of the arrangement.</p>
+          <div class="project-roles">Roles: Composition, music production, sound design · Foley recording &amp; vocal production · Mixing · 4-track stem mastering</div>
+          <audio controls preload="none" style="width:100%;margin-top:0.5rem" src="https://archive.org/download/portfolio_202606/05%20Chapter%20Blue%20%28snippet%29.mp3"></audio>
+        </div>
+      </div>
+    </div>
+
     <div class="project-block project-block--video">
       <div class="project-block-inner">
         <video controls preload="none" class="project-block-thumb" src="https://archive.org/download/portfolio_202606/01%20Bachelor%E2%80%99s%20Performance.mp4"></video>
@@ -1489,6 +1502,15 @@
         </div>
       </div>
 
+      <div class="pf-card" onclick="openProject('chapter_blue')">
+        <img class="pf-thumb" src="images/297122188_763731011505795_6643265607603850847_n.jpg" alt="05 Chapter Blue" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pf-thumb-placeholder" style="display:none">Chapter Blue</div>
+        <div class="pf-card-body">
+          <div class="pf-card-kicker">Music Duo · 2022</div>
+          <div class="pf-card-title">05 Chapter Blue</div>
+        </div>
+      </div>
+
       <div class="pf-card" onclick="openProject('sehen')">
         <img class="pf-thumb" src="images/thumb_sehen.jpg" alt="SEHEN" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="pf-thumb-placeholder" style="display:none">SEHEN</div>
@@ -2030,6 +2052,15 @@ const PROJECTS = {
     roles:  '',
     media:  'https://www.youtube.com/embed/videoseries?si=ljw_y69Y_nI3h_eE&list=OLAK5uy_nw9dXVZ3tN5FimrypZ9c96TfTocShlZas',
     mediaType: 'youtube'
+  },
+  chapter_blue: {
+    kicker: 'Music Duo · 2022',
+    title:  '05 Chapter Blue',
+    thumb:  'images/297122188_763731011505795_6643265607603850847_n.jpg',
+    desc:   'A music duo formed with singer Sprossi during the COVID pandemic via Instagram. All work was created online in an iterative back-and-forth. The project explores the inner child and personal transformation, translating her visual ideas into aural concepts. Working with an artist without formal training meant building new collaborative processes: weekly Zoom sessions and learning to make space for the voice from the start of the arrangement.',
+    roles:  'Composition, music production, sound design · Foley recording & vocal production · Mixing · 4-track stem mastering',
+    media:  'https://archive.org/download/portfolio_202606/05%20Chapter%20Blue%20%28snippet%29.mp3',
+    mediaType: 'audio'
   },
   sehen: {
     kicker: 'Bachelor Thesis · 2024',
