@@ -762,7 +762,7 @@
 
     <div class="project-block">
       <div class="project-block-inner">
-        <img class="project-block-thumb" src="images/thumb_wired.jpg" alt="WIRED FOR TOUCH." style="display:none">
+        <img class="project-block-thumb" src="images/the%20hum2.jpg" alt="WIRED FOR TOUCH." onerror="this.style.display='none'">
         <div>
           <div class="project-kicker">Bela Project · IADT 2025</div>
           <div class="project-title">WIRED FOR TOUCH.</div>
@@ -1475,7 +1475,7 @@
       </div>
 
       <div class="pf-card" onclick="openProject('grief_album')">
-        <img class="pf-thumb" src="images/thumb_grief_album.jpg" alt="Music and Grief" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img class="pf-thumb" src="images/a%20place%20that%20no%20longer%20exists.jpg" alt="Music and Grief" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="pf-thumb-placeholder" style="display:none">Album</div>
         <div class="pf-card-body">
           <div class="pf-card-kicker">Album · 2026</div>
@@ -1493,7 +1493,7 @@
       </div>
 
       <div class="pf-card" onclick="openProject('thehum')">
-        <img class="pf-thumb" src="images/thumb_thehum.jpg" alt="The Hum" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img class="pf-thumb" src="images/the%20hum.jpg" alt="The Hum" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="pf-thumb-placeholder" style="display:none">The Hum))</div>
         <div class="pf-card-body">
           <div class="pf-card-kicker">Interactive · IADT 2025</div>
@@ -1502,7 +1502,7 @@
       </div>
 
       <div class="pf-card" onclick="openProject('wired')">
-        <img class="pf-thumb" src="images/thumb_wired.jpg" alt="WIRED FOR TOUCH." onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img class="pf-thumb" src="images/the%20hum2.jpg" alt="WIRED FOR TOUCH." onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="pf-thumb-placeholder" style="display:none">WIRED FOR TOUCH.</div>
         <div class="pf-card-body">
           <div class="pf-card-kicker">Bela · IADT 2025</div>
@@ -1511,7 +1511,7 @@
       </div>
 
       <div class="pf-card" onclick="openProject('dublin')">
-        <img class="pf-thumb" src="images/thumb_dublin.jpg" alt="Music Production Project" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img class="pf-thumb" src="images/dublin.jpg" alt="Music Production Project" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="pf-thumb-placeholder" style="display:none">Dublin</div>
         <div class="pf-card-body">
           <div class="pf-card-kicker">Music Production · IADT 2025</div>
@@ -1520,7 +1520,7 @@
       </div>
 
       <div class="pf-card" onclick="openProject('bach')">
-        <img class="pf-thumb" src="images/thumb_bach.jpg" alt="Bach in Bitterfeld" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img class="pf-thumb" src="images/installation.png" alt="Bach in Bitterfeld" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="pf-thumb-placeholder" style="display:none">Bach in Bitterfeld</div>
         <div class="pf-card-body">
           <div class="pf-card-kicker">Installation · 2022</div>
@@ -1529,7 +1529,7 @@
       </div>
 
       <div class="pf-card" onclick="openProject('upyougo')">
-        <img class="pf-thumb" src="images/thumb_upyougo.jpg" alt="Up You Go" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img class="pf-thumb" src="images/upyougo.png" alt="Up You Go" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="pf-thumb-placeholder" style="display:none">Up You Go</div>
         <div class="pf-card-body">
           <div class="pf-card-kicker">Animation Sound · 2021</div>
@@ -1538,7 +1538,7 @@
       </div>
 
       <div class="pf-card" onclick="openProject('telekom')">
-        <img class="pf-thumb" src="images/thumb_telekom.jpg" alt="T-Idents" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img class="pf-thumb" src="images/telekom.png" alt="T-Idents" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="pf-thumb-placeholder" style="display:none">T-Idents</div>
         <div class="pf-card-body">
           <div class="pf-card-kicker">Brand Sound · 2023</div>
@@ -1829,53 +1829,29 @@ const AUDIO_PATHS = {
 };
 
 // ─────────────────────────────────────────
-//  ILE AUDIO ENGINE
+//  ILE AUDIO ENGINE  (plain volume control — no Web Audio API)
 // ─────────────────────────────────────────
-let actx = null, masterOut = null;
-const ileNodes = {};
-
-function ileInitCtx() {
-  if (actx) { actx.resume(); return; }
-  actx = new (window.AudioContext || window.webkitAudioContext)();
-  masterOut = actx.createGain();
-  masterOut.gain.value = 1.0;
-  masterOut.connect(actx.destination);
-
+function ileAudInit() {
+  if (ileAud.drp) return;
   ileAud.drp = document.getElementById('plAudDrops');
   ileAud.stp = document.getElementById('plAudSchritte');
   ileAud.mon = document.getElementById('ileAudMon');
+  ileXYApplyVolume();
+}
 
-  // Field recordings: crossfade × volume (XY pad)
-  const srcDrp    = actx.createMediaElementSource(ileAud.drp);
-  const srcStp    = actx.createMediaElementSource(ileAud.stp);
-  const gainDrp   = actx.createGain();
-  const gainStp   = actx.createGain();
-  const gainField = actx.createGain();
+function ileXYApplyVolume() {
+  if (!ileAud.drp) return;
   const xf  = ile.xy.x / 100;
   const vol = ile.xy.y / 100;
-  gainDrp.gain.value   = Math.cos(xf * Math.PI / 2);
-  gainStp.gain.value   = Math.sin(xf * Math.PI / 2);
-  gainField.gain.value = vol;
-  srcDrp.connect(gainDrp); gainDrp.connect(gainField);
-  srcStp.connect(gainStp); gainStp.connect(gainField);
-  gainField.connect(masterOut);
-  ileNodes.drp   = gainDrp;
-  ileNodes.stp   = gainStp;
-  ileNodes.field = gainField;
-
-  // Monastery ambience: simple gain → out
-  const srcMon  = actx.createMediaElementSource(ileAud.mon);
-  const gainMon = actx.createGain();
-  gainMon.gain.value = ile.vol.mon;
-  srcMon.connect(gainMon); gainMon.connect(masterOut);
-  ileNodes.mon = gainMon;
+  ileAud.drp.volume = Math.cos(xf * Math.PI / 2) * vol;
+  ileAud.stp.volume = Math.sin(xf * Math.PI / 2) * vol;
 }
 
 // ─────────────────────────────────────────
 //  ILE CONTROLS
 // ─────────────────────────────────────────
 function ileToggleField() {
-  ileInitCtx();
+  ileAudInit();
   ile.fieldPlaying = !ile.fieldPlaying;
   const btn = document.getElementById('ile-play-field');
   const ico = btn ? btn.querySelector('svg') : null;
@@ -1884,6 +1860,7 @@ function ileToggleField() {
     const stpSrc = ile.ver.field === 'ambi' ? AUDIO_PATHS.foot_ambi  : AUDIO_PATHS.foot_stereo;
     if (!ileAud.drp.src || ileAud.drp.src === location.href) ileAud.drp.src = drpSrc;
     if (!ileAud.stp.src || ileAud.stp.src === location.href) ileAud.stp.src = stpSrc;
+    ileXYApplyVolume();
     ileAud.drp.play().catch(() => {});
     ileAud.stp.play().catch(() => {});
     if (btn) btn.classList.add('on');
@@ -1897,13 +1874,14 @@ function ileToggleField() {
 }
 
 function ileToggleMon() {
-  ileInitCtx();
+  ileAudInit();
   ile.monPlaying = !ile.monPlaying;
   const btn = document.getElementById('ile-play-mon');
   const ico = btn ? btn.querySelector('svg') : null;
   if (ile.monPlaying) {
     const monSrc = ile.ver.mon === 'ambi' ? AUDIO_PATHS.rain_ambi : AUDIO_PATHS.rain_stereo;
     if (!ileAud.mon.src || ileAud.mon.src === location.href) ileAud.mon.src = monSrc;
+    ileAud.mon.volume = ile.vol.mon;
     ileAud.mon.play().catch(() => {});
     if (btn) btn.classList.add('on');
     if (ico) ico.innerHTML = '<rect x="5" y="3" width="4" height="16"/><rect x="13" y="3" width="4" height="16"/>';
@@ -1916,7 +1894,7 @@ function ileToggleMon() {
 
 function ileVol(k, v) {
   ile.vol[k] = v / 100;
-  if (actx && ileNodes[k]) ileNodes[k].gain.setTargetAtTime(ile.vol[k], actx.currentTime, 0.01);
+  if (ileAud.mon && k === 'mon') ileAud.mon.volume = ile.vol.mon;
 }
 
 function ileSetVer(section, ver) {
@@ -1939,14 +1917,9 @@ function ileSetVer(section, ver) {
 }
 
 function ileXYUpdate() {
-  const xf  = ile.xy.x / 100;
-  const vol = ile.xy.y / 100;
-  if (actx && ileNodes.drp) {
-    const t = actx.currentTime;
-    ileNodes.drp.gain.setTargetAtTime(Math.cos(xf * Math.PI / 2), t, 0.02);
-    ileNodes.stp.gain.setTargetAtTime(Math.sin(xf * Math.PI / 2), t, 0.02);
-    ileNodes.field.gain.setTargetAtTime(vol, t, 0.02);
-  }
+  ile.xy.x = Math.max(0, Math.min(100, ile.xy.x));
+  ile.xy.y = Math.max(0, Math.min(100, ile.xy.y));
+  ileXYApplyVolume();
 }
 
 function ileDrawXY() {
@@ -2078,14 +2051,13 @@ const PROJECTS = {
     kicker: 'Interactive Systems · IADT 2025',
     title:  'The Hum))',
     thumb:  'images/the%20hum.jpg',
-    thumb2: 'images/the%20hum2.jpg',
     desc:   'A breathwork installation that uses human-centred interaction and gamification to guide longer exhales. Grounded in yogic tradition and scientific literature (Jerath et al., 2006). Sonically guided by the ISO-Principle (Altshuler, 1948).',
     roles:  ''
   },
   wired: {
     kicker: 'Bela Project · IADT 2025',
     title:  'WIRED FOR TOUCH.',
-    thumb:  '',
+    thumb:  'images/the%20hum2.jpg',
     desc:   'Inspired by C-receptor research (Löken et al., 2009) — nerve fibres that only fire when skin is stroked at ~3 cm/s, wiring us evolutionarily for touch, social contact, and safety.',
     roles:  ''
   },
