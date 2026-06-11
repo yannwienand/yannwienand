@@ -1490,6 +1490,10 @@ function showPage(id) {
   });
   location.hash = id === 'start' ? '' : id;
   window.scrollTo(0, 0);
+  // Re-sync XY canvas after the casestudy section becomes visible
+  if (id === 'casestudy' && window._ileXYSync) {
+    requestAnimationFrame(() => window._ileXYSync());
+  }
 }
 
 window.addEventListener('hashchange', () => {
@@ -1773,33 +1777,43 @@ function ileXYSetup() {
   if (!canvas) return;
 
   function syncSize() {
-    const p = canvas.parentElement;
-    const w = p ? p.clientWidth : 300;
-    if (w > 10) { canvas.width = w; canvas.height = 140; }
+    // Use getBoundingClientRect so we get the real rendered width even if
+    // the section was hidden when DOMContentLoaded fired.
+    const r   = canvas.getBoundingClientRect();
+    const w   = r.width || (canvas.parentElement ? canvas.parentElement.clientWidth : 0);
+    if (w > 10) { canvas.width = Math.round(w); canvas.height = 140; }
     ileDrawXY();
   }
   syncSize();
   window.addEventListener('resize', syncSize);
+  // Exposed so showPage can call it when case-study becomes visible
+  window._ileXYSync = syncSize;
 
   let dragging = false;
+
+  // Always use the rendered rect — never divide by canvas.width (can be 0 on load)
   function getPos(e) {
     const r = canvas.getBoundingClientRect();
-    const cx = ((e.touches ? e.touches[0].clientX : e.clientX) - r.left) * (canvas.width / r.width);
-    const cy = ((e.touches ? e.touches[0].clientY : e.clientY) - r.top)  * (canvas.height / r.height);
+    if (!r.width || !r.height) return null;
+    const cx = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+    const cy = (e.touches ? e.touches[0].clientY : e.clientY) - r.top;
     return {
-      x: Math.max(0, Math.min(100, (cx / canvas.width)  * 100)),
-      y: Math.max(0, Math.min(100, (1 - cy / canvas.height) * 100))
+      x: Math.max(0, Math.min(100, (cx / r.width)  * 100)),
+      y: Math.max(0, Math.min(100, (1 - cy / r.height) * 100))
     };
   }
+
   function apply(e) {
     if (!dragging) return;
     const p = getPos(e);
+    if (!p) return;
     ile.xy.x = p.x; ile.xy.y = p.y;
     ileXYUpdate();
     ileDrawXY();
   }
-  canvas.addEventListener('mousedown',  e => { dragging = true; apply(e); });
-  canvas.addEventListener('touchstart', e => { e.preventDefault(); dragging = true; apply(e); }, { passive: false });
+
+  canvas.addEventListener('mousedown',  e => { dragging = true; syncSize(); apply(e); });
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); dragging = true; syncSize(); apply(e); }, { passive: false });
   window.addEventListener('mousemove',  apply);
   window.addEventListener('touchmove',  e => { if (dragging) { e.preventDefault(); apply(e); } }, { passive: false });
   window.addEventListener('mouseup',    () => { dragging = false; });
