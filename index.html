@@ -541,6 +541,106 @@
       .cv-layout { grid-template-columns: 1fr; gap: 1.5rem; }
       .img-grid { grid-template-columns: repeat(2, 1fr); }
       .state-overview .state-row { grid-template-columns: 70px 1fr; }
+      .pf-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .proj-drawer { width: 100% !important; }
+    }
+
+    /* ═══════════════════════════════════════
+       PORTFOLIO GRID WITH THUMBNAILS
+    ═══════════════════════════════════════ */
+    .pf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+      max-width: 1100px;
+      margin-top: 1.5rem;
+    }
+    .pf-card {
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      background: #fff;
+      overflow: hidden;
+    }
+    .pf-card:hover { border-color: #999; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+    .pf-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      background: var(--light);
+    }
+    .pf-thumb-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      color: var(--dim);
+      letter-spacing: 0.1em;
+    }
+    .pf-card-body { padding: 0.9rem 1rem 1rem; }
+    .pf-card-kicker { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.3rem; }
+    .pf-card-title { font-size: 0.92rem; font-weight: 700; line-height: 1.3; }
+
+    /* ═══════════════════════════════════════
+       PROJECT DRAWER (slide-in panel)
+    ═══════════════════════════════════════ */
+    .proj-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 500;
+    }
+    .proj-overlay.open { display: block; }
+    .proj-drawer {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: min(480px, 92vw);
+      background: #fff;
+      overflow-y: auto;
+      z-index: 501;
+      transform: translateX(100%);
+      transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: -4px 0 30px rgba(0,0,0,0.12);
+    }
+    .proj-drawer.open { transform: translateX(0); }
+    .proj-drawer-close {
+      position: sticky; top: 0;
+      display: flex; justify-content: flex-end;
+      padding: 1rem 1rem 0;
+      background: #fff;
+      z-index: 1;
+    }
+    .proj-drawer-close button {
+      font-family: inherit; font-size: 0.75rem; font-weight: 600;
+      border: 1px solid #000; background: #fff; color: #000;
+      padding: 0.3rem 0.85rem; cursor: pointer;
+      letter-spacing: 0.05em;
+    }
+    .proj-drawer-close button:hover { background: #000; color: #fff; }
+    .proj-drawer-img {
+      width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;
+      background: var(--light);
+      margin-top: 0.5rem;
+    }
+    .proj-drawer-body { padding: 1.5rem 1.5rem 3rem; }
+    .proj-drawer-kicker { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.5rem; }
+    .proj-drawer-title { font-size: 1.6rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.2rem; }
+    .proj-drawer-desc { font-size: 0.88rem; color: var(--mid); line-height: 1.8; margin-bottom: 1rem; }
+    .proj-drawer-roles { font-size: 0.75rem; color: var(--dim); line-height: 1.7; border-top: 1px solid var(--border); padding-top: 0.8rem; margin-top: 0.8rem; }
+    .proj-drawer-roles strong { color: var(--mid); display: block; margin-bottom: 0.2rem; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; }
+
+    /* ── Start page: project block thumbnails ── */
+    .project-block { max-width: 680px; margin-bottom: 2.5rem; }
+    .project-block-inner { display: grid; grid-template-columns: 140px 1fr; gap: 1.2rem; align-items: start; }
+    .project-block-thumb { width: 140px; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--light); flex-shrink: 0; }
+    .project-block-thumb-ph { width: 140px; aspect-ratio: 16/9; background: var(--light); flex-shrink: 0; }
+    @media (max-width: 600px) {
+      .project-block-inner { grid-template-columns: 1fr; }
+      .project-block-thumb, .project-block-thumb-ph { width: 100%; }
     }
   </style>
 </head>
@@ -626,50 +726,96 @@
     <h2 class="works-heading">Other Works</h2>
 
     <div class="project-block">
-      <div class="project-kicker">Album · 2026</div>
-      <div class="project-title">Music and Grief (Thesis &amp; Performance)</div>
-      <p class="project-body">A memory archive of 14 music productions — EDM, Sound Design, Animation Film Sound, Ambient — created over the past 5 years.</p>
+      <div class="project-block-inner">
+        <img class="project-block-thumb" src="images/a%20place%20that%20no%20longer%20exists.jpg" alt="Music and Grief" onerror="this.style.display='none'">
+        <div>
+          <div class="project-kicker">Album · 2026</div>
+          <div class="project-title">Music and Grief (Thesis &amp; Performance)</div>
+          <p class="project-body">A memory archive of 14 music productions — EDM, Sound Design, Animation Film Sound, Ambient — created over the past 5 years.</p>
+        </div>
+      </div>
     </div>
 
     <div class="project-block">
-      <div class="project-kicker">Bachelor Thesis · 2024</div>
-      <div class="project-title">SEHEN — Music &amp; Grief</div>
-      <p class="project-body">My bachelor's thesis explored the relationship between music and grief following my father's passing from cancer. Through a multimedia performance, I translated the emotional chaos, passivity, and impulsivity of the (pre-)mourning process into sound, with a particular focus on sonic spaces, ritual structures, and the capacity of music to evoke autobiographical memory through specific acoustic triggers.</p>
-      <p class="project-body">Drawing on Deirdre O'Toole's assertion that "the narratives of trauma must be made visible in order to be understood" (2019), I investigated how creative practice can make emotional processes perceptible and comprehensible.</p>
-      <div class="project-roles">Roles: Composition · Music Production · Sound Design · Voice &amp; Vocal Recording · Mixing &amp; Mastering · Creative Direction · Lighting Programming (Showsync Beam &amp; Ableton) · 24-Channel Speaker Setup</div>
+      <div class="project-block-inner">
+        <img class="project-block-thumb" src="images/thumb_sehen.jpg" alt="SEHEN" onerror="this.style.display='none'">
+        <div>
+          <div class="project-kicker">Bachelor Thesis · 2024</div>
+          <div class="project-title">SEHEN — Music &amp; Grief</div>
+          <p class="project-body">My bachelor's thesis explored the relationship between music and grief following my father's passing from cancer. Through a multimedia performance, I translated the emotional chaos, passivity, and impulsivity of the (pre-)mourning process into sound, with a particular focus on sonic spaces, ritual structures, and the capacity of music to evoke autobiographical memory through specific acoustic triggers.</p>
+          <p class="project-body">Drawing on Deirdre O'Toole's assertion that "the narratives of trauma must be made visible in order to be understood" (2019), I investigated how creative practice can make emotional processes perceptible and comprehensible.</p>
+          <div class="project-roles">Roles: Composition · Music Production · Sound Design · Voice &amp; Vocal Recording · Mixing &amp; Mastering · Creative Direction · Lighting Programming (Showsync Beam &amp; Ableton) · 24-Channel Speaker Setup</div>
+        </div>
+      </div>
     </div>
 
     <div class="project-block">
-      <div class="project-kicker">Interactive Systems · IADT 2025</div>
-      <div class="project-title">The Hum))</div>
-      <p class="project-body">The Hum)) uses a breathwork technique to downregulate and relax. It facilitates breathing out longer than in through human-centered interaction and gamification. Grounded in yogic tradition and scientific literature (Jerath et al., 2006): longer exhales activate the parasympathetic system. Sonically, the piece begins with a chaotic ocean ambience (ISO-Principle, Altshuler 1948) that gradually clarifies through filtering as the participant practices.</p>
+      <div class="project-block-inner">
+        <img class="project-block-thumb" src="images/the%20hum.jpg" alt="The Hum" onerror="this.style.display='none'">
+        <div>
+          <div class="project-kicker">Interactive Systems · IADT 2025</div>
+          <div class="project-title">The Hum))</div>
+          <p class="project-body">The Hum)) uses a breathwork technique to downregulate and relax. It facilitates breathing out longer than in through human-centered interaction and gamification. Grounded in yogic tradition and scientific literature (Jerath et al., 2006): longer exhales activate the parasympathetic system. Sonically, the piece begins with a chaotic ocean ambience (ISO-Principle, Altshuler 1948) that gradually clarifies through filtering as the participant practices.</p>
+        </div>
+      </div>
     </div>
 
     <div class="project-block">
-      <div class="project-kicker">Bela Project · IADT 2025</div>
-      <div class="project-title">WIRED FOR TOUCH.</div>
-      <p class="project-body">Inspired by research on C-receptors in the body (Löken et al., 2009) — nerve fibers that only fire when skin is stroked at ~3 cm/s. A mechanism developed by evolution that wires us for touch, social contact, and safety.</p>
+      <div class="project-block-inner">
+        <img class="project-block-thumb" src="images/thumb_wired.jpg" alt="WIRED FOR TOUCH." style="display:none">
+        <div>
+          <div class="project-kicker">Bela Project · IADT 2025</div>
+          <div class="project-title">WIRED FOR TOUCH.</div>
+          <p class="project-body">Inspired by research on C-receptors in the body (Löken et al., 2009) — nerve fibers that only fire when skin is stroked at ~3 cm/s. A mechanism developed by evolution that wires us for touch, social contact, and safety.</p>
+        </div>
+      </div>
     </div>
 
     <div class="project-block">
-      <div class="project-kicker">EAST Festival · 2022</div>
-      <div class="project-title">Bach in Bitterfeld (Installation)</div>
-      <p class="project-body">Interactive installations exploring water and musical fragments by J.S. Bach, performed in a former underground water reservoir with a 60-second decay time. I designed and installed a water drop sound installation, performed a composition for violin and live electronics, and manipulated live sound through a Valence-Arousal XY Pad on iPad.</p>
-      <div class="project-roles">Roles: Water drop installation · Violin &amp; live electronics · Sound manipulation · Dramaturgy · 8.1 speaker setup (60 m² underground concrete hall)</div>
+      <div class="project-block-inner">
+        <img class="project-block-thumb" src="images/dublin.jpg" alt="Music Production Project" onerror="this.style.display='none'">
+        <div>
+          <div class="project-kicker">Music Production · IADT 2025</div>
+          <div class="project-title">Music Production Project</div>
+          <p class="project-body">Field recordings of waves in Bray, Dublin and re-amplification.</p>
+        </div>
+      </div>
     </div>
 
     <div class="project-block">
-      <div class="project-kicker">Animation Sound · 2021</div>
-      <div class="project-title">Up You Go</div>
-      <p class="project-body">Children's animation film in collaboration with Nanyang University's Animation Institute. Complete creative freedom in shaping the sound world. Screening at Stuttgart Trickfilm International Animated Film Festival 2025.</p>
-      <div class="project-roles">Roles: Composition · Violin &amp; Celesta recording · Foley &amp; Sound Design · Mixing &amp; Mastering · Vocal reference recording · Dolby Atmos surround mix (ProTools)</div>
+      <div class="project-block-inner">
+        <img class="project-block-thumb" src="images/installation.png" alt="Bach in Bitterfeld" onerror="this.style.display='none'">
+        <div>
+          <div class="project-kicker">EAST Festival · 2022</div>
+          <div class="project-title">Bach in Bitterfeld (Installation)</div>
+          <p class="project-body">Interactive installations exploring water and musical fragments by J.S. Bach, performed in a former underground water reservoir with a 60-second decay time. I designed and installed a water drop sound installation, performed a composition for violin and live electronics, and manipulated live sound through a Valence-Arousal XY Pad on iPad.</p>
+          <div class="project-roles">Roles: Water drop installation · Violin &amp; live electronics · Sound manipulation · Dramaturgy · 8.1 speaker setup (60 m² underground concrete hall)</div>
+        </div>
+      </div>
     </div>
 
     <div class="project-block">
-      <div class="project-kicker">Brand Sound · 2023</div>
-      <div class="project-title">T-Idents (Telekom)</div>
-      <p class="project-body">Sound identities for Telekom's diverse motion designs. Three scenes: Jungle/earthy/fresh, Playful/technical, Friendly/childish/warm. Incorporated UI/UX sounds from Telekom's sound branding catalog alongside recorded guitar, voice, and synth elements.</p>
-      <div class="project-roles">Roles: Music composition &amp; production · Sound design · Recording (guitar, voice) · Mixing &amp; Mastering</div>
+      <div class="project-block-inner">
+        <img class="project-block-thumb" src="images/upyougo.png" alt="Up You Go" onerror="this.style.display='none'">
+        <div>
+          <div class="project-kicker">Animation Sound · 2021</div>
+          <div class="project-title">Up You Go</div>
+          <p class="project-body">Children's animation film in collaboration with Nanyang University's Animation Institute. Complete creative freedom in shaping the sound world. Screening at Stuttgart Trickfilm International Animated Film Festival 2025.</p>
+          <div class="project-roles">Roles: Composition · Violin &amp; Celesta recording · Foley &amp; Sound Design · Mixing &amp; Mastering · Vocal reference recording · Dolby Atmos surround mix (ProTools)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-block">
+      <div class="project-block-inner">
+        <img class="project-block-thumb" src="images/telekom.png" alt="T-Idents" onerror="this.style.display='none'">
+        <div>
+          <div class="project-kicker">Brand Sound · 2023</div>
+          <div class="project-title">T-Idents (Telekom)</div>
+          <p class="project-body">Sound identities for Telekom's diverse motion designs. Three scenes: Jungle/earthy/fresh, Playful/technical, Friendly/childish/warm. Incorporated UI/UX sounds from Telekom's sound branding catalog alongside recorded guitar, voice, and synth elements.</p>
+          <div class="project-roles">Roles: Music composition &amp; production · Sound design · Recording (guitar, voice) · Mixing &amp; Mastering</div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -688,7 +834,7 @@
     <div class="abstract-box">
       <div class="sec-label">Abstract</div>
       <p style="font-size:0.88rem; line-height:1.8; margin:0">
-        In an abandoned monastery in Spain, dripping water became footsteps. This paper asks whether Predictive Processing can serve as compositional dramaturgy: a four-state arc from sounds with clear sources through rising ambiguity to aberrant salience — the condition in which the brain's filtering mechanism fails and everything demands attention equally (Kapur, 2003). The paper then asks what keeps that state from tipping into dissociation. The answer found in practice is what Ihde (2007) calls the expressive dimension of voice: the layer that persists in a narrator's voice when its semantic content withdraws. The paper documents the compositional decisions behind <em>I Accept the Magic Anyway</em>, a collaborative headphone &amp; subwoofer listening installation made with Mischa Nijhof for the exhibition <em>Resounding Territories</em> in Lisbon. URL: [to be added]
+        In an abandoned monastery in Spain, dripping water became footsteps. This paper asks whether Predictive Processing can serve as compositional dramaturgy: a four-state arc from sounds with clear sources through rising ambiguity to aberrant salience — the condition in which the brain's filtering mechanism fails and everything demands attention equally (Kapur, 2003). The paper then asks what keeps that state from tipping into dissociation. The answer found in practice is what Ihde (2007) calls the expressive dimension of voice: the layer that persists in a narrator's voice when its semantic content withdraws. The paper documents the compositional decisions behind <em>I Accept the Magic Anyway</em>, a collaborative headphone &amp; subwoofer listening installation made with Mischa Nijhof for the exhibition <em>Resounding Territories</em> in Lisbon.
       </p>
     </div>
 
@@ -892,6 +1038,16 @@
         <span class="concept-tag">Seduction</span>
         <span class="concept-tag">Bodily Response</span>
         <span class="concept-tag">Angst (Heidegger)</span>
+      </div>
+    </div>
+
+    <div class="lit-entry">
+      <div class="lit-ref">Heidegger, M. (1962). <em>Being and Time</em> (J. Macquarrie &amp; E. Robinson, Trans.). Harper &amp; Row. (Original work published 1927)</div>
+      <p class="lit-anno">Heidegger distinguishes <em>Angst</em> from ordinary fear: where fear has a determinate object, Angst is the mood in which the world's familiar structure withdraws and nothing offers stable meaning. Unlike Angst, Forced Grace does not dissolve observation — the narrator's metacognitive act ("I know it is not real") holds both states simultaneously. Heidegger's distinction matters here because it clarifies what the piece does not do: it does not aim for the undifferentiated breakdown of Angst, but for the tension of holding fear and knowledge in the same moment.</p>
+      <div class="lit-concepts">
+        <span class="concept-tag">Angst</span>
+        <span class="concept-tag">Mood</span>
+        <span class="concept-tag">Worldhood</span>
       </div>
     </div>
 
@@ -1305,44 +1461,112 @@
   <div class="page-outer">
     <div class="sec-label">Works</div>
     <h1 class="page-title">Portfolio</h1>
-    <p class="body-text" style="color:var(--dim)">→ Full project descriptions on the <a href="#" onclick="showPage('start')" style="font-weight:700">Start page</a></p>
+    <p class="body-text" style="color:var(--dim)">Click a project for details.</p>
     <hr class="divider">
-    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:1.5rem; max-width:900px; margin-top:1.5rem">
-      <div style="border:1px solid var(--border); padding:1.2rem">
-        <div class="project-kicker">Installation · 2026</div>
-        <div class="project-title">I Accept the Magic Anyway</div>
+    <div class="pf-grid">
+
+      <div class="pf-card" onclick="openProject('ile')">
+        <img class="pf-thumb" src="images/20260521%20080%20cred_VeraMarmelo.JPG" alt="I Accept the Magic Anyway" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pf-thumb-placeholder" style="display:none">ILE</div>
+        <div class="pf-card-body">
+          <div class="pf-card-kicker">Installation · 2026</div>
+          <div class="pf-card-title">I Accept the Magic Anyway</div>
+        </div>
       </div>
-      <div style="border:1px solid var(--border); padding:1.2rem">
-        <div class="project-kicker">Album · 2026</div>
-        <div class="project-title">Music and Grief (Thesis &amp; Performance)</div>
+
+      <div class="pf-card" onclick="openProject('grief_album')">
+        <img class="pf-thumb" src="images/thumb_grief_album.jpg" alt="Music and Grief" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pf-thumb-placeholder" style="display:none">Album</div>
+        <div class="pf-card-body">
+          <div class="pf-card-kicker">Album · 2026</div>
+          <div class="pf-card-title">Music and Grief (Thesis &amp; Performance)</div>
+        </div>
       </div>
-      <div style="border:1px solid var(--border); padding:1.2rem">
-        <div class="project-kicker">Bachelor Thesis · 2024</div>
-        <div class="project-title">SEHEN — Music &amp; Grief</div>
+
+      <div class="pf-card" onclick="openProject('sehen')">
+        <img class="pf-thumb" src="images/thumb_sehen.jpg" alt="SEHEN" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pf-thumb-placeholder" style="display:none">SEHEN</div>
+        <div class="pf-card-body">
+          <div class="pf-card-kicker">Bachelor Thesis · 2024</div>
+          <div class="pf-card-title">SEHEN — Music &amp; Grief</div>
+        </div>
       </div>
-      <div style="border:1px solid var(--border); padding:1.2rem">
-        <div class="project-kicker">Interactive · IADT 2025</div>
-        <div class="project-title">The Hum))</div>
+
+      <div class="pf-card" onclick="openProject('thehum')">
+        <img class="pf-thumb" src="images/thumb_thehum.jpg" alt="The Hum" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pf-thumb-placeholder" style="display:none">The Hum))</div>
+        <div class="pf-card-body">
+          <div class="pf-card-kicker">Interactive · IADT 2025</div>
+          <div class="pf-card-title">The Hum))</div>
+        </div>
       </div>
-      <div style="border:1px solid var(--border); padding:1.2rem">
-        <div class="project-kicker">Bela · 2025</div>
-        <div class="project-title">WIRED FOR TOUCH.</div>
+
+      <div class="pf-card" onclick="openProject('wired')">
+        <img class="pf-thumb" src="images/thumb_wired.jpg" alt="WIRED FOR TOUCH." onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pf-thumb-placeholder" style="display:none">WIRED FOR TOUCH.</div>
+        <div class="pf-card-body">
+          <div class="pf-card-kicker">Bela · IADT 2025</div>
+          <div class="pf-card-title">WIRED FOR TOUCH.</div>
+        </div>
       </div>
-      <div style="border:1px solid var(--border); padding:1.2rem">
-        <div class="project-kicker">Installation · 2022</div>
-        <div class="project-title">Bach in Bitterfeld</div>
+
+      <div class="pf-card" onclick="openProject('dublin')">
+        <img class="pf-thumb" src="images/thumb_dublin.jpg" alt="Music Production Project" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pf-thumb-placeholder" style="display:none">Dublin</div>
+        <div class="pf-card-body">
+          <div class="pf-card-kicker">Music Production · IADT 2025</div>
+          <div class="pf-card-title">Music Production Project</div>
+        </div>
       </div>
-      <div style="border:1px solid var(--border); padding:1.2rem">
-        <div class="project-kicker">Film Sound · 2021</div>
-        <div class="project-title">Up You Go</div>
+
+      <div class="pf-card" onclick="openProject('bach')">
+        <img class="pf-thumb" src="images/thumb_bach.jpg" alt="Bach in Bitterfeld" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pf-thumb-placeholder" style="display:none">Bach in Bitterfeld</div>
+        <div class="pf-card-body">
+          <div class="pf-card-kicker">Installation · 2022</div>
+          <div class="pf-card-title">Bach in Bitterfeld</div>
+        </div>
       </div>
-      <div style="border:1px solid var(--border); padding:1.2rem">
-        <div class="project-kicker">Brand · 2023</div>
-        <div class="project-title">T-Idents (Telekom)</div>
+
+      <div class="pf-card" onclick="openProject('upyougo')">
+        <img class="pf-thumb" src="images/thumb_upyougo.jpg" alt="Up You Go" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pf-thumb-placeholder" style="display:none">Up You Go</div>
+        <div class="pf-card-body">
+          <div class="pf-card-kicker">Animation Sound · 2021</div>
+          <div class="pf-card-title">Up You Go</div>
+        </div>
       </div>
+
+      <div class="pf-card" onclick="openProject('telekom')">
+        <img class="pf-thumb" src="images/thumb_telekom.jpg" alt="T-Idents" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pf-thumb-placeholder" style="display:none">T-Idents</div>
+        <div class="pf-card-body">
+          <div class="pf-card-kicker">Brand Sound · 2023</div>
+          <div class="pf-card-title">T-Idents (Telekom)</div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
+
+<!-- ── PROJECT DRAWER ── -->
+<div class="proj-overlay" id="projOverlay" onclick="closeProject(event)">
+  <div class="proj-drawer" id="projDrawer">
+    <div class="proj-drawer-close"><button onclick="closeProject(null)">Close ×</button></div>
+    <img class="proj-drawer-img" id="projImg" src="" alt="">
+    <img class="proj-drawer-img" id="projImg2" src="" alt="" style="display:none;margin-top:0.5rem">
+    <div class="proj-drawer-body">
+      <div class="proj-drawer-kicker" id="projKicker"></div>
+      <div class="proj-drawer-title" id="projTitle"></div>
+      <div class="proj-drawer-desc"  id="projDesc"></div>
+      <div class="proj-drawer-roles" id="projRoles" style="display:none">
+        <strong>Roles</strong>
+        <span id="projRolesText"></span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ═══════════════════════════════════════════════════
      PAGE: CV
@@ -1596,8 +1820,8 @@ const _origShowPage = typeof showPage !== 'undefined' ? null : null;
 const AUDIO_PATHS = {
   binaural:      'https://archive.org/download/I_Accept_The_Magic_Anyway/komposition_binaural.mp3',
   stereo:        'https://archive.org/download/I_Accept_The_Magic_Anyway/komposition_stereo.mp3',
-  drops_ambi:    'audio/drops%20ambi.mp3',
-  drops_stereo:  'audio/drops%20stereo.mp3',
+  drops_ambi:    'audio/drop%20ambi.mp3',
+  drops_stereo:  'audio/drop%20stereo.mp3',
   foot_ambi:     'audio/foot%20ambi.mp3',
   foot_stereo:   'audio/foot%20stereo.mp3',
   rain_ambi:     'audio/rain%20ambi.mp3',
@@ -1825,6 +2049,106 @@ function ileXYSetup() {
 document.addEventListener('DOMContentLoaded', () => {
   ileXYSetup();
 });
+
+// ── Portfolio drawer ────────────────────────────────────────────────────────
+const PROJECTS = {
+  ile: {
+    kicker: 'Installation · 2026',
+    title:  'I Accept the Magic Anyway',
+    thumb:  'images/20260521%20080%20cred_VeraMarmelo.JPG',
+    desc:   'A headphone installation made with Mischa Nijhof at a former monastery in Bardou, France. The piece weaves field recordings of rain, footsteps, and water drops through a spatial composition that draws on predictive processing and the phenomenology of Forced Grace.',
+    roles:  'Composition · Field Recording · Spatial Audio · Max/MSP · Web Audio API · Web Design'
+  },
+  grief_album: {
+    kicker: 'Album · 2026',
+    title:  'Music and Grief (Thesis & Performance)',
+    thumb:  'images/a%20place%20that%20no%20longer%20exists.jpg',
+    desc:   'A memory archive of 14 music productions — EDM, Sound Design, Animation Film Sound, Ambient — created over the past 5 years.',
+    roles:  ''
+  },
+  sehen: {
+    kicker: 'Bachelor Thesis · 2024',
+    title:  'SEHEN — Music & Grief',
+    thumb:  'images/a%20place%20that%20no%20longer%20exists.jpg',
+    thumb2: 'images/thumb_sehen.jpg',
+    desc:   'A multimedia performance exploring the relationship between music and grief following my father\'s passing from cancer. I translated the emotional chaos, passivity, and impulsivity of the (pre-)mourning process into sound, focusing on sonic spaces, ritual structures, and autobiographical memory.',
+    roles:  'Composition · Music Production · Sound Design · Voice & Vocal Recording · Mixing & Mastering · Creative Direction · Lighting Programming (Showsync Beam & Ableton) · 24-Channel Speaker Setup'
+  },
+  thehum: {
+    kicker: 'Interactive Systems · IADT 2025',
+    title:  'The Hum))',
+    thumb:  'images/the%20hum.jpg',
+    thumb2: 'images/the%20hum2.jpg',
+    desc:   'A breathwork installation that uses human-centred interaction and gamification to guide longer exhales. Grounded in yogic tradition and scientific literature (Jerath et al., 2006). Sonically guided by the ISO-Principle (Altshuler, 1948).',
+    roles:  ''
+  },
+  wired: {
+    kicker: 'Bela Project · IADT 2025',
+    title:  'WIRED FOR TOUCH.',
+    thumb:  '',
+    desc:   'Inspired by C-receptor research (Löken et al., 2009) — nerve fibres that only fire when skin is stroked at ~3 cm/s, wiring us evolutionarily for touch, social contact, and safety.',
+    roles:  ''
+  },
+  dublin: {
+    kicker: 'Music Production · IADT 2025',
+    title:  'Music Production Project',
+    thumb:  'images/dublin.jpg',
+    desc:   'Field recordings of waves in Bray, Dublin and re-amplification.',
+    roles:  ''
+  },
+  bach: {
+    kicker: 'EAST Festival · 2022',
+    title:  'Bach in Bitterfeld (Installation)',
+    thumb:  'images/installation.png',
+    desc:   'Interactive installations exploring water and musical fragments by J.S. Bach in a former underground water reservoir with a 60-second decay time. Water drop sound installation, violin and live electronics, Valence-Arousal XY Pad performance.',
+    roles:  'Water drop installation · Violin & live electronics · Sound manipulation · Dramaturgy · 8.1 speaker setup (60 m² underground concrete hall)'
+  },
+  upyougo: {
+    kicker: 'Animation Sound · 2021',
+    title:  'Up You Go',
+    thumb:  'images/upyougo.png',
+    desc:   'Children\'s animation film in collaboration with Nanyang University\'s Animation Institute. Screened at Stuttgart Trickfilm International Animated Film Festival 2025.',
+    roles:  'Composition · Violin & Celesta recording · Foley & Sound Design · Mixing & Mastering · Vocal reference recording · Dolby Atmos surround mix (ProTools)'
+  },
+  telekom: {
+    kicker: 'Brand Sound · 2023',
+    title:  'T-Idents (Telekom)',
+    thumb:  'images/telekom.png',
+    desc:   'Sound identities for Telekom\'s diverse motion designs. Three scenes: Jungle/earthy/fresh, Playful/technical, Friendly/childish/warm. UI/UX sounds from Telekom\'s sound branding catalog alongside recorded guitar, voice, and synth elements.',
+    roles:  'Music composition & production · Sound design · Recording (guitar, voice) · Mixing & Mastering'
+  }
+};
+
+function openProject(key) {
+  const p = PROJECTS[key];
+  if (!p) return;
+  const img = document.getElementById('projImg');
+  img.src = p.thumb;
+  img.alt = p.title;
+  const img2 = document.getElementById('projImg2');
+  if (p.thumb2) { img2.src = p.thumb2; img2.alt = p.title; img2.style.display = ''; }
+  else { img2.src = ''; img2.style.display = 'none'; }
+  document.getElementById('projKicker').textContent  = p.kicker;
+  document.getElementById('projTitle').textContent   = p.title;
+  document.getElementById('projDesc').textContent    = p.desc;
+  const rolesEl = document.getElementById('projRoles');
+  if (p.roles) {
+    document.getElementById('projRolesText').textContent = p.roles;
+    rolesEl.style.display = '';
+  } else {
+    rolesEl.style.display = 'none';
+  }
+  document.getElementById('projOverlay').classList.add('open');
+  document.getElementById('projDrawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProject(e) {
+  if (e && e.target !== document.getElementById('projOverlay')) return;
+  document.getElementById('projOverlay').classList.remove('open');
+  document.getElementById('projDrawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
 </script>
 </body>
 </html>
