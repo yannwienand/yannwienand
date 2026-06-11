@@ -469,6 +469,52 @@
     .cp-tog.active { background: #000; color: #fff; }
 
     /* ═══════════════════════════════════════
+       PROCESS PAGE
+    ═══════════════════════════════════════ */
+    .proc-timeline { max-width: 720px; }
+    .proc-step {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 1.4rem;
+      margin-bottom: 2.5rem;
+      align-items: start;
+    }
+    .proc-marker {
+      width: 32px; height: 32px;
+      border: 2px solid #000;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 800;
+      flex-shrink: 0; margin-top: 0.1rem;
+    }
+    .proc-label {
+      font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--dim); margin-bottom: 0.6rem;
+    }
+    .proc-audio-block {
+      border: 1px solid var(--border);
+      padding: 1rem 1.2rem;
+      background: var(--light);
+      margin-top: 0.8rem;
+      max-width: 480px;
+    }
+    .proc-audio-label {
+      font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--dim); margin-bottom: 0.3rem;
+    }
+    .proc-avenues { max-width: 720px; }
+    .proc-avenue {
+      border-left: 3px solid #000;
+      padding: 0.8rem 1.2rem;
+      margin-bottom: 1.8rem;
+      background: var(--light);
+    }
+    .proc-avenue-title {
+      font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+
+    /* ═══════════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════════ */
     @media (max-width: 700px) {
@@ -490,6 +536,7 @@
     <button class="nav-btn"        data-page="project"     onclick="showPage('project')">Project Overview</button>
     <button class="nav-btn"        data-page="literature"  onclick="showPage('literature')">Literature Review</button>
     <button class="nav-btn"        data-page="casestudy"   onclick="showPage('casestudy')">Case Study</button>
+    <button class="nav-btn"        data-page="process"     onclick="showPage('process')">Process</button>
     <button class="nav-btn"        data-page="portfolio"   onclick="showPage('portfolio')">Portfolio</button>
     <button class="nav-btn"        data-page="cv"          onclick="showPage('cv')">CV</button>
   </nav>
@@ -1115,6 +1162,111 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════
+     PAGE: PROCESS
+════════════════════════════════════════════════════ -->
+<section id="page-process" class="page">
+  <div class="page-outer">
+    <div class="sec-label">Project Incubation · RESOUND Master 2025/26</div>
+    <h1 class="page-title">Process</h1>
+
+    <!-- ── WHERE IT CAME FROM ── -->
+    <h2 class="sec-title">Where It Came From</h2>
+    <p class="body-text" style="color:var(--dim)">How the piece found its form — ideas pursued, discarded, and transformed.</p>
+    <hr class="divider">
+
+    <div class="proc-timeline">
+
+      <div class="proc-step">
+        <div class="proc-marker">1</div>
+        <div class="proc-content">
+          <div class="proc-label">Starting Point · Electronic Music &amp; Groove Manipulation</div>
+          <p class="body-text">The initial research interest was in groove and micro-timing: how small rhythmic deviations create or destroy the feeling of flow. This led to experiments with 808-pattern manipulation — deliberately destabilising timing until the groove collapsed into something uncomfortable. The question behind those experiments: <em>at what point does something stop feeling musical and start feeling wrong?</em> That boundary became the early form of the research question.</p>
+        </div>
+      </div>
+
+      <div class="proc-step">
+        <div class="proc-marker">2</div>
+        <div class="proc-content">
+          <div class="proc-label">Bardou Draft · Visual Aberrant Salience</div>
+          <p class="body-text">Before the monastery, there was a draft concept centred on the village of Bardou — an abandoned settlement in the French Pyrénées repopulated by artists. The idea was to use visual as well as sonic material: the uncanny quality of a lived-in ruin, where things look right but feel wrong. This was an early intuition toward <span class="kw">aberrant salience</span> as a compositional mode, though the term wasn't in the vocabulary yet. The concept was eventually set aside — it was too illustrative, too reliant on image to do what the sound should do alone.</p>
+        </div>
+      </div>
+
+      <div class="proc-step">
+        <div class="proc-marker">3</div>
+        <div class="proc-content">
+          <div class="proc-label">The Monastery · Concept Becomes Experience</div>
+          <p class="body-text">One stormy night in an abandoned monastery in Spain, dripping water became footsteps. The shift was not metaphorical — the nervous system performed it involuntarily, under darkness, isolation, and exhaustion. This wasn't a designed experience; it was the research question arriving as a concrete event. What had been abstract (at what point does perception misfire?) became embodied: <em>this is what it feels like from the inside.</em> The Bardou concept was abandoned. The monastery experience became the centre.</p>
+        </div>
+      </div>
+
+      <div class="proc-step">
+        <div class="proc-marker">4</div>
+        <div class="proc-content">
+          <div class="proc-label">First State 3 — What Didn't Work</div>
+          <p class="body-text">The first version of State 3 used grain synthesis at constant maximum density — a permanent wall of sound intended to make categorisation impossible. In practice it produced dissociation, not navigable aberrant salience. Listeners reported shutdown rather than heightened attention. The problem was that maximum intensity has no texture: there is nothing to follow, nothing to hold onto.</p>
+          <!-- Audio placeholder — replace src with actual file when exported -->
+          <div class="proc-audio-block">
+            <div class="proc-audio-label">First State 3 (draft) — not used in final piece</div>
+            <audio id="proc-s3-audio" controls style="width:100%; margin-top:0.5rem">
+              <source src="audio/state3_draft.mp3" type="audio/mpeg">
+            </audio>
+            <p style="font-size:0.68rem; color:var(--dim); margin-top:0.4rem">← Export and place at <code>audio/state3_draft.mp3</code> to activate</p>
+          </div>
+          <p class="body-text" style="margin-top:1rem">The revision introduced <em>ebb and flow</em>: density rises and recedes rather than flooding. The listener's nervous system can track something. This gave aberrant salience a shape it could stay in rather than escape from.</p>
+        </div>
+      </div>
+
+      <div class="proc-step">
+        <div class="proc-marker">5</div>
+        <div class="proc-content">
+          <div class="proc-label">Imitation Gestures &amp; the Problem of Instruction</div>
+          <p class="body-text">An early approach to the narrator's role involved explicit instruction: asking the listener to imitate what they heard, or naming the physical sensation of listening. This created a different problem — instruction pulls attention toward compliance rather than experience. The listener starts managing their response rather than having one. The narrator's grammar was revised: no imperatives, no instructions. Observation only. Short declaratives that close uncertainty without directing behaviour.</p>
+        </div>
+      </div>
+
+    </div><!-- .proc-timeline -->
+
+    <hr class="divider">
+
+    <!-- ── WHERE IT COULD GO ── -->
+    <h2 class="sec-title">Where It Could Go</h2>
+    <p class="body-text" style="color:var(--dim)">Open questions and possible directions the research opens.</p>
+    <hr class="divider">
+
+    <div class="proc-avenues">
+
+      <div class="proc-avenue">
+        <div class="proc-avenue-title">Bardou Collaboration</div>
+        <p class="body-text">The Bardou concept — visual and sonic aberrant salience in a lived-in ruin — was set aside, not closed. A collaboration with an artist or filmmaker working in that space could develop it properly: sound that does not illustrate an image of wrongness but works alongside it, each channel doing something the other cannot.</p>
+      </div>
+
+      <div class="proc-avenue">
+        <div class="proc-avenue-title">The <span class="kw">Pronoia</span> / <span class="kw">Paranoia</span> Axis</div>
+        <p class="body-text">Mischa Nijhof's piece began when she heard the monastery story and recognised her own experience — but the valence was opposite: warmth rather than threat. Both are states of <span class="kw">aberrant salience</span>; the difference is direction. Whether these two poles can form a navigable compositional axis, and what positions exist between them, is a question this research opened without closing. It points toward a possible multi-piece project or collaborative exhibition.</p>
+      </div>
+
+      <div class="proc-avenue">
+        <div class="proc-avenue-title">Rave as Aberrant Salience Environment</div>
+        <p class="body-text">The rave context produces aberrant salience through different means — sustained sub-bass, repetition, physical exhaustion, altered states — and has developed its own navigation tools (community, ritual structure, the DJ as guide). Whether <span class="kw">Predictive Processing</span> theory illuminates what those tools do perceptually, and whether compositional ideas from this piece could translate into that format, is an open avenue.</p>
+      </div>
+
+      <div class="proc-avenue">
+        <div class="proc-avenue-title">Storytelling &amp; Narrator Refinement</div>
+        <p class="body-text">Several visitors at Jardim do Bombarda reported State 4 as the narrator's story rather than their own. The first-person voice may structurally invite identification rather than allowing the listener's own associations. A next piece could test a different narrative grammar — second person, fragmented, or non-verbal — to see whether the <span class="kw">expressive dimension</span> can anchor without the listener inhabiting the narrator's perspective.</p>
+      </div>
+
+      <div class="proc-avenue">
+        <div class="proc-avenue-title">Art &amp; Science</div>
+        <p class="body-text">This paper is practice-based and does not run a user study. The audience response data gathered at Jardim do Bombarda was informal. A next iteration could design a proper perceptual study: controlled conditions, defined hypotheses, quantitative and qualitative measures. The questions are precise enough to be testable — particularly whether the <span class="kw">expressive dimension</span> alone accounts for navigability, or whether the ebb-and-flow of the grain synthesis is doing equal work.</p>
+      </div>
+
+    </div><!-- .proc-avenues -->
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
      PAGE: PORTFOLIO
 ════════════════════════════════════════════════════ -->
 <section id="page-portfolio" class="page">
@@ -1258,7 +1410,7 @@
 // ─────────────────────────────────────────
 //  NAVIGATION (hash-based SPA)
 // ─────────────────────────────────────────
-const PAGES = ['start','project','literature','casestudy','portfolio','cv'];
+const PAGES = ['start','project','literature','casestudy','process','portfolio','cv'];
 
 // ILE state (defined early so showPage can reference it safely)
 const ile = {
