@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@YANNTRA — I Accept the Magic Anyway</title>
+  <title>@YANNTRA | I Accept the Magic Anyway</title>
   <style>
     /* ═══════════════════════════════════════
        BASE
@@ -638,9 +638,14 @@
     .project-block-inner { display: grid; grid-template-columns: 140px 1fr; gap: 1.2rem; align-items: start; }
     .project-block-thumb { width: 140px; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--light); flex-shrink: 0; }
     .project-block-thumb-ph { width: 140px; aspect-ratio: 16/9; background: var(--light); flex-shrink: 0; }
+    .project-block--video .project-block-inner { grid-template-columns: 210px 1fr; }
+    .project-block--video .project-block-thumb { width: 210px; height: auto; }
+    .proj-yt { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 4px; display: block; margin-bottom: 0.6rem; }
     @media (max-width: 600px) {
       .project-block-inner { grid-template-columns: 1fr; }
       .project-block-thumb, .project-block-thumb-ph { width: 100%; }
+      .project-block--video .project-block-inner { grid-template-columns: 1fr; }
+      .project-block--video .project-block-thumb { width: 100%; }
     }
   </style>
 </head>
@@ -684,7 +689,7 @@
     <h2 class="featured-title">I Accept the<br>Magic Anyway</h2>
     <div class="featured-body">
       <div class="featured-abstract">
-        In an abandoned monastery in Spain, dripping water became footsteps. This paper asks whether <span class="kw">Predictive Processing</span> can serve as compositional dramaturgy: a <span class="kw">four-state arc</span> from sounds with clear sources through rising ambiguity to <span class="kw">aberrant salience</span> — the condition in which the brain's filtering mechanism fails and everything demands attention equally (Kapur, 2003). The paper then asks what keeps that state from tipping into dissociation. The answer found in practice is what Ihde (2007) calls the <span class="kw">expressive dimension of voice</span>: the layer that persists in a narrator's voice when its semantic content withdraws. The paper documents the compositional decisions behind <em>I Accept the Magic Anyway</em>, a collaborative headphone &amp; subwoofer listening installation made with Mischa Nijhof for the exhibition <em>Resounding Territories</em> in Lisbon.
+        In an abandoned monastery in Spain, dripping water became footsteps. This paper asks whether <span class="kw">Predictive Processing</span> can serve as compositional dramaturgy: a <span class="kw">four-state arc</span> from sounds with clear sources through rising ambiguity to <span class="kw">aberrant salience</span>, the condition in which the brain's filtering mechanism fails and everything demands attention equally (Kapur, 2003). The paper then asks what keeps that state from tipping into dissociation. The answer found in practice is what Ihde (2007) calls the <span class="kw">expressive dimension of voice</span>: the layer that persists in a narrator's voice when its semantic content withdraws. The paper documents the compositional decisions behind <em>I Accept the Magic Anyway</em>, a collaborative headphone &amp; subwoofer listening installation made with Mischa Nijhof for the exhibition <em>Resounding Territories</em> in Lisbon.
       </div>
       <img src="images/monastery.jpg" alt="Abandoned monastery, Spain" class="featured-monastery">
     </div>
@@ -695,7 +700,7 @@
       <a class="feat-link" href="https://grupolusofona-my.sharepoint.com/:w:/g/personal/a22512036_alunos_ulht_pt/IQBG2dV1T_lcR5apfCy5xlugARFksRtEXykjUeHl9CxLh2c?e=eluQdI" target="_blank" rel="noopener">Article ↗</a>
     </div>
 
-    <!-- Composition Player — Start Page -->
+    <!-- Composition Player: Start Page -->
     <div class="comp-player" id="cpA">
       <div class="cp-top">
         <button class="cp-play" id="cpA-play" onclick="cpToggle('A')">
@@ -727,29 +732,23 @@
     <h2 class="works-heading">Other Works</h2>
 
     <div class="project-block">
-      <div class="project-block-inner">
-        <img class="project-block-thumb" src="images/a%20place%20that%20no%20longer%20exists.jpg" alt="Music and Grief" onerror="this.style.display='none'">
-        <div>
-          <div class="project-kicker">Album · 2026</div>
-          <div class="project-title">Music and Grief (Thesis &amp; Performance)</div>
-          <p class="project-body">A memory archive of 14 music productions — EDM, Sound Design, Animation Film Sound, Ambient — created over the past 5 years.</p>
-        </div>
-      </div>
-      <audio controls preload="none" style="width:100%;margin-top:0.7rem" src="https://archive.org/download/portfolio_202606/05%20Chapter%20Blue%20%28snippet%29.mp3"></audio>
+      <iframe class="proj-yt" src="https://www.youtube.com/embed/videoseries?si=ljw_y69Y_nI3h_eE&amp;list=OLAK5uy_nw9dXVZ3tN5FimrypZ9c96TfTocShlZas" title="A place that no longer exists" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <div class="project-kicker">Album · 2026</div>
+      <div class="project-title">A place that no longer exists (Album)</div>
+      <p class="project-body">A memory archive of 14 music productions (EDM, Sound Design, Animation Film Sound, Ambient) created over the past 5 years.</p>
     </div>
 
-    <div class="project-block">
+    <div class="project-block project-block--video">
       <div class="project-block-inner">
-        <img class="project-block-thumb" src="images/thumb_sehen.jpg" alt="SEHEN" onerror="this.style.display='none'">
+        <video controls preload="none" class="project-block-thumb" src="https://archive.org/download/portfolio_202606/01%20Bachelor%E2%80%99s%20Performance.mp4"></video>
         <div>
           <div class="project-kicker">Bachelor Thesis · 2024</div>
-          <div class="project-title">SEHEN — Music &amp; Grief</div>
+          <div class="project-title">Music and Grief (Thesis &amp; Performance)</div>
           <p class="project-body">My bachelor's thesis explored the relationship between music and grief following my father's passing from cancer. Through a multimedia performance, I translated the emotional chaos, passivity, and impulsivity of the (pre-)mourning process into sound, with a particular focus on sonic spaces, ritual structures, and the capacity of music to evoke autobiographical memory through specific acoustic triggers.</p>
           <p class="project-body">Drawing on Deirdre O'Toole's assertion that "the narratives of trauma must be made visible in order to be understood" (2019), I investigated how creative practice can make emotional processes perceptible and comprehensible.</p>
           <div class="project-roles">Roles: Composition · Music Production · Sound Design · Voice &amp; Vocal Recording · Mixing &amp; Mastering · Creative Direction · Lighting Programming (Showsync Beam &amp; Ableton) · 24-Channel Speaker Setup</div>
         </div>
       </div>
-      <video controls preload="none" style="width:100%;margin-top:0.7rem;border-radius:2px" src="https://archive.org/download/portfolio_202606/01%20Bachelor%E2%80%99s%20Performance.mp4"></video>
     </div>
 
     <div class="project-block">
@@ -769,7 +768,7 @@
         <div>
           <div class="project-kicker">Bela Project · IADT 2025</div>
           <div class="project-title">WIRED FOR TOUCH.</div>
-          <p class="project-body">Inspired by research on C-receptors in the body (Löken et al., 2009) — nerve fibers that only fire when skin is stroked at ~3 cm/s. A mechanism developed by evolution that wires us for touch, social contact, and safety.</p>
+          <p class="project-body">Inspired by research on C-receptors in the body (Löken et al., 2009): nerve fibers that only fire when skin is stroked at ~3 cm/s. A mechanism developed by evolution that wires us for touch, social contact, and safety.</p>
         </div>
       </div>
     </div>
@@ -781,14 +780,14 @@
           <div class="project-kicker">Music Production · IADT 2025</div>
           <div class="project-title">Music Production Project</div>
           <p class="project-body">Field recordings of waves in Bray, Dublin and re-amplification.</p>
+          <audio controls preload="none" style="width:100%;margin-top:0.5rem" src="https://archive.org/download/portfolio_202606/PM.2tr_9_STC_CA2_FreshEars_17122025.mp3"></audio>
         </div>
       </div>
-      <audio controls preload="none" style="width:100%;margin-top:0.7rem" src="https://archive.org/download/portfolio_202606/PM.2tr_9_STC_CA2_FreshEars_17122025.mp3"></audio>
     </div>
 
-    <div class="project-block">
+    <div class="project-block project-block--video">
       <div class="project-block-inner">
-        <img class="project-block-thumb" src="images/installation.png" alt="Bach in Bitterfeld" onerror="this.style.display='none'">
+        <video controls preload="none" class="project-block-thumb" src="https://archive.org/download/portfolio_202606/04%20EAST%20Festival%20Installation%20.mov"></video>
         <div>
           <div class="project-kicker">EAST Festival · 2022</div>
           <div class="project-title">Bach in Bitterfeld (Installation)</div>
@@ -796,12 +795,11 @@
           <div class="project-roles">Roles: Water drop installation · Violin &amp; live electronics · Sound manipulation · Dramaturgy · 8.1 speaker setup (60 m² underground concrete hall)</div>
         </div>
       </div>
-      <video controls preload="none" style="width:100%;margin-top:0.7rem;border-radius:2px" src="https://archive.org/download/portfolio_202606/04%20EAST%20Festival%20Installation%20.mov"></video>
     </div>
 
-    <div class="project-block">
+    <div class="project-block project-block--video">
       <div class="project-block-inner">
-        <img class="project-block-thumb" src="images/upyougo.png" alt="Up You Go" onerror="this.style.display='none'">
+        <video controls preload="none" class="project-block-thumb" src="https://archive.org/download/portfolio_202606/03%20Up%20You%20Go%20%28snippet%29.mov"></video>
         <div>
           <div class="project-kicker">Animation Sound · 2021</div>
           <div class="project-title">Up You Go</div>
@@ -809,12 +807,11 @@
           <div class="project-roles">Roles: Composition · Violin &amp; Celesta recording · Foley &amp; Sound Design · Mixing &amp; Mastering · Vocal reference recording · Dolby Atmos surround mix (ProTools)</div>
         </div>
       </div>
-      <video controls preload="none" style="width:100%;margin-top:0.7rem;border-radius:2px" src="https://archive.org/download/portfolio_202606/03%20Up%20You%20Go%20%28snippet%29.mov"></video>
     </div>
 
-    <div class="project-block">
+    <div class="project-block project-block--video">
       <div class="project-block-inner">
-        <img class="project-block-thumb" src="images/telekom.png" alt="T-Idents" onerror="this.style.display='none'">
+        <video controls preload="none" class="project-block-thumb" src="https://archive.org/download/portfolio_202606/02%20T-Idents.mp4"></video>
         <div>
           <div class="project-kicker">Brand Sound · 2023</div>
           <div class="project-title">T-Idents (Telekom)</div>
@@ -822,7 +819,6 @@
           <div class="project-roles">Roles: Music composition &amp; production · Sound design · Recording (guitar, voice) · Mixing &amp; Mastering</div>
         </div>
       </div>
-      <video controls preload="none" style="width:100%;margin-top:0.7rem;border-radius:2px" src="https://archive.org/download/portfolio_202606/02%20T-Idents.mp4"></video>
     </div>
 
   </div>
@@ -841,7 +837,7 @@
     <div class="abstract-box">
       <div class="sec-label">Abstract</div>
       <p style="font-size:0.88rem; line-height:1.8; margin:0">
-        In an abandoned monastery in Spain, dripping water became footsteps. This paper asks whether Predictive Processing can serve as compositional dramaturgy: a four-state arc from sounds with clear sources through rising ambiguity to aberrant salience — the condition in which the brain's filtering mechanism fails and everything demands attention equally (Kapur, 2003). The paper then asks what keeps that state from tipping into dissociation. The answer found in practice is what Ihde (2007) calls the expressive dimension of voice: the layer that persists in a narrator's voice when its semantic content withdraws. The paper documents the compositional decisions behind <em>I Accept the Magic Anyway</em>, a collaborative headphone &amp; subwoofer listening installation made with Mischa Nijhof for the exhibition <em>Resounding Territories</em> in Lisbon.
+        In an abandoned monastery in Spain, dripping water became footsteps. This paper asks whether Predictive Processing can serve as compositional dramaturgy: a four-state arc from sounds with clear sources through rising ambiguity to aberrant salience, the condition in which the brain's filtering mechanism fails and everything demands attention equally (Kapur, 2003). The paper then asks what keeps that state from tipping into dissociation. The answer found in practice is what Ihde (2007) calls the expressive dimension of voice: the layer that persists in a narrator's voice when its semantic content withdraws. The paper documents the compositional decisions behind <em>I Accept the Magic Anyway</em>, a collaborative headphone &amp; subwoofer listening installation made with Mischa Nijhof for the exhibition <em>Resounding Territories</em> in Lisbon.
       </p>
     </div>
 
@@ -889,7 +885,7 @@
       <div class="state-row">
         <div class="state-num">State 1</div>
         <div class="state-content">
-          <strong>Low prediction error.</strong> Figurative, source-identifiable sounds: field recordings the brain can categorise without effort. The narrator names what is heard — not to add information but to give the listener permission to stop searching for a threat. Grammar modelled on Calvino's <em>Palomar</em> (1983): short declarative sentences, one observation at a time.
+          <strong>Low prediction error.</strong> Figurative, source-identifiable sounds: field recordings the brain can categorise without effort. The narrator names what is heard, not to add information but to give the listener permission to stop searching for a threat. Grammar modelled on Calvino's <em>Palomar</em> (1983): short declarative sentences, one observation at a time.
         </div>
       </div>
       <div class="state-row">
@@ -901,13 +897,13 @@
       <div class="state-row">
         <div class="state-num">State 3</div>
         <div class="state-content">
-          <strong>Aberrant salience.</strong> Categorisation fails. The narrator says "I will speak less now" and then does, but does not disappear. What remains is Ihde's <span class="kw">expressive dimension</span>: breath, hesitation, fragments from a recorded self-interview with all semantic context removed. Around this, ebb and flow of composed grains replaces static chaos — density breathes, rises and recedes.
+          <strong>Aberrant salience.</strong> Categorisation fails. The narrator says "I will speak less now" and then does, but does not disappear. What remains is Ihde's <span class="kw">expressive dimension</span>: breath, hesitation, fragments from a recorded self-interview with all semantic context removed. Around this, ebb and flow of composed grains replaces static chaos: density breathes, rises and recedes.
         </div>
       </div>
       <div class="state-row">
         <div class="state-num">State 4</div>
         <div class="state-content">
-          <strong>Forced Grace.</strong> The Litany Against Fear (Herbert, 1965) and the recognition "I've been here before" mark the transition out of aberrant salience. The narrator returns with one final broken sentence: "I'm feeling fear, but my mind knows it's not real, and that's wh…" The break is already the metacognitive act. Distorted violin and synth pads in major chords — something melancholic and aggressive alongside something warm.
+          <strong>Forced Grace.</strong> The Litany Against Fear (Herbert, 1965) and the recognition "I've been here before" mark the transition out of aberrant salience. The narrator returns with one final broken sentence: "I'm feeling fear, but my mind knows it's not real, and that's wh…" The break is already the metacognitive act. Distorted violin and synth pads in major chords: something melancholic and aggressive alongside something warm.
         </div>
       </div>
     </div>
@@ -917,7 +913,7 @@
     <!-- Mindmap -->
     <h2 class="sec-title">Mindmap</h2>
     <img src="mindmap_i_accept_the_magic_anyway_v2.png"
-         alt="Mindmap — I Accept the Magic Anyway"
+         alt="Mindmap: I Accept the Magic Anyway"
          style="max-width:100%; margin-top:1rem; display:block;">
 
   </div>
@@ -930,7 +926,7 @@
   <div class="page-outer">
     <div class="sec-label">Project Incubation · Literature Review</div>
     <h1 class="page-title">Literature<br>Review</h1>
-    <p class="body-text" style="color:var(--dim)">Annotated bibliography — theoretical and practical references.</p>
+    <p class="body-text" style="color:var(--dim)">Annotated bibliography: theoretical and practical references.</p>
     <img src="images/mindmap_i_accept_the_magic_anyway_v2.png" alt="Research Mindmap" style="width:100%; max-width:900px; margin: 0.5rem 0 0.5rem; border: 1px solid #eee; display:block;">
     <p style="font-size:0.68rem; color:var(--dim); margin-bottom:1.5rem">Research map: references, sub-questions, hypothesis, methods.</p>
     <hr class="divider">
@@ -940,7 +936,7 @@
 
     <div class="lit-entry">
       <div class="lit-ref">Clark, A. (2013). Whatever next? Predictive brains, situated agents, and the future of cognitive science. <em>Behavioral and Brain Sciences, 36</em>(3), 181–204.</div>
-      <p class="lit-anno">Clark's paper is a landmark synthesis of Predictive Processing theory. The brain continuously generates predictions about incoming sensory data and updates them based on prediction errors — mismatches between expectation and input. Crucially, Clark argues that affective and prosodic features of voice constitute a prediction layer separate from semantic content. This separation is the mechanism that allows the expressive dimension to remain as an anchor when semantic content withdraws in State 3.</p>
+      <p class="lit-anno">Clark's paper is a landmark synthesis of Predictive Processing theory. The brain continuously generates predictions about incoming sensory data and updates them based on prediction errors: mismatches between expectation and input. Crucially, Clark argues that affective and prosodic features of voice constitute a prediction layer separate from semantic content. This separation is the mechanism that allows the expressive dimension to remain as an anchor when semantic content withdraws in State 3.</p>
       <div class="lit-concepts">
         <span class="concept-tag">Predictive Processing</span>
         <span class="concept-tag">Prediction Error</span>
@@ -950,7 +946,7 @@
 
     <div class="lit-entry">
       <div class="lit-ref">Seth, A. (2021). <em>Being You: A New Science of Consciousness.</em> Dutton.</div>
-      <p class="lit-anno">Seth develops PP into a theory of consciousness as "controlled hallucination": the brain's best prediction of the causes of sensory signals, not a direct readout of reality. This framing reframes the monastery experience — the footsteps were not a failure of perception but its normal operation. Relevant for framing the compositional arc as designing controlled versions of a process that already happens.</p>
+      <p class="lit-anno">Seth develops PP into a theory of consciousness as "controlled hallucination": the brain's best prediction of the causes of sensory signals, not a direct readout of reality. This framing reframes the monastery experience: the footsteps were not a failure of perception but its normal operation. Relevant for framing the compositional arc as designing controlled versions of a process that already happens.</p>
       <div class="lit-concepts">
         <span class="concept-tag">Controlled Hallucination</span>
         <span class="concept-tag">Consciousness</span>
@@ -960,7 +956,7 @@
 
     <div class="lit-entry">
       <div class="lit-ref">Kapur, S. (2003). Psychosis as a state of aberrant salience. <em>American Journal of Psychiatry, 160</em>(1), 13–23.</div>
-      <p class="lit-anno">Kapur defines aberrant salience as the breakdown of the brain's filtering mechanism: everything demands attention, nothing can be dismissed as unimportant. Developed in psychosis research, the mechanism is borrowed here as a compositional state — not a clinical one. It is not meaning gain but meaning overwhelm; the boundary between figuration and abstraction dissolves. The piece aims to occupy the zone between over-figuration (monastery footsteps) and dissociation (categorisation shutdown).</p>
+      <p class="lit-anno">Kapur defines aberrant salience as the breakdown of the brain's filtering mechanism: everything demands attention, nothing can be dismissed as unimportant. Developed in psychosis research, the mechanism is borrowed here as a compositional state, not a clinical one. It is not meaning gain but meaning overwhelm; the boundary between figuration and abstraction dissolves. The piece aims to occupy the zone between over-figuration (monastery footsteps) and dissociation (categorisation shutdown).</p>
       <div class="lit-concepts">
         <span class="concept-tag">Aberrant Salience</span>
         <span class="concept-tag">Salience Filter</span>
@@ -970,7 +966,7 @@
 
     <div class="lit-entry">
       <div class="lit-ref">Vuust, P. &amp; Friston, K. (2022). Why music moves us. <em>Neuroscience and Biobehavioral Reviews.</em></div>
-      <p class="lit-anno">Applies the PP framework to music, arguing that emotional and cognitive responses to sound are triggered when "expectations are met or artfully violated" (Kringelbach et al., 2024, as cited in Ibanez, 2026). This is the clearest statement that composers design PP conditions — that the craft of composition is, in part, the craft of managing prediction error. Directly supports the claim that the four-state arc is a PP dramaturgy.</p>
+      <p class="lit-anno">Applies the PP framework to music, arguing that emotional and cognitive responses to sound are triggered when "expectations are met or artfully violated" (Kringelbach et al., 2024, as cited in Ibanez, 2026). This is the clearest statement that composers design PP conditions: the craft of composition is, in part, the craft of managing prediction error. Directly supports the claim that the four-state arc is a PP dramaturgy.</p>
       <div class="lit-concepts">
         <span class="concept-tag">Musical Expectations</span>
         <span class="concept-tag">Artful Violation</span>
@@ -995,7 +991,7 @@
 
     <div class="lit-entry">
       <div class="lit-ref">Bonnet, F.J. (2016). <em>The Order of Sounds: A Sonorous Archipelago.</em> Urbanomic/MIT Press.</div>
-      <p class="lit-anno">Bonnet argues that reduced listening — hearing sound stripped of source and context — is impossible regardless of technique: listeners cannot stop bringing meaning to what they hear. This critique stands in State 3. The piece does not resolve this. It accepts it. The title came from exactly that: you accept what the experience gives you, regardless of whether it is true.</p>
+      <p class="lit-anno">Bonnet argues that reduced listening (hearing sound stripped of source and context) is impossible regardless of technique: listeners cannot stop bringing meaning to what they hear. This critique stands in State 3. The piece does not resolve this. It accepts it. The title came from exactly that: you accept what the experience gives you, regardless of whether it is true.</p>
       <div class="lit-concepts">
         <span class="concept-tag">Limits of Reduced Listening</span>
         <span class="concept-tag">Meaning-making</span>
@@ -1009,7 +1005,7 @@
 
     <div class="lit-entry">
       <div class="lit-ref">Ihde, D. (2007). <em>Listening and Voice: Phenomenologies of Sound</em> (2nd ed.). State University of New York Press.</div>
-      <p class="lit-anno">Ihde argues that voice carries two simultaneous layers: the semantic content of what is said, and the expressive dimension of how it is said — tone, breath, hesitation, rhythm. A sentence spoken with hesitation communicates something different from the same sentence spoken confidently, even when the words are identical. In PP terms, these are separate prediction layers. In this piece, it is the expressive dimension that makes aberrant salience navigable rather than merely overwhelming: when semantic content withdraws in State 3, warmth and rhythm remain as a stable prior.</p>
+      <p class="lit-anno">Ihde argues that voice carries two simultaneous layers: the semantic content of what is said, and the expressive dimension of how it is said (tone, breath, hesitation, rhythm). A sentence spoken with hesitation communicates something different from the same sentence spoken confidently, even when the words are identical. In PP terms, these are separate prediction layers. In this piece, it is the expressive dimension that makes aberrant salience navigable rather than merely overwhelming: when semantic content withdraws in State 3, warmth and rhythm remain as a stable prior.</p>
       <div class="lit-concepts">
         <span class="concept-tag">Expressive Dimension</span>
         <span class="concept-tag">Semantic Layer</span>
@@ -1043,7 +1039,7 @@
 
     <div class="lit-entry">
       <div class="lit-ref">Novack, D. (2022). <em>Sound Design for Film: Liberating from Image, Seducing Surrender.</em> PhD dissertation, Universidade Lusofona.</div>
-      <p class="lit-anno">Novack argues that sound design works directly on the body, seducing the listener into releasing cognitive control — the body lets go first, the mind follows. Forced Grace is a useful contrast: it runs the other way. The body is afraid; the mind knows there is nothing to fear. Neither cancels the other. Grace and surrender are not synonyms, but share a structure: in both, the self stops managing. Heidegger's concept of <em>Angst</em> is a related reference: the mood in which the world's familiar structure breaks down, distinct from ordinary fear (Heidegger). Unlike Angst, Forced Grace does not dissolve observation.</p>
+      <p class="lit-anno">Novack argues that sound design works directly on the body, seducing the listener into releasing cognitive control: the body lets go first, the mind follows. Forced Grace is a useful contrast: it runs the other way. The body is afraid; the mind knows there is nothing to fear. Neither cancels the other. Grace and surrender are not synonyms, but share a structure: in both, the self stops managing. Heidegger's concept of <em>Angst</em> is a related reference: the mood in which the world's familiar structure breaks down, distinct from ordinary fear (Heidegger). Unlike Angst, Forced Grace does not dissolve observation.</p>
       <div class="lit-concepts">
         <span class="concept-tag">Surrender</span>
         <span class="concept-tag">Seduction</span>
@@ -1054,7 +1050,7 @@
 
     <div class="lit-entry">
       <div class="lit-ref">Heidegger, M. (1962). <em>Being and Time</em> (J. Macquarrie &amp; E. Robinson, Trans.). Harper &amp; Row. (Original work published 1927)</div>
-      <p class="lit-anno">Heidegger distinguishes <em>Angst</em> from ordinary fear: where fear has a determinate object, Angst is the mood in which the world's familiar structure withdraws and nothing offers stable meaning. Unlike Angst, Forced Grace does not dissolve observation — the narrator's metacognitive act ("I know it is not real") holds both states simultaneously. Heidegger's distinction matters here because it clarifies what the piece does not do: it does not aim for the undifferentiated breakdown of Angst, but for the tension of holding fear and knowledge in the same moment.</p>
+      <p class="lit-anno">Heidegger distinguishes <em>Angst</em> from ordinary fear: where fear has a determinate object, Angst is the mood in which the world's familiar structure withdraws and nothing offers stable meaning. Unlike Angst, Forced Grace does not dissolve observation: the narrator's metacognitive act ("I know it is not real") holds both states simultaneously. Heidegger's distinction matters here because it clarifies what the piece does not do: it does not aim for the undifferentiated breakdown of Angst, but for the tension of holding fear and knowledge in the same moment.</p>
       <div class="lit-concepts">
         <span class="concept-tag">Angst</span>
         <span class="concept-tag">Mood</span>
@@ -1064,7 +1060,7 @@
 
     <div class="lit-entry">
       <div class="lit-ref">Goldner, F.H. (1982). Pronoia. <em>Social Problems, 30</em>(1), 82–91.</div>
-      <p class="lit-anno">Goldner names pronoia: the irrational belief that the world conspires to do you good — the positive counterpart to paranoia. He calls it irrational; the belief has no basis in fact. The piece tests a different version: pronoia reached through metacognition. The "anyway" in the title is not delusion. It is a decision. Mischa Nijhof's piece in the installation arrives at the same mechanism through warmth rather than the metacognitive fight: whether pronoia and paranoia together constitute a compositional axis is a question the paper opens without closing.</p>
+      <p class="lit-anno">Goldner names pronoia: the irrational belief that the world conspires to do you good, the positive counterpart to paranoia. He calls it irrational; the belief has no basis in fact. The piece tests a different version: pronoia reached through metacognition. The "anyway" in the title is not delusion. It is a decision. Mischa Nijhof's piece in the installation arrives at the same mechanism through warmth rather than the metacognitive fight: whether pronoia and paranoia together constitute a compositional axis is a question the paper opens without closing.</p>
       <div class="lit-concepts">
         <span class="concept-tag">Pronoia</span>
         <span class="concept-tag">Metacognition</span>
@@ -1074,7 +1070,7 @@
 
     <div class="lit-entry">
       <div class="lit-ref">Sá, A. (2013). Continuity/discontinuity taxonomy for audiovisual instrument design. [Conference paper]</div>
-      <p class="lit-anno">Sá maps audiovisual relationships along a continuity axis. Ambivalent discontinuity corresponds to rising prediction error (State 2); radical discontinuity approximates aberrant salience (State 3). The taxonomy was designed for audiovisual performance; this piece applies the sonic axis alone. The approximation is rough — radical discontinuity describes a functioning system registering a rupture, while aberrant salience describes one whose filtering has failed. The distinction matters compositionally.</p>
+      <p class="lit-anno">Sá maps audiovisual relationships along a continuity axis. Ambivalent discontinuity corresponds to rising prediction error (State 2); radical discontinuity approximates aberrant salience (State 3). The taxonomy was designed for audiovisual performance; this piece applies the sonic axis alone. The approximation is rough: radical discontinuity describes a functioning system registering a rupture, while aberrant salience describes one whose filtering has failed. The distinction matters compositionally.</p>
       <div class="lit-concepts">
         <span class="concept-tag">Continuity/Discontinuity</span>
         <span class="concept-tag">Ambivalent Discontinuity</span>
@@ -1084,7 +1080,7 @@
 
     <div class="lit-entry">
       <div class="lit-ref">Calvino, I. (1983). <em>Palomar.</em> Einaudi.</div>
-      <p class="lit-anno">Calvino's prose in <em>Palomar</em> provided the grammatical model for the State 1 narrator voice: short declarative sentences, one observation at a time. "Those are rain drops. The roof. The wind." The grammar was designed to give the listener permission to stop searching for a threat. Adriana Sá's observation after listening — that the naming had introduced doubt rather than resolved it — suggests naming a sound raises the possibility it might not have been there. A voice that identifies a sound is also a voice that could be wrong.</p>
+      <p class="lit-anno">Calvino's prose in <em>Palomar</em> provided the grammatical model for the State 1 narrator voice: short declarative sentences, one observation at a time. "Those are rain drops. The roof. The wind." The grammar was designed to give the listener permission to stop searching for a threat. Adriana Sá's observation after listening (that the naming had introduced doubt rather than resolved it) suggests naming a sound raises the possibility it might not have been there. A voice that identifies a sound is also a voice that could be wrong.</p>
       <div class="lit-concepts">
         <span class="concept-tag">Narrator Grammar</span>
         <span class="concept-tag">Observation</span>
@@ -1093,7 +1089,7 @@
 
     <div class="lit-entry">
       <div class="lit-ref">Herbert, F. (1965). <em>Dune.</em> Chilton Books.</div>
-      <p class="lit-anno">The Litany Against Fear from <em>Dune</em> is used in State 4 of the piece. Not because it resolves anything, but because recitation is a metacognitive act: naming the fear while knowing its nature. "I must not fear. Fear is the mind-killer…" The structure of the litany — threat → void → self → recognition — matches the transition out of aberrant salience. The narrator's final broken sentence in State 4 breaks where the explanation would begin; that break is already the metacognitive act.</p>
+      <p class="lit-anno">The Litany Against Fear from <em>Dune</em> is used in State 4 of the piece. Not because it resolves anything, but because recitation is a metacognitive act: naming the fear while knowing its nature. "I must not fear. Fear is the mind-killer…" The structure of the litany (threat → void → self → recognition) matches the transition out of aberrant salience. The narrator's final broken sentence in State 4 breaks where the explanation would begin; that break is already the metacognitive act.</p>
       <div class="lit-concepts">
         <span class="concept-tag">Metacognition</span>
         <span class="concept-tag">Litany Against Fear</span>
@@ -1113,10 +1109,10 @@
     <h1 class="page-title">I Accept the<br>Magic Anyway</h1>
 
     <p class="body-text">
-      A 25-minute headphone listening installation made with Mischa Nijhof for a greenhouse in Jardim do Bombarda, Lisbon, mixed in ambisonics for eight headphones and a subwoofer. My contribution was the first 13 minutes: the four-state compositional architecture, the narrator design and script, field recordings from Lisbon and the sea near Dublin, granular processing, drone synthesis, violin, and ambisonics mixing. Mischa contributed her own piece, the transition between both works, and substantial compositional feedback during development — including the State 3 sound design inspiration and the observation that Italo Calvino's writing style offered a useful grammatical model for the narrator voice.
+      A 25-minute headphone listening installation made with Mischa Nijhof for a greenhouse in Jardim do Bombarda, Lisbon, mixed in ambisonics for eight headphones and a subwoofer. My contribution was the first 13 minutes: the four-state compositional architecture, the narrator design and script, field recordings from Lisbon and the sea near Dublin, granular processing, drone synthesis, violin, and ambisonics mixing. Mischa contributed her own piece, the transition between both works, and substantial compositional feedback during development, including the State 3 sound design inspiration and the observation that Italo Calvino's writing style offered a useful grammatical model for the narrator voice.
     </p>
 
-    <!-- Composition Player — Case Study Page -->
+    <!-- Composition Player: Case Study Page -->
     <div class="comp-player" id="cpB">
       <div class="cp-top">
         <button class="cp-play" id="cpB-play" onclick="cpToggle('B')">
@@ -1199,7 +1195,7 @@
     <hr class="divider">
 
     <!-- ── DOCUMENTATION PHOTOS ── -->
-    <h2 class="sec-title">Documentation — Installation Photos</h2>
+    <h2 class="sec-title">Documentation: Installation Photos</h2>
     <div class="img-grid">
       <div class="img-slot"><img src="images/20260521%20084%20cred_VeraMarmelo.JPG" alt="Installation photo 1"></div>
       <div class="img-slot"><img src="images/20260521%20080%20cred_VeraMarmelo.JPG" alt="Installation photo 2"></div>
@@ -1213,7 +1209,7 @@
     <hr class="divider">
 
     <!-- ── TABLE 1: 4-STATE ARC ── -->
-    <h2 class="sec-title">Table 1 — The Four-State Compositional Arc</h2>
+    <h2 class="sec-title">Table 1: The Four-State Compositional Arc</h2>
     <table class="data-table">
       <thead><tr>
         <th>State</th><th>Predictive Processing</th><th>Schaeffer / Ihde</th><th>Narrator Function</th>
@@ -1238,7 +1234,7 @@
           <td>Breath, fragments; presence without naming</td>
         </tr>
         <tr>
-          <td><strong>4 — Forced Grace</strong></td>
+          <td><strong>4: Forced Grace</strong></td>
           <td>Metacognition as active tool; simultaneous fear and knowledge</td>
           <td>Language as self-observation</td>
           <td>'I'm feeling fear, but… that's wh…' (sentence breaks)</td>
@@ -1247,7 +1243,7 @@
     </table>
 
     <!-- ── TABLE 2: SOUND ELEMENTS & MEANINGS ── -->
-    <h2 class="sec-title">Table 2 — Sound Elements &amp; Meanings</h2>
+    <h2 class="sec-title">Table 2: Sound Elements &amp; Meanings</h2>
     <table class="data-table">
       <thead><tr>
         <th>Element</th><th>Function in PP Arc</th><th>Association</th><th>Reference</th>
@@ -1285,15 +1281,15 @@
         </tr>
         <tr>
           <td><strong>Violin + synth pads</strong></td>
-          <td>Forced Grace; major chords — melancholic &amp; warm simultaneously</td>
+          <td>Forced Grace; major chords, melancholic &amp; warm simultaneously</td>
           <td>Ambivalence, acceptance</td>
           <td>State 4</td>
         </tr>
       </tbody>
     </table>
 
-    <!-- ── TABLE 3: VALENCES — PRONOIA / PARANOIA ── -->
-    <h2 class="sec-title">Table 3 — Valences: Paranoia / Pronoia Axis</h2>
+    <!-- ── TABLE 3: VALENCES: PRONOIA / PARANOIA ── -->
+    <h2 class="sec-title">Table 3: Valences, Paranoia / Pronoia Axis</h2>
     <table class="data-table">
       <thead><tr>
         <th>State</th><th>Valence</th><th>Arousal</th><th>Sound Description</th><th>Interpretation</th>
@@ -1304,14 +1300,14 @@
           <td class="tag-pos">+ Positive</td>
           <td>High</td>
           <td>Crickets in winter; warmth before the question arrives</td>
-          <td>The irrational belief that the world conspires to do you good — reached without metacognitive fight (Goldner, 1982)</td>
+          <td>The irrational belief that the world conspires to do you good, reached without metacognitive fight (Goldner, 1982)</td>
         </tr>
         <tr>
           <td><strong>Forced Grace<br><small>(Yann's piece)</small></strong></td>
           <td>Mixed</td>
           <td>High</td>
           <td>Aberrant salience held by expressive voice + breathing grains; Litany Against Fear</td>
-          <td>Body afraid, mind knows — neither cancels the other; acceptance through metacognition</td>
+          <td>Body afraid, mind knows; neither cancels the other; acceptance through metacognition</td>
         </tr>
         <tr>
           <td><strong>Paranoia</strong></td>
@@ -1322,10 +1318,10 @@
         </tr>
         <tr>
           <td><strong>Dissociation</strong></td>
-          <td>—</td>
+          <td>N/A</td>
           <td>Low</td>
           <td>Static granular chaos (first version of State 3)</td>
-          <td>Categorisation shutdown; listeners had nothing to follow — identified as compositional failure</td>
+          <td>Categorisation shutdown; listeners had nothing to follow, identified as compositional failure</td>
         </tr>
       </tbody>
     </table>
@@ -1349,10 +1345,10 @@
 
     <h2 class="sec-title">Further Research</h2>
     <p class="body-text">
-      The most immediate open question comes from the collaboration with Mischa Nijhof. Her piece was not built from PP theory — it began when she heard the monastery story and recognised her own experience in it. But the same mechanism is legible in both: <span class="kw">aberrant salience</span> that produces warmth rather than threat. Whether <span class="kw">Pronoia</span> and <span class="kw">Paranoia</span> together constitute a compositional axis others can navigate, and what positions exist between the poles, is a question this paper opens without closing.
+      The most immediate open question comes from the collaboration with Mischa Nijhof. Her piece was not built from PP theory. It began when she heard the monastery story and recognised her own experience in it. But the same mechanism is legible in both: <span class="kw">aberrant salience</span> that produces warmth rather than threat. Whether <span class="kw">Pronoia</span> and <span class="kw">Paranoia</span> together constitute a compositional axis others can navigate, and what positions exist between the poles, is a question this paper opens without closing.
     </p>
     <p class="body-text">
-      The <span class="kw">expressive dimension</span> as a compositional tool also needs further development. This paper identifies it in one form: the narrator's voice. Whether it can function as an anchor in other forms — a recurring melodic fragment, a spatial signature, a timbral quality — and under what conditions, is a question this piece cannot answer alone.
+      The <span class="kw">expressive dimension</span> as a compositional tool also needs further development. This paper identifies it in one form: the narrator's voice. Whether it can function as an anchor in other forms (a recurring melodic fragment, a spatial signature, a timbral quality) and under what conditions, is a question this piece cannot answer alone.
     </p>
     <p class="body-text">
       What this paper points toward most directly is the relationship between scientific framework and perceptual experience: not art inspired by neuroscience, but art that makes a perceptual mechanism legible during the experience itself. The narrator's final sentence breaks where the explanation would begin. That was a compositional decision. Whether completing it would have made the PP mechanism audible without breaking the experience is a question a next piece would need to find out.
@@ -1407,9 +1403,9 @@
         <div class="proc-content">
           <div class="proc-label">First State 3 · What Didn't Work</div>
           <p class="body-text">The first version of State 3 was grain synthesis at constant maximum density, a permanent wall of sound meant to make categorisation impossible. In practice, people switched off. Not heightened attention: shutdown. Maximum intensity has no texture. There is nothing to follow.</p>
-          <!-- Audio placeholder — replace src with actual file when exported -->
+          <!-- Audio placeholder: replace src with actual file when exported -->
           <div class="proc-audio-block">
-            <div class="proc-audio-label">First State 3 (draft) — not used in final piece</div>
+            <div class="proc-audio-label">First State 3 (draft), not used in final piece</div>
             <audio id="proc-s3-audio" controls style="width:100%; margin-top:0.5rem">
               <source src="audio/state3_draft.mp3" type="audio/mpeg">
             </audio>
@@ -1489,7 +1485,7 @@
         <div class="pf-thumb-placeholder" style="display:none">Album</div>
         <div class="pf-card-body">
           <div class="pf-card-kicker">Album · 2026</div>
-          <div class="pf-card-title">Music and Grief (Thesis &amp; Performance)</div>
+          <div class="pf-card-title">A place that no longer exists (Album)</div>
         </div>
       </div>
 
@@ -1498,7 +1494,7 @@
         <div class="pf-thumb-placeholder" style="display:none">SEHEN</div>
         <div class="pf-card-body">
           <div class="pf-card-kicker">Bachelor Thesis · 2024</div>
-          <div class="pf-card-title">SEHEN — Music &amp; Grief</div>
+          <div class="pf-card-title">Music and Grief (Thesis &amp; Performance)</div>
         </div>
       </div>
 
@@ -1604,11 +1600,11 @@
       <div class="cv-section-head">Education</div>
       <div class="cv-entry">
         <div class="cv-entry-head"><span class="cv-entry-title">Universidade Lusófona, Lisbon</span><span class="cv-entry-date">Feb 2026 – Jul 2026</span></div>
-        <div class="cv-entry-org">Master of Music, RESOUND — Interdisciplinary Sound Practice</div>
+        <div class="cv-entry-org">Master of Music, RESOUND, Interdisciplinary Sound Practice</div>
       </div>
       <div class="cv-entry">
         <div class="cv-entry-head"><span class="cv-entry-title">IADT, Institute of Art, Design + Technologies, Dún Laoghaire</span><span class="cv-entry-date">Sep 2025 – Dec 2025</span></div>
-        <div class="cv-entry-org">Master of Music, RESOUND — Interdisciplinary Sound Practice</div>
+        <div class="cv-entry-org">Master of Music, RESOUND, Interdisciplinary Sound Practice</div>
       </div>
       <div class="cv-entry">
         <div class="cv-entry-head"><span class="cv-entry-title">California State University Monterey Bay, Seaside CA</span><span class="cv-entry-date">Aug 2022 – Dec 2022</span></div>
@@ -1634,7 +1630,7 @@
       </div>
       <div class="cv-entry">
         <div class="cv-entry-head"><span class="cv-entry-title">Sound Experience Internship</span><span class="cv-entry-date">Berlin, Aug 2023 – Feb 2024</span></div>
-        <div class="cv-entry-org">Kling Klang Klong — Audio Agency</div>
+        <div class="cv-entry-org">Kling Klang Klong, Audio Agency</div>
         <div class="cv-entry-body"><ul>
           <li>Designed immersive nature soundscapes in ProTools with Dolby Atmos demo-like storytelling approach for L-Acoustics multichannel system L-ISA</li>
           <li>Composed and designed a full composition, soundscape and sound design for Kunstmuseum Stuttgart</li>
@@ -1839,7 +1835,7 @@ const AUDIO_PATHS = {
 };
 
 // ─────────────────────────────────────────
-//  ILE AUDIO ENGINE  (plain audio.volume — no Web Audio API)
+//  ILE AUDIO ENGINE  (plain audio.volume, no Web Audio API)
 // ─────────────────────────────────────────
 function ileAudInit() {
   if (ileAud.drp) return;
@@ -2028,16 +2024,16 @@ const PROJECTS = {
   },
   grief_album: {
     kicker: 'Album · 2026',
-    title:  'Music and Grief (Thesis & Performance)',
+    title:  'A place that no longer exists (Album)',
     thumb:  'images/a%20place%20that%20no%20longer%20exists.jpg',
-    desc:   'A memory archive of 14 music productions — EDM, Sound Design, Animation Film Sound, Ambient — created over the past 5 years.',
+    desc:   'A memory archive of 14 music productions (EDM, Sound Design, Animation Film Sound, Ambient) created over the past 5 years.',
     roles:  '',
-    media:  'https://archive.org/download/portfolio_202606/05%20Chapter%20Blue%20%28snippet%29.mp3',
-    mediaType: 'audio'
+    media:  'https://www.youtube.com/embed/videoseries?si=ljw_y69Y_nI3h_eE&list=OLAK5uy_nw9dXVZ3tN5FimrypZ9c96TfTocShlZas',
+    mediaType: 'youtube'
   },
   sehen: {
     kicker: 'Bachelor Thesis · 2024',
-    title:  'SEHEN — Music & Grief',
+    title:  'Music and Grief (Thesis & Performance)',
     thumb:  'images/a%20place%20that%20no%20longer%20exists.jpg',
     thumb2: 'images/thumb_sehen.jpg',
     desc:   'A multimedia performance exploring the relationship between music and grief following my father\'s passing from cancer. I translated the emotional chaos, passivity, and impulsivity of the (pre-)mourning process into sound, focusing on sonic spaces, ritual structures, and autobiographical memory.',
@@ -2056,7 +2052,7 @@ const PROJECTS = {
     kicker: 'Bela Project · IADT 2025',
     title:  'WIRED FOR TOUCH.',
     thumb:  'images/the%20hum2.jpg',
-    desc:   'Inspired by C-receptor research (Löken et al., 2009) — nerve fibres that only fire when skin is stroked at ~3 cm/s, wiring us evolutionarily for touch, social contact, and safety.',
+    desc:   'Inspired by C-receptor research (Löken et al., 2009): nerve fibres that only fire when skin is stroked at ~3 cm/s, wiring us evolutionarily for touch, social contact, and safety.',
     roles:  ''
   },
   dublin: {
@@ -2118,7 +2114,9 @@ function openProject(key) {
   }
   const mediaDiv = document.getElementById('projMedia');
   if (p.media) {
-    if (p.mediaType === 'video') {
+    if (p.mediaType === 'youtube') {
+      mediaDiv.innerHTML = `<iframe style="width:100%;aspect-ratio:16/9;border:0;border-radius:2px;display:block" src="${p.media}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+    } else if (p.mediaType === 'video') {
       mediaDiv.innerHTML = `<video controls preload="none" style="width:100%;border-radius:2px;display:block" src="${p.media}"></video>`;
     } else {
       mediaDiv.innerHTML = `<audio controls preload="none" style="width:100%;display:block" src="${p.media}"></audio>`;
