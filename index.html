@@ -642,9 +642,22 @@
     .project-block--video .project-block-thumb { width: 210px; height: auto; }
     .proj-yt { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 4px; display: block; margin-bottom: 0.6rem; object-fit: cover; }
     .proj-clickable { cursor: pointer; }
-    .proj-clickable::after { content: '  ▶'; font-size: 0.6em; opacity: 0.35; transition: opacity 0.15s; }
-    .proj-clickable:hover::after { opacity: 0.75; }
-    .proj-clickable.proj-open::after { content: '  ▾'; opacity: 0.6; }
+    .proj-clickable.proj-open::after { content: '  ▾'; font-size: 0.6em; opacity: 0.6; }
+    /* Thumbnail play overlay */
+    .proj-thumb-wrap { position: relative; cursor: pointer; display: block; }
+    .proj-play-overlay {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 42px; height: 42px;
+      background: rgba(0,0,0,0.48);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+      transition: background 0.15s;
+    }
+    .proj-play-overlay svg { width: 15px; height: 15px; margin-left: 3px; }
+    .proj-thumb-wrap:hover .proj-play-overlay { background: rgba(0,0,0,0.7); }
+    .proj-thumb-wrap.proj-open .proj-play-overlay { display: none; }
     @media (max-width: 600px) {
       .project-block-inner { grid-template-columns: 1fr; }
       .project-block-thumb, .project-block-thumb-ph { width: 100%; }
@@ -701,7 +714,7 @@
       <button class="feat-link" onclick="showPage('project')">Project Overview →</button>
       <button class="feat-link" onclick="showPage('literature')">Literature Review →</button>
       <button class="feat-link" onclick="showPage('casestudy')">Case Study →</button>
-      <a class="feat-link" href="https://grupolusofona-my.sharepoint.com/:w:/g/personal/a22512036_alunos_ulht_pt/IQBG2dV1T_lcR5apfCy5xlugARFksRtEXykjUeHl9CxLh2c?e=eluQdI" target="_blank" rel="noopener">Article ↗</a>
+      <a class="feat-link" href="https://drive.google.com/file/d/15y3cxWM8G4OBULF78o1dW-CH_SWt9L99/view?usp=sharing" target="_blank" rel="noopener">Article ↗</a>
     </div>
 
     <!-- Composition Player: Start Page -->
@@ -736,16 +749,22 @@
     <h2 class="works-heading">Other Works</h2>
 
     <div class="project-block">
-      <img class="proj-yt proj-thumb-toggle" src="images/a%20place%20that%20no%20longer%20exists.jpg" alt="A place that no longer exists">
-      <iframe class="proj-yt proj-media-toggle" src="https://www.youtube.com/embed/videoseries?si=ljw_y69Y_nI3h_eE&amp;list=OLAK5uy_nw9dXVZ3tN5FimrypZ9c96TfTocShlZas" title="A place that no longer exists" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="display:none"></iframe>
-      <div class="project-kicker" style="margin-top:0.5rem">Album · 2026</div>
+      <div class="proj-thumb-wrap" onclick="toggleMedia(this)" style="width:100%;margin-bottom:0.6rem">
+        <img class="proj-yt proj-thumb-toggle" src="images/a%20place%20that%20no%20longer%20exists.jpg" alt="A place that no longer exists" style="margin-bottom:0">
+        <div class="proj-play-overlay"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><polygon points="4,2 14,8 4,14" fill="white"/></svg></div>
+        <iframe class="proj-yt proj-media-toggle" src="https://www.youtube.com/embed/videoseries?si=ljw_y69Y_nI3h_eE&amp;list=OLAK5uy_nw9dXVZ3tN5FimrypZ9c96TfTocShlZas" title="A place that no longer exists" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="display:none;margin-bottom:0"></iframe>
+      </div>
+      <div class="project-kicker">Album · 2026</div>
       <div class="project-title proj-clickable" onclick="toggleMedia(this)">A place that no longer exists (Album)</div>
       <p class="project-body">A memory archive of 14 music productions (EDM, Sound Design, Animation Film Sound, Ambient) created over the past 5 years.</p>
     </div>
 
     <div class="project-block">
       <div class="project-block-inner">
-        <img class="project-block-thumb" src="images/297122188_763731011505795_6643265607603850847_n.jpg" alt="05 Chapter Blue" onerror="this.style.display='none'">
+        <div class="proj-thumb-wrap" onclick="toggleMedia(this)">
+          <img class="project-block-thumb" src="images/297122188_763731011505795_6643265607603850847_n.jpg" alt="05 Chapter Blue" onerror="this.style.display='none'">
+          <div class="proj-play-overlay"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><polygon points="4,2 14,8 4,14" fill="white"/></svg></div>
+        </div>
         <div>
           <div class="project-kicker">Music Duo · 2022</div>
           <div class="project-title proj-clickable" onclick="toggleMedia(this)">05 Chapter Blue</div>
@@ -758,8 +777,9 @@
 
     <div class="project-block project-block--video">
       <div class="project-block-inner">
-        <div>
+        <div class="proj-thumb-wrap" onclick="toggleMedia(this)">
           <img class="project-block-thumb proj-thumb-toggle" src="images/thumb_sehen.jpg" alt="SEHEN" onerror="this.style.display='none'">
+          <div class="proj-play-overlay"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><polygon points="4,2 14,8 4,14" fill="white"/></svg></div>
           <video controls preload="none" class="project-block-thumb proj-media-toggle" style="display:none" src="https://archive.org/download/portfolio_202606/01%20Bachelor%E2%80%99s%20Performance.mp4"></video>
         </div>
         <div>
@@ -796,7 +816,10 @@
 
     <div class="project-block">
       <div class="project-block-inner">
-        <img class="project-block-thumb" src="images/dublin.jpg" alt="Music Production Project" onerror="this.style.display='none'">
+        <div class="proj-thumb-wrap" onclick="toggleMedia(this)">
+          <img class="project-block-thumb" src="images/dublin.jpg" alt="Music Production Project" onerror="this.style.display='none'">
+          <div class="proj-play-overlay"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><polygon points="4,2 14,8 4,14" fill="white"/></svg></div>
+        </div>
         <div>
           <div class="project-kicker">Music Production · IADT 2025</div>
           <div class="project-title proj-clickable" onclick="toggleMedia(this)">Music Production Project</div>
@@ -808,8 +831,9 @@
 
     <div class="project-block project-block--video">
       <div class="project-block-inner">
-        <div>
+        <div class="proj-thumb-wrap" onclick="toggleMedia(this)">
           <img class="project-block-thumb proj-thumb-toggle" src="images/installation.png" alt="Bach in Bitterfeld" onerror="this.style.display='none'">
+          <div class="proj-play-overlay"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><polygon points="4,2 14,8 4,14" fill="white"/></svg></div>
           <video controls preload="none" class="project-block-thumb proj-media-toggle" style="display:none" src="https://archive.org/download/portfolio_202606/04%20EAST%20Festival%20Installation%20.mov"></video>
         </div>
         <div>
@@ -823,8 +847,9 @@
 
     <div class="project-block project-block--video">
       <div class="project-block-inner">
-        <div>
+        <div class="proj-thumb-wrap" onclick="toggleMedia(this)">
           <img class="project-block-thumb proj-thumb-toggle" src="images/upyougo.png" alt="Up You Go" onerror="this.style.display='none'">
+          <div class="proj-play-overlay"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><polygon points="4,2 14,8 4,14" fill="white"/></svg></div>
           <video controls preload="none" class="project-block-thumb proj-media-toggle" style="display:none" src="https://archive.org/download/portfolio_202606/03%20Up%20You%20Go%20%28snippet%29.mov"></video>
         </div>
         <div>
@@ -838,8 +863,9 @@
 
     <div class="project-block project-block--video">
       <div class="project-block-inner">
-        <div>
+        <div class="proj-thumb-wrap" onclick="toggleMedia(this)">
           <img class="project-block-thumb proj-thumb-toggle" src="images/telekom.png" alt="T-Idents (Telekom)" onerror="this.style.display='none'">
+          <div class="proj-play-overlay"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><polygon points="4,2 14,8 4,14" fill="white"/></svg></div>
           <video controls preload="none" class="project-block-thumb proj-media-toggle" style="display:none" src="https://archive.org/download/portfolio_202606/02%20T-Idents.mp4"></video>
         </div>
         <div>
@@ -879,7 +905,7 @@
     </div>
 
     <div style="margin-top:1.2rem">
-      <a class="feat-link" href="https://grupolusofona-my.sharepoint.com/:w:/g/personal/a22512036_alunos_ulht_pt/IQBG2dV1T_lcR5apfCy5xlugARFksRtEXykjUeHl9CxLh2c?e=eluQdI" target="_blank" rel="noopener">Read Full Article ↗</a>
+      <a class="feat-link" href="https://drive.google.com/file/d/15y3cxWM8G4OBULF78o1dW-CH_SWt9L99/view?usp=sharing" target="_blank" rel="noopener">Read Full Article ↗</a>
     </div>
 
     <hr class="divider">
@@ -1649,35 +1675,49 @@
       <div class="cv-section-head">Experience</div>
       <div class="cv-entry">
         <div class="cv-entry-head"><span class="cv-entry-title">Bachelor Thesis</span><span class="cv-entry-date">Trossingen, Apr 2024 – Jul 2024</span></div>
+        <div class="cv-entry-org">University of Music Trossingen</div>
         <div class="cv-entry-body"><ul>
-          <li>Interdisciplinary research on the role of music in mourning processes</li>
-          <li>Analysis of the emotional impact of music in coping with loss</li>
-          <li>Creation of an acoustic memory of a key moment, development of a multimedia concert performance</li>
+          <li>Interdisciplinary research on the role of music in mourning processes from ethnomusicological, psychological, and compositional perspectives</li>
+          <li>Analysis of the emotional impact of music in coping with loss and collective mourning practices</li>
+          <li>Creation of an acoustic memory of a key moment and development of a multimedia concept for concert performance</li>
         </ul></div>
       </div>
       <div class="cv-entry">
         <div class="cv-entry-head"><span class="cv-entry-title">Sound Experience Internship</span><span class="cv-entry-date">Berlin, Aug 2023 – Feb 2024</span></div>
         <div class="cv-entry-org">Kling Klang Klong, Audio Agency</div>
         <div class="cv-entry-body"><ul>
-          <li>Designed immersive nature soundscapes in ProTools with Dolby Atmos demo-like storytelling approach for L-Acoustics multichannel system L-ISA</li>
-          <li>Composed and designed a full composition, soundscape and sound design for Kunstmuseum Stuttgart</li>
+          <li>Designed immersive nature soundscapes in ProTools with a Dolby Atmos demo-like storytelling approach for L-Acoustics' multichannel system L-ISA</li>
+          <li>Arranged and recorded violin, synth, and piano compositions for documentaries and film scores</li>
+          <li>Composed and designed a full composition, soundscape and sound design exhibited at Kunstmuseum Stuttgart</li>
         </ul></div>
       </div>
       <div class="cv-entry">
-        <div class="cv-entry-head"><span class="cv-entry-title">Audio Design Internship</span><span class="cv-entry-date">Stuttgart, Mar 2023 – Jun 2023</span></div>
-        <div class="cv-entry-org">Klangerfinder Audio Agency</div>
+        <div class="cv-entry-head"><span class="cv-entry-title">Audio Design Internship</span><span class="cv-entry-date">Stuttgart, Apr 2023 – Jun 2023</span></div>
+        <div class="cv-entry-org">Klangerfinder, Audio Agency</div>
         <div class="cv-entry-body"><ul>
           <li>Corporate sound &amp; audio branding, including futuristic UI/UX &amp; service design research for public transport</li>
           <li>Music production &amp; sound design for various projects</li>
+          <li>Concept development for a museum installation exploring noise rather than sound, DJ-Set</li>
         </ul></div>
       </div>
       <div class="cv-entry">
         <div class="cv-entry-head"><span class="cv-entry-title">Music Workshop Educator</span><span class="cv-entry-date">Schlitz, May 2022</span></div>
         <div class="cv-entry-org">German States Youth Orchestra Gathering</div>
+        <div class="cv-entry-body"><ul>
+          <li>Taught teenage orchestra players storytelling, self-recording techniques, and unconventional instrument use with electronic effects</li>
+          <li>Led music-assisted breathwork sessions as warm-up and cool-down</li>
+        </ul></div>
       </div>
       <div class="cv-entry">
-        <div class="cv-entry-head"><span class="cv-entry-title">Explorative Sound Design and Interactive Music Research</span><span class="cv-entry-date">Trossingen, Feb 2021 – 2024</span></div>
+        <div class="cv-entry-head"><span class="cv-entry-title">Explorative Sound Design and Interactive Music Research</span><span class="cv-entry-date">Trossingen, Feb 2021 – now</span></div>
         <div class="cv-entry-org">University of Music Trossingen</div>
+        <div class="cv-entry-body"><ul>
+          <li>Musical analysis of Jon Hopkins' <em>Music for Psychedelic Therapy</em>, exploring the renaissance of psychedelic therapy</li>
+          <li>Synchronized heartbeat (via contact mic) with an arpeggiator to demonstrate the ISO principle (Max4Live)</li>
+          <li>Modulated instrumental emotion using a valence-arousal XY pad on the master, linking audio effects like distortion and speed to arousal, and playful effects (delay, added notes) to valence (Max4Live)</li>
+          <li>Manipulated sound by mapping Tai Chi movements via camera input (TouchDesigner, Ableton)</li>
+          <li>Beta testing Wavepaths, a platform for musical journeys in meditation, wellness, and therapy</li>
+        </ul></div>
       </div>
 
       <div class="cv-section-head">Scholarships</div>
@@ -2166,15 +2206,18 @@ function openProject(key) {
   document.body.style.overflow = 'hidden';
 }
 
-function toggleMedia(titleEl) {
-  const block = titleEl.closest('.project-block');
+function toggleMedia(el) {
+  const block = el.closest('.project-block');
   const thumb = block.querySelector('.proj-thumb-toggle');
   const media = block.querySelector('.proj-media-toggle');
   if (!media) return;
   const opening = media.style.display === 'none';
   media.style.display = opening ? 'block' : 'none';
   if (thumb) thumb.style.display = opening ? 'none' : 'block';
-  titleEl.classList.toggle('proj-open', opening);
+  const wrap  = block.querySelector('.proj-thumb-wrap');
+  if (wrap)  wrap.classList.toggle('proj-open', opening);
+  const title = block.querySelector('.proj-clickable');
+  if (title) title.classList.toggle('proj-open', opening);
 }
 
 function closeProject(e) {
