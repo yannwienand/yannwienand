@@ -640,7 +640,11 @@
     .project-block-thumb-ph { width: 140px; aspect-ratio: 16/9; background: var(--light); flex-shrink: 0; }
     .project-block--video .project-block-inner { grid-template-columns: 210px 1fr; }
     .project-block--video .project-block-thumb { width: 210px; height: auto; }
-    .proj-yt { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 4px; display: block; margin-bottom: 0.6rem; }
+    .proj-yt { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 4px; display: block; margin-bottom: 0.6rem; object-fit: cover; }
+    .proj-clickable { cursor: pointer; }
+    .proj-clickable::after { content: '  ▶'; font-size: 0.6em; opacity: 0.35; transition: opacity 0.15s; }
+    .proj-clickable:hover::after { opacity: 0.75; }
+    .proj-clickable.proj-open::after { content: '  ▾'; opacity: 0.6; }
     @media (max-width: 600px) {
       .project-block-inner { grid-template-columns: 1fr; }
       .project-block-thumb, .project-block-thumb-ph { width: 100%; }
@@ -732,9 +736,10 @@
     <h2 class="works-heading">Other Works</h2>
 
     <div class="project-block">
-      <iframe class="proj-yt" src="https://www.youtube.com/embed/videoseries?si=ljw_y69Y_nI3h_eE&amp;list=OLAK5uy_nw9dXVZ3tN5FimrypZ9c96TfTocShlZas" title="A place that no longer exists" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-      <div class="project-kicker">Album · 2026</div>
-      <div class="project-title">A place that no longer exists (Album)</div>
+      <img class="proj-yt proj-thumb-toggle" src="images/a%20place%20that%20no%20longer%20exists.jpg" alt="A place that no longer exists">
+      <iframe class="proj-yt proj-media-toggle" src="https://www.youtube.com/embed/videoseries?si=ljw_y69Y_nI3h_eE&amp;list=OLAK5uy_nw9dXVZ3tN5FimrypZ9c96TfTocShlZas" title="A place that no longer exists" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="display:none"></iframe>
+      <div class="project-kicker" style="margin-top:0.5rem">Album · 2026</div>
+      <div class="project-title proj-clickable" onclick="toggleMedia(this)">A place that no longer exists (Album)</div>
       <p class="project-body">A memory archive of 14 music productions (EDM, Sound Design, Animation Film Sound, Ambient) created over the past 5 years.</p>
     </div>
 
@@ -743,20 +748,23 @@
         <img class="project-block-thumb" src="images/297122188_763731011505795_6643265607603850847_n.jpg" alt="05 Chapter Blue" onerror="this.style.display='none'">
         <div>
           <div class="project-kicker">Music Duo · 2022</div>
-          <div class="project-title">05 Chapter Blue</div>
+          <div class="project-title proj-clickable" onclick="toggleMedia(this)">05 Chapter Blue</div>
           <p class="project-body">A music duo formed with singer Sprossi during the COVID pandemic via Instagram. All work was created online in an iterative back-and-forth. The project explores the inner child and personal transformation, translating her visual ideas into aural concepts. Working with an artist without formal training meant building new collaborative processes: weekly Zoom sessions and learning to make space for the voice from the start of the arrangement.</p>
           <div class="project-roles">Roles: Composition, music production, sound design · Foley recording &amp; vocal production · Mixing · 4-track stem mastering</div>
-          <audio controls preload="none" style="width:100%;margin-top:0.5rem" src="https://archive.org/download/portfolio_202606/05%20Chapter%20Blue%20%28snippet%29.mp3"></audio>
+          <audio controls preload="none" class="proj-media-toggle" style="display:none;width:100%;margin-top:0.5rem" src="https://archive.org/download/portfolio_202606/05%20Chapter%20Blue%20%28snippet%29.mp3"></audio>
         </div>
       </div>
     </div>
 
     <div class="project-block project-block--video">
       <div class="project-block-inner">
-        <video controls preload="none" class="project-block-thumb" src="https://archive.org/download/portfolio_202606/01%20Bachelor%E2%80%99s%20Performance.mp4"></video>
+        <div>
+          <img class="project-block-thumb proj-thumb-toggle" src="images/thumb_sehen.jpg" alt="SEHEN" onerror="this.style.display='none'">
+          <video controls preload="none" class="project-block-thumb proj-media-toggle" style="display:none" src="https://archive.org/download/portfolio_202606/01%20Bachelor%E2%80%99s%20Performance.mp4"></video>
+        </div>
         <div>
           <div class="project-kicker">Bachelor Thesis · 2024</div>
-          <div class="project-title">Music and Grief (Thesis &amp; Performance)</div>
+          <div class="project-title proj-clickable" onclick="toggleMedia(this)">Music and Grief (Thesis &amp; Performance)</div>
           <p class="project-body">My bachelor's thesis explored the relationship between music and grief following my father's passing from cancer. Through a multimedia performance, I translated the emotional chaos, passivity, and impulsivity of the (pre-)mourning process into sound, with a particular focus on sonic spaces, ritual structures, and the capacity of music to evoke autobiographical memory through specific acoustic triggers.</p>
           <p class="project-body">Drawing on Deirdre O'Toole's assertion that "the narratives of trauma must be made visible in order to be understood" (2019), I investigated how creative practice can make emotional processes perceptible and comprehensible.</p>
           <div class="project-roles">Roles: Composition · Music Production · Sound Design · Voice &amp; Vocal Recording · Mixing &amp; Mastering · Creative Direction · Lighting Programming (Showsync Beam &amp; Ableton) · 24-Channel Speaker Setup</div>
@@ -791,19 +799,22 @@
         <img class="project-block-thumb" src="images/dublin.jpg" alt="Music Production Project" onerror="this.style.display='none'">
         <div>
           <div class="project-kicker">Music Production · IADT 2025</div>
-          <div class="project-title">Music Production Project</div>
+          <div class="project-title proj-clickable" onclick="toggleMedia(this)">Music Production Project</div>
           <p class="project-body">Field recordings of waves in Bray, Dublin and re-amplification.</p>
-          <audio controls preload="none" style="width:100%;margin-top:0.5rem" src="https://archive.org/download/portfolio_202606/PM.2tr_9_STC_CA2_FreshEars_17122025.mp3"></audio>
+          <audio controls preload="none" class="proj-media-toggle" style="display:none;width:100%;margin-top:0.5rem" src="https://archive.org/download/portfolio_202606/PM.2tr_9_STC_CA2_FreshEars_17122025.mp3"></audio>
         </div>
       </div>
     </div>
 
     <div class="project-block project-block--video">
       <div class="project-block-inner">
-        <video controls preload="none" class="project-block-thumb" src="https://archive.org/download/portfolio_202606/04%20EAST%20Festival%20Installation%20.mov"></video>
+        <div>
+          <img class="project-block-thumb proj-thumb-toggle" src="images/installation.png" alt="Bach in Bitterfeld" onerror="this.style.display='none'">
+          <video controls preload="none" class="project-block-thumb proj-media-toggle" style="display:none" src="https://archive.org/download/portfolio_202606/04%20EAST%20Festival%20Installation%20.mov"></video>
+        </div>
         <div>
           <div class="project-kicker">EAST Festival · 2022</div>
-          <div class="project-title">Bach in Bitterfeld (Installation)</div>
+          <div class="project-title proj-clickable" onclick="toggleMedia(this)">Bach in Bitterfeld (Installation)</div>
           <p class="project-body">Interactive installations exploring water and musical fragments by J.S. Bach, performed in a former underground water reservoir with a 60-second decay time. I designed and installed a water drop sound installation, performed a composition for violin and live electronics, and manipulated live sound through a Valence-Arousal XY Pad on iPad.</p>
           <div class="project-roles">Roles: Water drop installation · Violin &amp; live electronics · Sound manipulation · Dramaturgy · 8.1 speaker setup (60 m² underground concrete hall)</div>
         </div>
@@ -812,10 +823,13 @@
 
     <div class="project-block project-block--video">
       <div class="project-block-inner">
-        <video controls preload="none" class="project-block-thumb" src="https://archive.org/download/portfolio_202606/03%20Up%20You%20Go%20%28snippet%29.mov"></video>
+        <div>
+          <img class="project-block-thumb proj-thumb-toggle" src="images/upyougo.png" alt="Up You Go" onerror="this.style.display='none'">
+          <video controls preload="none" class="project-block-thumb proj-media-toggle" style="display:none" src="https://archive.org/download/portfolio_202606/03%20Up%20You%20Go%20%28snippet%29.mov"></video>
+        </div>
         <div>
           <div class="project-kicker">Animation Sound · 2021</div>
-          <div class="project-title">Up You Go</div>
+          <div class="project-title proj-clickable" onclick="toggleMedia(this)">Up You Go</div>
           <p class="project-body">Children's animation film in collaboration with Nanyang University's Animation Institute. Complete creative freedom in shaping the sound world. Screening at Stuttgart Trickfilm International Animated Film Festival 2025.</p>
           <div class="project-roles">Roles: Composition · Violin &amp; Celesta recording · Foley &amp; Sound Design · Mixing &amp; Mastering · Vocal reference recording · Dolby Atmos surround mix (ProTools)</div>
         </div>
@@ -824,10 +838,13 @@
 
     <div class="project-block project-block--video">
       <div class="project-block-inner">
-        <video controls preload="none" class="project-block-thumb" src="https://archive.org/download/portfolio_202606/02%20T-Idents.mp4"></video>
+        <div>
+          <img class="project-block-thumb proj-thumb-toggle" src="images/telekom.png" alt="T-Idents (Telekom)" onerror="this.style.display='none'">
+          <video controls preload="none" class="project-block-thumb proj-media-toggle" style="display:none" src="https://archive.org/download/portfolio_202606/02%20T-Idents.mp4"></video>
+        </div>
         <div>
           <div class="project-kicker">Brand Sound · 2023</div>
-          <div class="project-title">T-Idents (Telekom)</div>
+          <div class="project-title proj-clickable" onclick="toggleMedia(this)">T-Idents (Telekom)</div>
           <p class="project-body">Sound identities for Telekom's diverse motion designs. Three scenes: Jungle/earthy/fresh, Playful/technical, Friendly/childish/warm. Incorporated UI/UX sounds from Telekom's sound branding catalog alongside recorded guitar, voice, and synth elements.</p>
           <div class="project-roles">Roles: Music composition &amp; production · Sound design · Recording (guitar, voice) · Mixing &amp; Mastering</div>
         </div>
@@ -949,7 +966,7 @@
 
     <div class="lit-entry">
       <div class="lit-ref">Clark, A. (2013). Whatever next? Predictive brains, situated agents, and the future of cognitive science. <em>Behavioral and Brain Sciences, 36</em>(3), 181–204.</div>
-      <p class="lit-anno">Clark's paper is a landmark synthesis of Predictive Processing theory. The brain continuously generates predictions about incoming sensory data and updates them based on prediction errors: mismatches between expectation and input. Crucially, Clark argues that affective and prosodic features of voice constitute a prediction layer separate from semantic content. This separation is the mechanism that allows the expressive dimension to remain as an anchor when semantic content withdraws in State 3.</p>
+      <p class="lit-anno">Clark's paper is a landmark synthesis of Predictive Processing theory. The brain continuously generates predictions about incoming sensory data and updates them through prediction errors: mismatches between expectation and input. Building on this hierarchical framework, this piece treats the affective and prosodic features of voice (intonation, rhythm, breath) as a layer of prediction that can persist when semantic prediction fails, an extension of Clark's model rather than a claim he makes directly. That persistence lets the expressive dimension stay as an anchor when semantic content withdraws in State 3.</p>
       <div class="lit-concepts">
         <span class="concept-tag">Predictive Processing</span>
         <span class="concept-tag">Prediction Error</span>
@@ -1052,7 +1069,7 @@
 
     <div class="lit-entry">
       <div class="lit-ref">Novack, D. (2022). <em>Sound Design for Film: Liberating from Image, Seducing Surrender.</em> PhD dissertation, Universidade Lusofona.</div>
-      <p class="lit-anno">Novack argues that sound design works directly on the body, seducing the listener into releasing cognitive control: the body lets go first, the mind follows. Forced Grace is a useful contrast: it runs the other way. The body is afraid; the mind knows there is nothing to fear. Neither cancels the other. Grace and surrender are not synonyms, but share a structure: in both, the self stops managing. Heidegger's concept of <em>Angst</em> is a related reference: the mood in which the world's familiar structure breaks down, distinct from ordinary fear (Heidegger). Unlike Angst, Forced Grace does not dissolve observation.</p>
+      <p class="lit-anno">Novack argues that sound design works directly on the body, seducing the listener into releasing cognitive control: the body lets go first, the mind follows. Forced Grace is a useful contrast: it runs the other way. The body is afraid; the mind knows there is nothing to fear. Neither cancels the other. Grace and surrender are not synonyms, but share a structure: in both, the self stops managing. Where Heidegger's <em>Angst</em> (see below) dissolves observation entirely, a mood in which the world's familiar structure withdraws and nothing holds, Forced Grace keeps the observer in place. That is what the following entry unpacks.</p>
       <div class="lit-concepts">
         <span class="concept-tag">Surrender</span>
         <span class="concept-tag">Seduction</span>
@@ -1389,8 +1406,8 @@
         <div class="proc-marker">1</div>
         <div class="proc-content">
           <div class="proc-label">Starting Point · Electronic Music &amp; Groove Manipulation</div>
-          <p class="body-text">The first question was about groove and micro-timing: how small rhythmic deviations create or destroy the feeling of flow. I started running experiments with 808-pattern manipulation, Roland TR step sequencers and Max 4 Live, deliberately pushing timing until the groove collapsed into something uncomfortable. <em>At what point does something stop feeling musical and start feeling wrong?</em> That boundary became the research question.</p>
-          <p class="body-text" style="margin-top:0.8rem">A concert in Lisbon pushed it further. The same experimental ambient music left one person in the room relaxed and sent another into anxious introspection. Same piece, same room, opposite landings. <span class="kw">Aberrant salience</span> works as a perceptual mechanism, but without an anchor it tips toward one extreme or the other. What acts as the anchor was the question.</p>
+          <p class="body-text">A concert in Lisbon was the starting point. The same experimental ambient music left one person in the room relaxed and sent another into anxious introspection. Same piece, same room, opposite landings. What makes that difference?</p>
+          <p class="body-text" style="margin-top:0.8rem">That question led to experiments with groove and micro-timing: 808-pattern manipulation, Roland TR step sequencers and Max 4 Live, pushing timing until the groove collapsed into something uncomfortable. <em>At what point does something stop feeling musical and start feeling wrong?</em> <span class="kw">Aberrant salience</span> works as a perceptual mechanism, but without an anchor it tips toward one extreme or the other. What acts as the anchor became the research question.</p>
         </div>
       </div>
 
@@ -1398,41 +1415,23 @@
         <div class="proc-marker">2</div>
         <div class="proc-content">
           <div class="proc-label">Three-State Model · Predictive Processing &amp; Benjamin Bardou</div>
-          <p class="body-text">Before the monastery, the research question had a theoretical shape already: can sound control the degree of <span class="kw">perceptual anchoring</span> in audiovisual experience? I drew on <span class="kw">Predictive Processing</span> (PP) theory and the concept of <span class="kw">aberrant salience</span> from psychosis phenomenology to build a three-state compositional model. <em>Over-anchored:</em> predictions dominate, attention disengages. <em>Navigable ambiguity:</em> predictions waver, attention sharpens. <em>Anchor-removed:</em> predictions fail, hyper-significance emerges. The three states map onto Baudelaire's <em>Hell</em>, <em>Spleen</em>, and <em>Ideal</em>, a philosophical frame for what PP describes neurologically. The <em>Ideal</em> names the same cognitive mechanism as aberrant salience, but recasts it as awe rather than threat.</p>
-          <p class="body-text" style="margin-top:0.8rem">Then I came across Benjamin Bardou's AI-generated <span class="kw">latent space</span> morph videos, and the model became concrete. His project <em>The Flow</em> uses continuous morph transitions through recognisable scenes, visual material that challenges the predictive system hardest where two scenes merge. His three Baudelairean regimes map onto the PP model exactly. The question got specific: can sound shape whether a viewer's experience of those transitions lands as Hell, Spleen, or Ideal? During the transitions, the image anchors nothing. Sound has to.</p>
+          <p class="body-text">The monastery came first. A night alone in an abandoned monastery in Spain: dripping water became footsteps. The shift was involuntary, something the nervous system performed under darkness and isolation. That experience made the research question urgent. Understanding it led to <span class="kw">Predictive Processing</span> (PP) theory and the concept of <span class="kw">aberrant salience</span> from psychosis phenomenology. The brain generates predictions continuously; when they fail and nothing can be dismissed, everything starts to feel significant. That mechanism became the compositional problem. Three states emerged: <em>Over-anchored</em> (predictions dominate, attention disengages), <em>Navigable ambiguity</em> (predictions waver, attention sharpens), <em>Anchor-removed</em> (predictions fail, hyper-significance emerges).</p>
+          <p class="body-text" style="margin-top:0.8rem">I came across Benjamin Bardou's work next: AI-generated <span class="kw">latent space</span> morph videos, continuous transitions between recognisable scenes where the image resists categorisation. Reading his project <em>The Flow</em>, his Baudelairean framework came into focus: <em>Hell</em> as saturated, homogeneous time; <em>Spleen</em> as suspension and drift; <em>Ideal</em> as moments of temporal condensation, instances of grace. That framework mapped onto the PP three-state model. The connection that crystallised: what Bardou calls the <em>Ideal</em> behaves like positive <span class="kw">aberrant salience</span>. The same perceptual mechanism, a different valence. The question became: can sound steer which way it lands, toward awe or toward threat?</p>
         </div>
       </div>
 
       <div class="proc-step">
         <div class="proc-marker">3</div>
         <div class="proc-content">
-          <div class="proc-label">The Monastery · Concept Becomes Experience</div>
-          <p class="body-text">One stormy night in an abandoned monastery in Spain, dripping water became footsteps. The shift was involuntary. The nervous system performed it under darkness, exhaustion, isolation. This wasn't a designed experience; it was the research question arriving as a concrete event. What had been abstract (at what point does perception misfire?) became something felt from the inside: <em>this is what it feels like.</em> The theoretical draft was set aside. The monastery became the centre.</p>
-        </div>
-      </div>
-
-      <div class="proc-step">
-        <div class="proc-marker">4</div>
-        <div class="proc-content">
           <div class="proc-label">First State 3 · What Didn't Work</div>
           <p class="body-text">The first version of State 3 was grain synthesis at constant maximum density, a permanent wall of sound meant to make categorisation impossible. In practice, people switched off. Not heightened attention: shutdown. Maximum intensity has no texture. There is nothing to follow.</p>
-          <!-- Audio placeholder: replace src with actual file when exported -->
           <div class="proc-audio-block">
             <div class="proc-audio-label">First State 3 (draft), not used in final piece</div>
             <audio id="proc-s3-audio" controls style="width:100%; margin-top:0.5rem">
               <source src="audio/state3_draft.mp3" type="audio/mpeg">
             </audio>
-            <p style="font-size:0.68rem; color:var(--dim); margin-top:0.4rem">← Export and place at <code>audio/state3_draft.mp3</code> to activate</p>
           </div>
-          <p class="body-text" style="margin-top:1rem">The revision introduced <em>ebb and flow</em>: density rises and recedes rather than flooding. The nervous system can track something. That made it possible to stay in the state instead of fleeing it.</p>
-        </div>
-      </div>
-
-      <div class="proc-step">
-        <div class="proc-marker">5</div>
-        <div class="proc-content">
-          <div class="proc-label">Imitation Gestures &amp; the Problem of Instruction</div>
-          <p class="body-text">An early approach to the narrator's role involved explicit instruction: asking the listener to imitate what they heard, or name the physical sensation of listening. It didn't work. Instruction pulls attention toward compliance. The listener starts managing their response instead of having one. The narrator's grammar was revised: no imperatives, no instructions. Observation only. Short declaratives that close uncertainty without directing behaviour.</p>
+          <p class="body-text" style="margin-top:1rem">The revision introduced <em>ebb and flow</em>: density rises and recedes rather than flooding. The narrator's expressive dimension, intonation, rhythm, breath, remains present throughout, giving the nervous system something to track. That made it possible to stay in the state instead of fleeing it.</p>
         </div>
       </div>
 
@@ -1449,7 +1448,7 @@
 
       <div class="proc-avenue">
         <div class="proc-avenue-title">Bardou Collaboration</div>
-        <p class="body-text">Benjamin Bardou's project <em>The Flow</em> works with the same question on the visual level: how AI-generated <span class="kw">latent space</span> morph transitions produce competing predictions and perceptual ambiguity. His three Baudelairean regimes map onto the PP three-state model exactly. A collaboration, with sound composed specifically for his visual material, would test whether the compositional logic here can steer the experience of those transitions: whether anchoring, ambiguity, and awe can be shaped by sound alone when the image does not resolve.</p>
+        <p class="body-text"><em>The Flow</em> is conceived as a 24-hour film-essay on the stream of consciousness. Rather than montage, which separates and reconnects fragments, Bardou uses continuous AI-generated <span class="kw">latent space</span> transitions: images understood as positions in a high-dimensional space, drifting from one into another without cuts. The resulting images are incomplete and unstable, close to how memories surface, always in recomposition. Three Baudelairean regimes structure the film, <em>Hell</em> (saturated, homogeneous time), <em>Spleen</em> (suspension and perceptual drift), <em>Ideal</em> (instances of grace, persistent images, fragments of utopia), not as chapters but as simultaneous layers. The <em>Ideal</em> is where visual awe lives: the moment an ambiguous transition produces wonder rather than anxiety. A collaboration would test whether sound can steer which regime a viewer lands in when the image does not resolve, and specifically whether the compositional tools developed here can shift an ambiguous transition toward the <em>Ideal</em> rather than <em>Hell</em>.</p>
       </div>
 
       <div class="proc-avenue">
@@ -1459,7 +1458,13 @@
 
       <div class="proc-avenue">
         <div class="proc-avenue-title">RAVE · ML Hallucination as Compositional Material</div>
-        <p class="body-text">The IRCAM RAVE plugin (Realtime Audio Variational autoEncoder) trains on field recordings and generates new sonic material from them. The idea is to feed it the monastery recordings and use the output for State 3, replacing the looped Schaeffer-style field recordings with something the network has learned and then distorted. The less data it trains on, the more it hallucinates. The output becomes unstable: sounds that are almost, but not quite, the source. That instability is structurally the same as what Bardou's <span class="kw">latent space</span> morphs do visually, material caught between recognition and failure. Whether RAVE audio could work as a sonic parallel, and whether it would sharpen or destabilise the navigability of State 3, is open.</p>
+        <p class="body-text">RAVE (Realtime Audio Variational autoEncoder), developed at IRCAM, is a machine learning tool for audio: it trains on a body of material and generates new output from that learned space. A classmate, Olivia, introduced it during a seminar. The specific application here: train it on the monastery field recordings and use the output for State 3. The less data it trains on, the more it hallucinates, producing sounds that are almost, but not quite, the source. That instability runs parallel to what Bardou's <span class="kw">latent space</span> morphs do visually: material caught between recognition and failure. Whether RAVE audio would sharpen or destabilise the navigability of State 3 is open. Olivia's work with the tool makes a collaboration next semester a concrete possibility.</p>
+      </div>
+
+      <div class="proc-avenue">
+        <div class="proc-avenue-title">Predictive Processing as a Lens</div>
+        <p class="body-text">Since engaging with PP as a compositional problem, it keeps appearing: in a documentary on Anil Seth about spirituality and the brain, in conversations with classmates working on entirely different projects, in the language neuroscientists use to describe ordinary perception. The framework seems to be in the air as a way to explain how we construct reality. That ubiquity is not an argument for it, but it does suggest that the question this piece poses, whether experience can be designed by working with the brain's predictive architecture, is one many fields are reaching toward simultaneously.</p>
+        <p class="body-text" style="margin-top:0.8rem">A related realisation about terminology: the word <em>metacognition</em> appears in this paper and in discussion, but it may be too blunt. What the narrator's "I know it is not real" actually describes is closer to what Merleau-Ponty calls body knowledge: not thinking about thinking, but a pre-reflective awareness that surfaces in the act. In the moment of performing the piece, that knowledge sits in the doing. The metacognitive reflection comes after. That distinction connects directly to the question écoute réduite poses: how much consciousness is already in perception, and when does it tip into reflection?</p>
       </div>
 
       <div class="proc-avenue">
@@ -1869,10 +1874,11 @@ function ileAudInit() {
 
 function ileXYApplyVolume() {
   if (!ileAud.drp) return;
-  const xf  = ile.xy.x / 100;
-  const vol = ile.xy.y / 100;
+  const xf      = ile.xy.x / 100;
+  const vol     = ile.xy.y / 100;
+  const STP_GAIN = 1.5; // boost footsteps to match drops loudness
   ileAud.drp.volume = Math.cos(xf * Math.PI / 2) * vol;
-  ileAud.stp.volume = Math.sin(xf * Math.PI / 2) * vol;
+  ileAud.stp.volume = Math.min(1, Math.sin(xf * Math.PI / 2) * vol * STP_GAIN);
 }
 
 // ─────────────────────────────────────────
@@ -2158,6 +2164,17 @@ function openProject(key) {
   document.getElementById('projOverlay').classList.add('open');
   document.getElementById('projDrawer').classList.add('open');
   document.body.style.overflow = 'hidden';
+}
+
+function toggleMedia(titleEl) {
+  const block = titleEl.closest('.project-block');
+  const thumb = block.querySelector('.proj-thumb-toggle');
+  const media = block.querySelector('.proj-media-toggle');
+  if (!media) return;
+  const opening = media.style.display === 'none';
+  media.style.display = opening ? 'block' : 'none';
+  if (thumb) thumb.style.display = opening ? 'none' : 'block';
+  titleEl.classList.toggle('proj-open', opening);
 }
 
 function closeProject(e) {
